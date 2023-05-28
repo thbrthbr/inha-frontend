@@ -1,0 +1,108 @@
+{
+  "users": [
+    {
+      "userId": 1,
+      "name": "하도영",
+      "nickname": "op",
+      "sex": true,
+      "cellphone": "010-0000-0001",
+      "birthdayDate": "1999-02-03",
+      "ownCar": false,
+      "canDrive": false,
+      "rating": 4.2,
+      "point": 123,
+      "carPoolCount": 10,
+      "level": 1,
+      "totalCo2": 0
+    },
+    {
+      "userId": 2,
+      "name": "문동은",
+      "nickname": "op",
+      "sex": true,
+      "cellphone": "010-0000-0001",
+      "birthdayDate": "2002-02-03",
+      "ownCar": false,
+      "canDrive": false,
+      "rating": 4.2,
+      "point": 123,
+      "carPoolCount": 10,
+      "level": 1,
+      "totalCo2": 0
+    }
+  ],
+  "posts": [
+    {
+      "id": 1,
+      "userId": 1,
+      "channelId": 1,
+      "title": "2",
+      "departures": "에버랜드",
+      "departuresLatitude": "127.20219830178264",
+      "departuresLongitude": "37.293101115700345",
+      "arrivals": "구성역 수인분당선",
+      "arrivalsLatitude": "127.105695833197",
+      "arrivalsLongitude": "37.2989770487314",
+      "personnel": 50,
+      "content": null,
+      "regular": false,
+      "carpoolDate": "2",
+      "driverId": ""
+    }
+  ],
+  "carpools": [
+    {
+      "carpoolId": 1,
+      "hostId": 1,
+      "driverId": 1,
+      "driverNickname": 1,
+      "departures": "에버랜드",
+      "arrivals": "구성역 수인분당선",
+      "personnel": 3,
+      "content": null,
+      "regular": false,
+      "usrChannelList": [
+        {
+          "userId": 1,
+          "nickname": "op",
+          "departuresLatitude": "127.20219830178264",
+          "departuresLongitude": "37.293101115700345",
+          "arrivalsLatitude": "127.105695833197",
+          "arrivalsLongitude": "37.2989770487314",
+          "rating": 4.2
+        },
+        {
+          "userId": 2,
+          "nickname": "carbonizer2",
+          "departuresLatitude": null,
+          "departuresLongitude": null,
+          "arrivalsLatitude": null,
+          "arrivalsLongitude": null,
+          "rating": 4.2
+        },
+        {
+          "userId": 3,
+          "nickname": "carbonizer3",
+          "departuresLatitude": null,
+          "departuresLongitude": null,
+          "arrivalsLatitude": null,
+          "arrivalsLongitude": null,
+          "rating": 4.2
+        }
+      ]
+    }
+  ],
+  "joins": [
+    {
+      "realId": "ID1",
+      "password": "1234",
+      "name": "NAME1",
+      "nickname": "NICKNAME1",
+      "sex": false,
+      "cellphone": "010-0000-0001",
+      "birthdayDate": "2023-02-03",
+      "ownCar": true,
+      "driving": true
+    }
+  ]
+}

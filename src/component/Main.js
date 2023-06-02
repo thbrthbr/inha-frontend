@@ -153,62 +153,69 @@ const Main = (props) => {
   const logInRequest = async () => {
     try {
       const res = await axios.post(
-        "/loginProc",
+        "http://localhost:8080/loginProc",
         {
-          realId: id,
+          username: id,
           password: password,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
         },
         {
           withCredentials: true,
         }
       );
-      console.log(res);
+      console.log(res.status);
 
       // 나중에 다시 확인
-      if (res.status === "200") {
+      if (res.status === 200) {
         alert("로그인 되셨습니다");
+        setLoggedin(true);
+        setLoggedId(res.data.nickname);
+        setLoggedRealId(res.data.userId);
+        movePage("login/today/*");
       }
     } catch (e) {
-      alert("로그인 실패");
+      console.log(e.response);
+      if (e.response.status === 401) {
+        alert("아이디나 비밀번호를 확인해주세요");
+        window.location.reload();
+      } else {
+        alert("로그인 실패");
+        window.location.reload();
+      }
+
       console.log("error: " + e);
     }
   };
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const res = await axios.post(
-          "/loginProc",
-          {
-            realId: id,
-            password: password,
-          },
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          },
-          {
-            withCredentials: true,
-          }
-        );
-        console.log(res);
+  // useEffect(() => {
+  //   (async () => {
+  //     try {
+  //       const res = await axios.post(
+  //         "/loginProc",
+  //         {
+  //           realId: id,
+  //           password: password,
+  //         },
+  //         {
+  //           headers: {
+  //             "Content-Type": "application/json",
+  //           },
+  //         },
+  //         {
+  //           withCredentials: true,
+  //         }
+  //       );
+  //       console.log(res);
 
-        // 나중에 다시 확인
-        if (res.status === "200") {
-          alert("로그인 되셨습니다");
-        }
-      } catch (e) {
-        alert("로그인 실패");
-        console.log("error: " + e);
-      }
-    })();
-  }, []);
+  //       // 나중에 다시 확인
+  //       if (res.status === "200") {
+  //         alert("로그인 되셨습니다");
+  //       }
+  //     } catch (e) {
+  //       alert("로그인 실패");
+  //       console.log("error: " + e);
+  //     }
+  //   })();
+  // }, []);
 
   const kariLogInRequest = async (e) => {
     try {

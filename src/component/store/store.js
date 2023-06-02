@@ -29,19 +29,6 @@ import { addMonths, subMonths } from "date-fns";
 //   )
 // );
 
-// const useSnsLogStateStore = create(
-//   persist(
-//     (set) => ({
-//       snsLogState: false,
-//       setSnsLogState: (input) => set({ snsLogState: input }),
-//     }),
-//     {
-//       name: "snsLogState",
-//       getStorage: () => sessionStorage,
-//     }
-//   )
-// );
-
 // const useStore3 = create((set) => ({
 //   async tempFunc(id, password) {
 //     const response = await fetch("http://localhost:4000/users");
@@ -138,7 +125,7 @@ const ChannelStore = create((set, get) => ({
   arrivalsLongitude: null,
   setArrivalsLongitude: (input) => set({ arrivalsLongitude: input }),
 
-  personnel: null,
+  personnel: 2,
   setPersonnel: (input) => set({ personnel: input }),
 
   content: null,
@@ -220,6 +207,30 @@ const ChannelStore = create((set, get) => ({
   addSecondArr: (input) =>
     set((state) => ({ secondArr: [...state.secondArr, input] })),
   setSecondArr: (input) => set({ secondArr: input }),
+
+  roomDeparture: null,
+  setRoomDeparture: (input) => set({ roomDeparture: input }),
+
+  roomArrival: null,
+  setRoomArrival: (input) => set({ roomArrival: input }),
+
+  roomHost: null,
+  setRoomHost: (input) => set({ roomHost: input }),
+
+  roomDriver: null,
+  setRoomDriver: (input) => set({ roomDriver: input }),
+
+  isMaster: false,
+  setIsMaster: (input) => set({ isMaster: input }),
+
+  roomPeople: [],
+  setRoomPeople: (input) => set({ roomPeople: input }),
+
+  myCarpools: [],
+  setMyCarpools: (input) => set({ myCarpools: input }),
+
+  forLayOut: [],
+  setForLayOut: (input) => set({ forLayOut: input }),
 }));
 
 const LoginStore = create((set, get) => ({
@@ -254,4 +265,51 @@ const LoginStore = create((set, get) => ({
   setOwnCar: (input) => set({ ownCar: input }),
 }));
 
-export { calenderStore, ProfileStore, ChannelStore, LoginStore };
+const MasterStore = create(
+  persist(
+    (set) => ({
+      loggedin: false,
+      setLoggedin: (input) => set({ loggedin: input }),
+    }),
+    {
+      name: "snsLogState",
+      getStorage: () => sessionStorage,
+    }
+  )
+);
+
+const MasterStore2 = create(
+  persist(
+    (set) => ({
+      loggedId: null,
+      setLoggedId: (input) => set({ loggedId: input }),
+    }),
+    {
+      name: "loggedId",
+      getStorage: () => sessionStorage,
+    }
+  )
+);
+
+const MasterStore3 = create(
+  persist(
+    (set) => ({
+      loggedRealId: null,
+      setLoggedRealId: (input) => set({ loggedRealId: input }),
+    }),
+    {
+      name: "loggedRealId",
+      getStorage: () => sessionStorage,
+    }
+  )
+);
+
+export {
+  calenderStore,
+  ProfileStore,
+  ChannelStore,
+  LoginStore,
+  MasterStore,
+  MasterStore2,
+  MasterStore3,
+};

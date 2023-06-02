@@ -8,6 +8,7 @@ const PageBox = styled.div`
   height: 600px;
   width: 1048px;
   margin-left: 10px;
+  oveflow: scroll;
 `;
 
 const UpperBar = styled.div`

@@ -1,8 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import logoImg from "../img/logo.png";
-import { Link, Outlet, useLocation } from "react-router-dom";
-import { ProfileStore, ChannelStore } from "../store/store.js";
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
+import {
+  ProfileStore,
+  ChannelStore,
+  MasterStore,
+  MasterStore2,
+} from "../store/store.js";
 
 const HeaderArea = styled.div`
   height: 110px;
@@ -21,8 +26,12 @@ const Item = styled.p`
 `;
 
 function Header(props) {
+  const movePage = useNavigate();
+
   const { switchOn, setSwitchOn } = ProfileStore();
   const { setShowListA, setShowListD } = ChannelStore();
+  const { loggedin, setLoggedin } = MasterStore();
+  const { loggedId, setLoggedId } = MasterStore2();
   const location = useLocation();
   // console.log(location.pathname);
   // console.log(switchOn);
@@ -37,122 +46,268 @@ function Header(props) {
     setShowListD(false);
   };
 
+  const logOut = () => {
+    setLoggedId(null);
+    movePage("/");
+    setLoggedin(false);
+  };
+
+  const deny = () => {
+    alert("Access Denied");
+    movePage("/");
+  };
+  // useEffect(() => {
+  //   deny();
+  // }, []);
+
+  useEffect(() => {
+    if (loggedin === false) {
+      console.log("두번찍히나");
+      alert("Access Denied");
+      movePage("/");
+    }
+  }, []);
+
   return (
     <>
-      <HeaderArea>
-        <span style={{ height: "100px" }}>
-          <Link
-            to="/login/today/*"
-            style={{ color: "inherit", textDecoration: "none" }}
-          >
-            <img src={logoImg} alt="logo" style={{ height: "80px" }} />
-          </Link>
-        </span>
+      {/* {loggedin === true ? (
+        <>
+          <HeaderArea>
+            <span style={{ height: "100px" }}>
+              <Link
+                to="/login/today/*"
+                style={{ color: "inherit", textDecoration: "none" }}
+              >
+                <img src={logoImg} alt="logo" style={{ height: "80px" }} />
+              </Link>
+            </span>
 
-        <CategoryItem>
-          <Link
-            to="/login/today/*"
-            style={{ color: "inherit", textDecoration: "none" }}
-          >
-            <Item
-              style={
-                location.pathname === "/login/today/*"
-                  ? {
-                      color: "blue",
-                      textDecoration: "none",
-                      marginLeft: "15px",
-                      marginRight: "15px",
-                    }
-                  : {
-                      color: "inherit",
-                      textDecoration: "none",
-                      marginLeft: "15px",
-                      marginRight: "15px",
-                    }
-              }
-              onClick={stateInit}
+            <CategoryItem>
+              <Link
+                to="/login/today/*"
+                style={{ color: "inherit", textDecoration: "none" }}
+              >
+                <Item
+                  style={
+                    location.pathname === "/login/today/*"
+                      ? {
+                          color: "blue",
+                          textDecoration: "none",
+                          marginLeft: "15px",
+                          marginRight: "15px",
+                        }
+                      : {
+                          color: "inherit",
+                          textDecoration: "none",
+                          marginLeft: "15px",
+                          marginRight: "15px",
+                        }
+                  }
+                  onClick={stateInit}
+                >
+                  오늘의 이동거리
+                </Item>
+              </Link>
+            </CategoryItem>
+            <CategoryItem>
+              <Link
+                to="/login/calendar/*"
+                style={{ color: "inherit", textDecoration: "none" }}
+              >
+                <Item
+                  style={
+                    location.pathname === "/login/calendar/*"
+                      ? {
+                          color: "blue",
+                          textDecoration: "none",
+                          marginRight: "15px",
+                        }
+                      : {
+                          color: "inherit",
+                          textDecoration: "none",
+                          marginRight: "15px",
+                        }
+                  }
+                  onClick={stateInit}
+                >
+                  탄소배출일지
+                </Item>
+              </Link>
+            </CategoryItem>
+            <CategoryItem>
+              <Link
+                to="/login/board/*"
+                style={{ color: "inherit", textDecoration: "none" }}
+              >
+                <Item
+                  style={
+                    location.pathname === "/login/board/*"
+                      ? {
+                          color: "blue",
+                          textDecoration: "none",
+                          marginRight: "15px",
+                        }
+                      : {
+                          color: "inherit",
+                          textDecoration: "none",
+                          marginRight: "15px",
+                        }
+                  }
+                  onClick={stateInit}
+                >
+                  카풀 쉐어링
+                </Item>
+              </Link>
+            </CategoryItem>
+            <CategoryItem>
+              <Link
+                to="/login/mypage/channeltask"
+                style={{ color: "inherit", textDecoration: "none" }}
+              >
+                <Item
+                  style={
+                    location.pathname.includes("/login/mypage")
+                      ? {
+                          color: "blue",
+                          textDecoration: "none",
+                          marginRight: "15px",
+                        }
+                      : {
+                          color: "inherit",
+                          textDecoration: "none",
+                          marginRight: "15px",
+                        }
+                  }
+                  onClick={stateInit}
+                >
+                  마이페이지
+                </Item>
+              </Link>
+            </CategoryItem>
+            <button onClick={logOut}>로그아웃</button>
+          </HeaderArea>
+          <Outlet />
+        </>
+      ) : (
+        deny()
+      )} */}
+      <>
+        <HeaderArea>
+          <span style={{ height: "100px" }}>
+            <Link
+              to="/login/today/*"
+              style={{ color: "inherit", textDecoration: "none" }}
             >
-              오늘의 이동거리
-            </Item>
-          </Link>
-        </CategoryItem>
-        <CategoryItem>
-          <Link
-            to="/login/calendar/*"
-            style={{ color: "inherit", textDecoration: "none" }}
-          >
-            <Item
-              style={
-                location.pathname === "/login/calendar/*"
-                  ? {
-                      color: "blue",
-                      textDecoration: "none",
-                      marginRight: "15px",
-                    }
-                  : {
-                      color: "inherit",
-                      textDecoration: "none",
-                      marginRight: "15px",
-                    }
-              }
-              onClick={stateInit}
+              <img src={logoImg} alt="logo" style={{ height: "80px" }} />
+            </Link>
+          </span>
+
+          <CategoryItem>
+            <Link
+              to="/login/today/*"
+              style={{ color: "inherit", textDecoration: "none" }}
             >
-              탄소배출일지
-            </Item>
-          </Link>
-        </CategoryItem>
-        <CategoryItem>
-          <Link
-            to="/login/board/*"
-            style={{ color: "inherit", textDecoration: "none" }}
-          >
-            <Item
-              style={
-                location.pathname === "/login/board/*"
-                  ? {
-                      color: "blue",
-                      textDecoration: "none",
-                      marginRight: "15px",
-                    }
-                  : {
-                      color: "inherit",
-                      textDecoration: "none",
-                      marginRight: "15px",
-                    }
-              }
-              onClick={stateInit}
+              <Item
+                style={
+                  location.pathname === "/login/today/*"
+                    ? {
+                        color: "blue",
+                        textDecoration: "none",
+                        marginLeft: "15px",
+                        marginRight: "15px",
+                      }
+                    : {
+                        color: "inherit",
+                        textDecoration: "none",
+                        marginLeft: "15px",
+                        marginRight: "15px",
+                      }
+                }
+                onClick={stateInit}
+              >
+                오늘의 이동거리
+              </Item>
+            </Link>
+          </CategoryItem>
+          <CategoryItem>
+            <Link
+              to="/login/calendar/*"
+              style={{ color: "inherit", textDecoration: "none" }}
             >
-              카풀 쉐어링
-            </Item>
-          </Link>
-        </CategoryItem>
-        <CategoryItem>
-          <Link
-            to="/login/mypage/channeltask"
-            style={{ color: "inherit", textDecoration: "none" }}
-          >
-            <Item
-              style={
-                location.pathname.includes("/login/mypage")
-                  ? {
-                      color: "blue",
-                      textDecoration: "none",
-                      marginRight: "15px",
-                    }
-                  : {
-                      color: "inherit",
-                      textDecoration: "none",
-                      marginRight: "15px",
-                    }
-              }
-              onClick={stateInit}
+              <Item
+                style={
+                  location.pathname === "/login/calendar/*"
+                    ? {
+                        color: "blue",
+                        textDecoration: "none",
+                        marginRight: "15px",
+                      }
+                    : {
+                        color: "inherit",
+                        textDecoration: "none",
+                        marginRight: "15px",
+                      }
+                }
+                onClick={stateInit}
+              >
+                탄소배출일지
+              </Item>
+            </Link>
+          </CategoryItem>
+          <CategoryItem>
+            <Link
+              to="/login/board/*"
+              style={{ color: "inherit", textDecoration: "none" }}
             >
-              마이페이지
-            </Item>
-          </Link>
-        </CategoryItem>
-      </HeaderArea>
-      <Outlet />
+              <Item
+                style={
+                  location.pathname === "/login/board/*"
+                    ? {
+                        color: "blue",
+                        textDecoration: "none",
+                        marginRight: "15px",
+                      }
+                    : {
+                        color: "inherit",
+                        textDecoration: "none",
+                        marginRight: "15px",
+                      }
+                }
+                onClick={stateInit}
+              >
+                카풀 쉐어링
+              </Item>
+            </Link>
+          </CategoryItem>
+          <CategoryItem>
+            <Link
+              to="/login/mypage/channeltask"
+              style={{ color: "inherit", textDecoration: "none" }}
+            >
+              <Item
+                style={
+                  location.pathname.includes("/login/mypage")
+                    ? {
+                        color: "blue",
+                        textDecoration: "none",
+                        marginRight: "15px",
+                      }
+                    : {
+                        color: "inherit",
+                        textDecoration: "none",
+                        marginRight: "15px",
+                      }
+                }
+                onClick={stateInit}
+              >
+                마이페이지
+              </Item>
+            </Link>
+          </CategoryItem>
+          <button onClick={logOut}>로그아웃</button>
+        </HeaderArea>
+        <Outlet />
+      </>
     </>
   );
 }

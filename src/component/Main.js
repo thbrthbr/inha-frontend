@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import logoImg from "./img/logo.png";
 import { Link, useNavigate } from "react-router-dom";
@@ -178,6 +178,37 @@ const Main = (props) => {
       console.log("error: " + e);
     }
   };
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await axios.post(
+          "/loginProc",
+          {
+            realId: id,
+            password: password,
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          },
+          {
+            withCredentials: true,
+          }
+        );
+        console.log(res);
+
+        // 나중에 다시 확인
+        if (res.status === "200") {
+          alert("로그인 되셨습니다");
+        }
+      } catch (e) {
+        alert("로그인 실패");
+        console.log("error: " + e);
+      }
+    })();
+  }, []);
 
   const kariLogInRequest = async (e) => {
     try {

@@ -1,4 +1,8 @@
 import React, { useEffect, useState, Suspense } from "react";
+import { GlobalStyle } from "./noScroll.js";
+import { BsMegaphone } from "react-icons/bs";
+import { AiOutlineSearch } from "react-icons/ai";
+import { BiRefresh } from "react-icons/bi";
 // import { useIsFocused } from "@react-navigation/native";
 import styled from "styled-components";
 import axios from "axios";
@@ -8,11 +12,18 @@ import {
   MasterStore2,
   MasterStore3,
 } from "./store/store.js";
-import assemble from "./img/assemble2.jpg";
+import assemble2 from "./img/assemble2.jpg";
+import assemble1 from "./img/assemble1.jpg";
+import arrow from "./img/right_arrow.png";
 import PacmanLoader from "react-spinners/PacmanLoader";
 import qs from "qs";
 
-const Container = styled.div``;
+const Container = styled.div`
+  width: 1500px;
+  height: 500px;
+  display: flex;
+  justify-content: center;
+`;
 
 const BoardBox = styled.div`
   // border: 0.5px solid #c0c0c0;
@@ -24,27 +35,79 @@ const BoardBox = styled.div`
 const SearchSection = styled.div`
   display: flex;
   flex-direction: colmun;
+  justify-content: center;
 `;
 
 const Searchbar = styled.input`
+  margin-left: 20px;
+  border: none;
+  background-color: #eeeeee;
   margin-bottom: 10px;
+  margin-right: 20px;
+  height: 20px;
 `;
 
 const Searchbar2 = styled.input`
+  border: none;
+  background-color: #eeeeee;
   margin-bottom: 10px;
+  height: 20px;
 `;
 
 const ChannelBox = styled.div`
   position: relative;
+  height: 500px;
+  overflow: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const Channel = styled.div`
-  border: 0.5px solid #c0c0c0;
-  // height: 100px;
-  width: 800px;
-  margin-left: 20px;
+  border: 0.5px solid orange;
+  padding: 20px;
+  border-radius: 30px;
+  height: 150px;
+  width: 1000px;
+  // margin-left: 20px;
   margin-bottom: 20px;
   cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Channel2 = styled.div`
+  border: 0.5px solid blue;
+  padding: 20px;
+  border-radius: 30px;
+  height: 150px;
+  width: 1000px;
+  // margin-left: 20px;
+  margin-bottom: 20px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const ChannelFirstRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  font-size: 20px;
+  width: 900px;
+  justify-content: space-between;
+`;
+
+const FirstItem = styled.div`
+  // border: 0.5px solid #c0c0c0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 500px;
+  flex-direction: column;
 `;
 
 const RoomContainer = styled.div`
@@ -56,7 +119,7 @@ const RoomContainer = styled.div`
   // display: none;
   width: 2000px;
   height: 2000px;
-  background-color: rgba(0, 0, 0, 0.5);
+  // background-color: rgba(0, 0, 0, 0.5);
   // background-color: red;
 `;
 
@@ -72,6 +135,7 @@ const Room = styled.div`
   // width: 500px;
   // display: flex;
   border: 0.5px solid #c0c0c0;
+  border-radius: 10%;
   top: 15%;
   position: fixed;
   height: 500px;
@@ -110,7 +174,9 @@ const EndPoint = styled.div`
 `;
 
 const ButtonX1 = styled.button`
-  margin-left: 480px;
+  margin-left: 420px;
+  margin-top: 20px;
+  width: 5px;
   border: none;
   background-color: white;
   cursor: pointer;
@@ -124,7 +190,8 @@ const ButtonX2 = styled.button`
 `;
 
 const ButtonX3 = styled.button`
-  margin-left: 475px;
+  margin-top: 20px;
+  margin-left: 450px;
   border: none;
   background-color: white;
   cursor: pointer;
@@ -139,11 +206,12 @@ const ModalContainer = styled.div`
   display: none;
   width: 2000px;
   height: 2000px;
-  background-color: rgba(0, 0, 0, 0.5);
+  // background-color: rgba(0, 0, 0, 0.5);
 `;
 
 const ModalBox = styled.div`
   background-color: white;
+  border-radius: 10%;
   margin-left: 300px;
   top: 15%;
   position: fixed;
@@ -157,15 +225,46 @@ const ModalBox = styled.div`
 
 const Assemble = styled.button`
   position: fixed;
-  width: 60px;
-  height: 60px;
+  width: 80px;
+  height: 80px;
   z-index: 5;
-  right: 2%;
-  bottom: 2%;
-  background-color: #ffc0cb;
+  right: 3%;
+  bottom: 3%;
+  background-color: #ffb635;
   border-radius: 50%;
   border: none;
   cursor: pointer;
+`;
+
+const RegularSticker = styled.div`
+  position: absolute;
+  margin-left: -950px;
+  margin-top: -150px;
+  font-family: "GangwonEduPowerExtraBoldA";
+  -webkit-text-stroke: 1px blue;
+  color: white;
+`;
+
+const RegularSticker2 = styled.div`
+  position: absolute;
+  margin-left: -950px;
+  margin-top: -150px;
+  font-family: "GangwonEduPowerExtraBoldA";
+  -webkit-text-stroke: 1px orange;
+  color: white;
+`;
+
+const ContactTool = styled.div`
+  margin-top: 30px;
+`;
+
+const PersonnelSticker = styled.div`
+  position: absolute;
+  margin-right: -900px;
+  margin-top: -150px;
+  // font-family: "GangwonEduPowerExtraBoldA";
+  // -webkit-text-stroke: 1px orange;
+  // color: white;
 `;
 
 const KakaoMap = styled.div`
@@ -209,14 +308,17 @@ const SubModal2 = styled.div`
 `;
 
 const Pagination = styled.div`
+  // border: 0.5px solid #c0c0c0;
+  // height: 100px;
   // display = "flex";
   // justify-content = "space-between";
   // margin-top = "-10px";
 `;
 
 const ChannelPages = styled.div`
-  width: 1248px;
-  height: 80px;
+  // border: 0.5px solid #c0c0c0;
+  width: 1040px;
+  height: 60px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -321,6 +423,8 @@ const Board = ({ searchPlace }) => {
   const { loggedId, setLoggedId } = MasterStore2();
   const { loggedRealId, setLoggedRealId } = MasterStore3();
 
+  const testAsync = require("async");
+
   const createChannel = () => {
     setContent(null);
     document.getElementById("modalbox").style.display = "block";
@@ -329,12 +433,16 @@ const Board = ({ searchPlace }) => {
     top: -${window.scrollY}px;
     overflow-y: scroll;
     // width: 100%;`;
+    document.getElementById("channelBox").style.cssText = `
+    overflow: hidden;
+    // width: 100%;`;
   };
   const closeCreateChannel = () => {
     setContent(null);
     document.getElementById("modalbox").style.display = "none";
     const scrollY = document.body.style.top;
     document.body.style.cssText = "";
+    document.getElementById("channelBox").style.cssText = "";
     setSearch("");
     setSearch2("");
     window.scrollTo(0, parseInt(scrollY || "0", 10) * -1);
@@ -372,6 +480,7 @@ const Board = ({ searchPlace }) => {
   };
 
   const closeRoom = (event) => {
+    document.getElementById("channelBox").style.cssText = "";
     setIsRoomOn(false);
     setIsMaster(false);
   };
@@ -430,6 +539,9 @@ const Board = ({ searchPlace }) => {
   //@@@@@@@@@@@@@@@@@@@@@@@@@@
   const enterChannel = async (curpersonnel, channelId, roomId) => {
     try {
+      document.getElementById("channelBox").style.cssText = `
+    overflow: hidden;
+    // width: 100%;`;
       console.log(channelId);
       console.log(roomId);
       console.log(loggedId);
@@ -524,6 +636,22 @@ const Board = ({ searchPlace }) => {
   };
   //@@@@@@@@@@@@@@@@@@@@@@@@@@
 
+  const kariGetChannelData = async () => {
+    try {
+      const temp = 1;
+      const res = await axios.get(
+        `http://localhost:8080/api/posts/lists/${temp}`,
+        {
+          withCredentials: true,
+        }
+      );
+
+      return res.data;
+    } catch (e) {
+      console.log("error: " + e);
+    }
+  };
+
   const getChannelData = async () => {
     try {
       // window.location.reload();
@@ -534,7 +662,7 @@ const Board = ({ searchPlace }) => {
       const res = await axios.get("http://localhost:4000/posts", {
         withCredentials: true,
       });
-      setChannelCount(res.data.length);
+      setChannelCount(res.data[res.data.length - 1].id);
       // 진짜 서버 연결하면 수정해야하는 부분 @@@@
       channelNum = res.data.length;
       channelPages =
@@ -610,7 +738,8 @@ const Board = ({ searchPlace }) => {
         tempArr = [];
       }
       setChannelArr(tempAllArr);
-      window.scrollTo(0, 0);
+      document.getElementById("channelBox").scrollTo(0, 0);
+      // window.scrollTo(0, 0);
       setChannelList(res.data);
       return res.data;
     } catch (e) {
@@ -749,7 +878,7 @@ const Board = ({ searchPlace }) => {
               id={i}
               style={{
                 color: "blue",
-                size: "30px",
+                fontSize: "25px",
                 cursor: "pointer",
                 marginRight: "20px",
               }}
@@ -764,7 +893,7 @@ const Board = ({ searchPlace }) => {
               id={i}
               style={{
                 color: "black",
-                size: "30px",
+                fontSize: "25px",
                 cursor: "pointer",
                 marginRight: "20px",
               }}
@@ -781,7 +910,7 @@ const Board = ({ searchPlace }) => {
               id={i}
               style={{
                 color: "blue",
-                size: "30px",
+                fontSize: "25px",
                 cursor: "pointer",
               }}
               onClick={getPageChannel}
@@ -795,7 +924,7 @@ const Board = ({ searchPlace }) => {
               id={i}
               style={{
                 color: "black",
-                size: "30px",
+                fontSize: "25px",
                 cursor: "pointer",
               }}
               onClick={getPageChannel}
@@ -926,8 +1055,23 @@ const Board = ({ searchPlace }) => {
           }
         }
 
-        ps.keywordSearch(findD, placesSearchCBD);
-        ps.keywordSearch(findA, placesSearchCBA);
+        function Play() {
+          testAsync.waterfall(
+            [
+              ps.keywordSearch(findD, placesSearchCBD),
+              ps.keywordSearch(findA, placesSearchCBA),
+            ],
+            function (err, result) {
+              if (err) console.log(err);
+              else console.log("작업 완료");
+            }
+          );
+        }
+
+        Play();
+
+        // ps.keywordSearch(findD, placesSearchCBD);
+        // ps.keywordSearch(findA, placesSearchCBA);
       }
     }
 
@@ -969,8 +1113,8 @@ const Board = ({ searchPlace }) => {
         // let paginationElD = null;
         // let paginationElA = null;
         if (DorA === "findD") {
-          completeXY.push(location);
-          completeDA.push(locationName);
+          completeXY.unshift(location);
+          completeDA.unshift(locationName);
           // for (let i = 0; i < res.data.length; i++) {
           //   let tempArr = [];
           //   tempArr.push(res.data[i].arrivalsLatitude);
@@ -983,6 +1127,11 @@ const Board = ({ searchPlace }) => {
           completeXY.push(location);
           completeDA.push(locationName);
           console.log(completeXY);
+          console.log(completeDA);
+          // completeXY[0][0]; // 출발지의 lat
+          // completeXY[0][1]; // 출발지의 lon
+          // dbLocation[i][0][0]
+          // dbLocation[i][0][1]
           const dbLocation = [];
           for (let i = 0; i < res.data.length; i++) {
             let tempArrD = [];
@@ -995,18 +1144,125 @@ const Board = ({ searchPlace }) => {
               tempArrD,
               tempArrA,
               [res.data[i].departures, res.data[i].arrivals],
+              res.data[i].id,
             ]);
             // [0] == [2][0] / [1] == [2][1]
+
+            //dbLocation[i][2][0] === completeDA[0]
           }
           console.log(dbLocation);
+          let tempArr1 = [];
+          let R = 6372.8 * 1000;
           for (let i = 0; i < dbLocation.length; i++) {
-            //여기에 위도경도 로직구현
+            let confirm = [];
+            const latD1 = parseFloat(completeXY[0][0]);
+            const latD2 = parseFloat(dbLocation[i][0][0]);
+            const lonD1 = parseFloat(completeXY[0][1]);
+            const lonD2 = parseFloat(dbLocation[i][0][1]);
+            console.log("정상");
+            let dLat = ((latD2 - latD1) * Math.PI) / 180;
+            let dLon = ((lonD2 - lonD1) * Math.PI) / 180;
+            let a =
+              Math.pow(Math.sin(dLat / 2), 2.0) +
+              Math.pow(Math.sin(dLon / 2), 2.0) *
+                Math.cos((latD1 * Math.PI) / 180) *
+                Math.cos((latD2 * Math.PI) / 180);
+            let c = 2 * Math.asin(Math.sqrt(a));
+            let finalD = R * c;
+
+            console.log(finalD);
+
+            // if (finalD <= 100) {
+            //   confirm.push("D");
+            // }
+
+            // 여기까지가 출발지에서 100미터 전방에 있는 것들
+
+            console.log("정상");
+            const latA1 = parseFloat(completeXY[1][0]);
+            console.log(latA1);
+            const latA2 = parseFloat(dbLocation[i][1][0]);
+            console.log(latA2);
+            const lonA1 = parseFloat(completeXY[1][1]);
+            console.log(lonA1);
+            const lonA2 = parseFloat(dbLocation[i][1][1]);
+            console.log(lonA2);
+
+            let ALat = ((latA2 - latA1) * Math.PI) / 180;
+            let ALon = ((lonA2 - lonA1) * Math.PI) / 180;
+            let a2 =
+              Math.pow(Math.sin(ALat / 2), 2.0) +
+              Math.pow(Math.sin(ALon / 2), 2.0) *
+                Math.cos((latA1 * Math.PI) / 180) *
+                Math.cos((latA2 * Math.PI) / 180);
+            let c2 = 2 * Math.asin(Math.sqrt(a2));
+            let finalA = R * c2;
+
+            // if (finalA <= 100) {
+            //   confirm.push("A");
+            // }
+
+            // console.log(final);
+            console.log(finalA);
+            if (finalD <= 100 && finalA <= 100) {
+              tempArr1.push(dbLocation[i][3]);
+            }
           }
+          console.log(tempArr1);
+          if (tempArr1.length === 0) {
+            alert("검색결과가 없습니다");
+            completeXY = [];
+            completeDA = [];
+          } else {
+            setPageNum(0);
+            channelNum = tempArr1.length;
+            channelPages =
+              channelNum % 10 === 0
+                ? Math.floor(channelNum / 10)
+                : Math.floor(channelNum / 10) + 1;
+            setChannelPg(channelPages);
+            let result = [];
+            for (let i = 0; i < res.data.length; i++) {
+              for (let j = 0; j < tempArr1.length; j++) {
+                if (res.data[i].id === tempArr1[j]) {
+                  result.push(res.data[i]);
+                }
+              }
+            }
+            console.log(result);
+
+            let tempAllArr = [];
+            const reverseData = result.slice(0).reverse();
+            for (let i = 0; i < channelPages; i++) {
+              let tempStartNum = 0;
+              let tempNum = 10;
+              let tempArr = [];
+              tempStartNum = tempNum * i;
+              tempNum = tempNum * (i + 1);
+              for (let j = tempStartNum; j < tempNum; j++) {
+                if (reverseData[j] !== undefined) {
+                  tempArr.push(reverseData[j]);
+                }
+              }
+              tempAllArr = [...tempAllArr, tempArr];
+              // addChannelArr(tempArr);
+              // console.log(channelArr);
+              tempArr = [];
+            }
+            setChannelArr(tempAllArr);
+            completeXY = [];
+            completeDA = [];
+          }
+
+          // document.getElementById("1").style.color = "blue";
+          // setChannelList(res.data);
         }
 
         return res.data;
       } catch (e) {
         console.log("error: " + e);
+        alert("검색결과가 없습니다");
+        // window.location.reload();
       }
     };
 
@@ -1090,9 +1346,9 @@ const Board = ({ searchPlace }) => {
     //       //   if (i < paginationD.last)
     //       //     document.getElementById("invisible1Sub").click();
     //       // }
-          // let num2 = new Set(startArround);
-          // startArround = Array.from(num2);
-          // console.log(startArround);
+    // let num2 = new Set(startArround);
+    // startArround = Array.from(num2);
+    // console.log(startArround);
     //     } else {
     //       const dataA = data;
     //       const paginationA = pagination;
@@ -1508,28 +1764,57 @@ const Board = ({ searchPlace }) => {
 
   return (
     <Container>
+      <GlobalStyle />
       <Suspense fallback={<PacmanLoader color="#000000" size={25} />}>
         <BoardBox>
           <SearchSection>
-            <div style={{ marginLeft: "285px" }}>출발지</div>
-            <Searchbar id="findD"></Searchbar>
-            <div style={{ marginLeft: "40px" }}>목적지</div>
-            <Searchbar2 id="findA"></Searchbar2>
+            <button
+              style={{
+                width: "20px",
+                height: "20px",
+                borderRadius: "15%",
+                backgroundColor: "white",
+                marginBottom: "8px",
+                cursor: "pointer",
+                borderStyle: "solid",
+                borderColor: "black",
+                boxShadow: "none",
+                borderWidth: "1px",
+              }}
+              onClick={getChannelData}
+            >
+              <BiRefresh style={{ marginLeft: "-3.5px" }} />
+            </button>
+            <Searchbar id="findD" placeholder="출발지"></Searchbar>
+            {/* <div style={{ marginLeft: "40px" }}>목적지</div> */}
+            <Searchbar2 id="findA" placeholder="도착지"></Searchbar2>
             <button
               id="find"
-              style={{ marginBottom: "8px", marginLeft: "20px" }}
+              style={{
+                width: "20px",
+                height: "20px",
+                borderRadius: "15%",
+                backgroundColor: "white",
+                marginBottom: "8px",
+                marginLeft: "20px",
+                cursor: "pointer",
+                borderStyle: "solid",
+                borderColor: "black",
+                boxShadow: "none",
+                borderWidth: "1px",
+              }}
             >
-              검색
+              <AiOutlineSearch style={{ marginLeft: "-5px" }} />
             </button>
           </SearchSection>
           <Assemble onClick={createChannel}>
             <img
-              src={assemble}
+              src={assemble1}
               alt="assemble"
               style={{ marginTop: "2px", height: "32px" }}
             />
           </Assemble>
-          <ChannelBox>
+          <ChannelBox id="channelBox">
             {firstTake === false
               ? channelList
                   .slice(0)
@@ -1547,12 +1832,43 @@ const Board = ({ searchPlace }) => {
                             );
                           }}
                         >
-                          <div>출발지 {channel.departures}</div>
-                          <div>도착지 {channel.arrivals}</div>
-                          <div>
+                          <ChannelFirstRow>
+                            <FirstItem>
+                              <div
+                                style={{
+                                  fontSize: "30px",
+                                  fontStyle: "italic",
+                                  fontFamily: "establishRetrosansOTF",
+                                }}
+                              >
+                                출발
+                              </div>
+                              {channel.departures}
+                            </FirstItem>
+                            <img
+                              src={arrow}
+                              alt="arrow"
+                              style={{ height: "32px" }}
+                            />
+                            <FirstItem>
+                              <div
+                                style={{
+                                  fontSize: "30px",
+                                  fontStyle: "italic",
+                                  fontFamily: "establishRetrosansOTF",
+                                }}
+                              >
+                                도착
+                              </div>
+                              {channel.arrivals}
+                            </FirstItem>
+                          </ChannelFirstRow>
+                          <PersonnelSticker>
                             인원수 {channel.curPersonnel} / {channel.personnel}{" "}
-                          </div>
-                          <div>참고사항: {channel.content}</div>
+                          </PersonnelSticker>
+                          <ContactTool>
+                            <BsMegaphone /> {channel.content}
+                          </ContactTool>
                           <div>
                             {channel.regular === true ? "정기" : "비정기"}
                           </div>
@@ -1561,7 +1877,58 @@ const Board = ({ searchPlace }) => {
                     }
                   })
               : channelArr[pageNum].map((channel) => {
-                  return (
+                  return channel.regular === true ? (
+                    <Channel2
+                      onClick={(e) => {
+                        enterChannel(
+                          channel.curPersonnel,
+                          channel.id,
+                          channel.nickname
+                        );
+                      }}
+                    >
+                      <ChannelFirstRow>
+                        <FirstItem>
+                          <div
+                            style={{
+                              fontSize: "30px",
+                              fontStyle: "italic",
+                              fontFamily: "establishRetrosansOTF",
+                            }}
+                          >
+                            출발
+                          </div>
+                          {channel.departures}
+                        </FirstItem>
+                        <img
+                          src={arrow}
+                          alt="arrow"
+                          style={{ height: "32px" }}
+                        />
+                        <FirstItem>
+                          <div
+                            style={{
+                              fontSize: "30px",
+                              fontStyle: "italic",
+                              fontFamily: "establishRetrosansOTF",
+                            }}
+                          >
+                            도착
+                          </div>
+                          {channel.arrivals}
+                        </FirstItem>
+                      </ChannelFirstRow>
+                      <PersonnelSticker>
+                        인원수 {channel.curPersonnel} / {channel.personnel}{" "}
+                      </PersonnelSticker>
+                      <ContactTool>
+                        <BsMegaphone /> {channel.content}
+                      </ContactTool>
+                      <RegularSticker>
+                        {channel.regular === true ? "정기" : "비정기"}
+                      </RegularSticker>
+                    </Channel2>
+                  ) : (
                     <Channel
                       onClick={(e) => {
                         enterChannel(
@@ -1571,13 +1938,47 @@ const Board = ({ searchPlace }) => {
                         );
                       }}
                     >
-                      <div>출발지 {channel.departures}</div>
-                      <div>도착지 {channel.arrivals}</div>
-                      <div>
+                      <ChannelFirstRow>
+                        <FirstItem>
+                          <div
+                            style={{
+                              fontSize: "30px",
+                              fontStyle: "italic",
+                              fontFamily: "establishRetrosansOTF",
+                            }}
+                          >
+                            출발
+                          </div>
+                          {channel.departures}
+                        </FirstItem>
+                        <img
+                          src={arrow}
+                          alt="arrow"
+                          style={{ height: "32px" }}
+                        />
+                        <FirstItem>
+                          <div
+                            style={{
+                              fontSize: "30px",
+                              fontStyle: "italic",
+                              fontFamily: "establishRetrosansOTF",
+                            }}
+                          >
+                            도착
+                          </div>
+                          {channel.arrivals}
+                        </FirstItem>
+                      </ChannelFirstRow>
+                      <PersonnelSticker>
                         인원수 {channel.curPersonnel} / {channel.personnel}{" "}
-                      </div>
-                      <div>참고사항: {channel.content}</div>
-                      <div>{channel.regular === true ? "정기" : "비정기"}</div>
+                      </PersonnelSticker>
+                      <ContactTool>
+                        <BsMegaphone /> {channel.content}
+                      </ContactTool>
+                      <RegularSticker2>
+                        {channel.regular === true ? "정기" : "비정기"}
+                      </RegularSticker2>
+                      {/* <div>{channel.regular === true ? "정기" : "비정기"}</div> */}
                     </Channel>
                   );
                 })}
@@ -1651,8 +2052,7 @@ const Board = ({ searchPlace }) => {
                         onKeyPress={handleOnKeyPress}
                       />
                       <button className="start" id="submit_btn1" type="submit">
-                        검색
-                        {/* <S.SearchIcon /> */}
+                        <AiOutlineSearch />
                       </button>
                     </div>
                     {showListD ? (
@@ -1678,7 +2078,7 @@ const Board = ({ searchPlace }) => {
                         onKeyPress={handleOnKeyPress}
                       />
                       <button className="end" id="submit_btn2" type="submit">
-                        검색
+                        <AiOutlineSearch />
                       </button>
                     </div>
                     {showListA ? (

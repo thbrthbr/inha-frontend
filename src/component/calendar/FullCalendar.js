@@ -15,6 +15,13 @@ import {
 import styled from "styled-components";
 import { calenderStore } from "../store/store.js";
 
+const CalendarContainer = styled.div`
+  width: 1500px;
+  height: 600px;
+  display: flex;
+  justify-content: center;
+`;
+
 const RenderHeader = (props) => {
   const { prevMonth, nextMonth, currentMonth } = calenderStore();
 
@@ -130,10 +137,12 @@ const RenderCells = () => {
 
 export const FullCalendar = () => {
   return (
-    <div className="calendar">
-      <RenderHeader />
-      <RenderDays />
-      <RenderCells />
-    </div>
+    <CalendarContainer>
+      <div className="calendar" style={{ width: "800px", height: "500px" }}>
+        <RenderHeader />
+        <RenderDays />
+        <RenderCells />
+      </div>
+    </CalendarContainer>
   );
 };

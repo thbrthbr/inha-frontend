@@ -10,12 +10,13 @@ import {
 } from "../store/store.js";
 
 const HeaderArea = styled.div`
-  height: 110px;
-  width: 1248px;
+  height: 150px;
+  width: 1300px;
   display: flex;
   font-size: 100%;
   // justify-content: space-between;
   align-items: center;
+  margin-left: 50px;
 `;
 const CategoryItem = styled.span``;
 
@@ -198,7 +199,11 @@ function Header(props) {
               to="/login/today/*"
               style={{ color: "inherit", textDecoration: "none" }}
             >
-              <img src={logoImg} alt="logo" style={{ height: "80px" }} />
+              <img
+                src={logoImg}
+                alt="logo"
+                style={{ height: "100px", marginRight: "15px" }}
+              />
             </Link>
           </span>
 
@@ -211,21 +216,25 @@ function Header(props) {
                 style={
                   location.pathname === "/login/today/*"
                     ? {
+                        fontSize: "30px",
                         color: "blue",
                         textDecoration: "none",
                         marginLeft: "15px",
-                        marginRight: "15px",
+                        marginRight: "30px",
+                        marginTop: "60px",
                       }
                     : {
+                        fontSize: "30px",
                         color: "inherit",
                         textDecoration: "none",
                         marginLeft: "15px",
-                        marginRight: "15px",
+                        marginRight: "30px",
+                        marginTop: "60px",
                       }
                 }
                 onClick={stateInit}
               >
-                오늘의 이동거리
+                하루요약
               </Item>
             </Link>
           </CategoryItem>
@@ -238,14 +247,18 @@ function Header(props) {
                 style={
                   location.pathname === "/login/calendar/*"
                     ? {
+                        fontSize: "30px",
                         color: "blue",
                         textDecoration: "none",
-                        marginRight: "15px",
+                        marginRight: "30px",
+                        marginTop: "60px",
                       }
                     : {
+                        fontSize: "30px",
                         color: "inherit",
                         textDecoration: "none",
-                        marginRight: "15px",
+                        marginRight: "30px",
+                        marginTop: "60px",
                       }
                 }
                 onClick={stateInit}
@@ -263,14 +276,18 @@ function Header(props) {
                 style={
                   location.pathname === "/login/board/*"
                     ? {
+                        fontSize: "30px",
                         color: "blue",
                         textDecoration: "none",
-                        marginRight: "15px",
+                        marginRight: "30px",
+                        marginTop: "60px",
                       }
                     : {
+                        fontSize: "30px",
                         color: "inherit",
                         textDecoration: "none",
-                        marginRight: "15px",
+                        marginRight: "30px",
+                        marginTop: "60px",
                       }
                 }
                 onClick={stateInit}
@@ -288,14 +305,18 @@ function Header(props) {
                 style={
                   location.pathname.includes("/login/mypage")
                     ? {
+                        fontSize: "30px",
                         color: "blue",
                         textDecoration: "none",
-                        marginRight: "15px",
+                        marginRight: "30px",
+                        marginTop: "60px",
                       }
                     : {
+                        fontSize: "30px",
                         color: "inherit",
                         textDecoration: "none",
-                        marginRight: "15px",
+                        marginRight: "30px",
+                        marginTop: "60px",
                       }
                 }
                 onClick={stateInit}

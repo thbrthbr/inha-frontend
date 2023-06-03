@@ -43,6 +43,12 @@ const SignInInput = styled.input`
   margin-bottom: 5px;
 `;
 
+const SignInInput2 = styled.input.attrs((props) => ({
+  type: "password",
+}))`
+  margin-bottom: 5px;
+`;
+
 const ChoiceBox = styled.div`
   display: flex;
   // flex-direction: column;
@@ -64,10 +70,18 @@ const Main = (props) => {
     setName,
     gender,
     setGender,
-    phone,
-    setPhone,
-    birthdate,
-    setBirthdate,
+    phoneF,
+    setPhoneF,
+    phoneS,
+    setPhoneS,
+    phoneT,
+    setPhoneT,
+    birthdateY,
+    setBirthdateY,
+    birthdateM,
+    setBirthdateM,
+    birthdateD,
+    setBirthdateD,
     isDriver,
     setIsDriver,
     ownCar,
@@ -104,11 +118,27 @@ const Main = (props) => {
   };
 
   const phoneChange = (e) => {
-    setPhone(e.target.value);
+    if (e.target.id === "first") {
+      setPhoneF(e.target.value);
+    }
+    if (e.target.id === "second") {
+      setPhoneS(e.target.value);
+    }
+    if (e.target.id === "third") {
+      setPhoneT(e.target.value);
+    }
   };
 
   const birthdateChange = (e) => {
-    setBirthdate(e.target.value);
+    if (e.target.id === "year") {
+      setBirthdateY(e.target.value);
+    }
+    if (e.target.id === "month") {
+      setBirthdateM(e.target.value);
+    }
+    if (e.target.id === "day") {
+      setBirthdateD(e.target.value);
+    }
   };
 
   const isDriverChange = (e) => {
@@ -121,27 +151,34 @@ const Main = (props) => {
 
   const signInRequest = async () => {
     try {
-      const res = await axios.post(
-        `http://localhost:4000/join`,
-        {
-          realId: id,
-          password: password,
-          name: name,
-          nickname: nickname,
-          sex: gender,
-          cellphone: phone,
-          birthdayDate: birthdate,
-          ownCar: ownCar,
-          driving: isDriver,
-        },
-        {
-          withCredentials: true,
-        }
-      );
+      const signInData = {
+        realId: id,
+        password: password,
+        name: name,
+        nickname: nickname,
+        sex: gender,
+        cellphone:
+          phoneF.toString() + "-" + phoneS.toString() + "-" + phoneT.toString(),
+        birthdayDate:
+          birthdateY.toString() +
+          "-" +
+          birthdateM.toString() +
+          "-" +
+          birthdateD.toString(),
+        ownCar: ownCar,
+        driving: isDriver,
+      };
+
+      console.log(toString(phoneF));
+      console.log(signInData);
+      const res = await axios.post(`http://localhost:8080/join`, signInData, {
+        withCredentials: true,
+      });
+      console.log(res);
 
       if (res.data.httpStatus === "OK") {
         alert("회원가입에 성공하셨습니다");
-        window.location.reload();
+        // window.location.reload();
       } else {
         alert(res.data.message);
       }
@@ -168,6 +205,8 @@ const Main = (props) => {
       if (res.status === 200) {
         alert("로그인 되셨습니다");
         setLoggedin(true);
+        console.log(res.data.nickname);
+        console.log(res.data.userId);
         setLoggedId(res.data.nickname);
         setLoggedRealId(res.data.userId);
         movePage("login/today/*");
@@ -181,7 +220,6 @@ const Main = (props) => {
         alert("로그인 실패");
         window.location.reload();
       }
-
       console.log("error: " + e);
     }
   };
@@ -309,18 +347,9 @@ const Main = (props) => {
           {loggedin === false ? (
             isSignIn === false ? (
               <>
-                <div>
-                  <button>
-                    <Link
-                      to="/login/today/*"
-                      style={{ color: "inherit", textDecoration: "none" }}
-                    >
-                      만능로그인
-                    </Link>
-                  </button>
+                {/* <div>
                   <button onClick={kariLogInRequest}>임시로그인</button>
-                  {/* 이버튼은서버연결되면지울부분 */}
-                </div>
+                </div> */}
                 <div>ID</div>
                 <input type="text" onChange={idChange}></input>
                 <div>비밀번호</div>
@@ -330,22 +359,102 @@ const Main = (props) => {
               </>
             ) : (
               <>
-                <button onClick={startSignIn}>&lt;&lt;</button>
-                아이디
+                <button style={{ marginLeft: "-260px" }} onClick={startSignIn}>
+                  &lt;&lt;
+                </button>
+                &lt;아이디&gt;
                 <SignInInput onChange={idChange}></SignInInput>
-                비밀번호
-                <SignInInput onChange={passwordChange}></SignInInput>
-                이름
+                &lt;비밀번호&gt;
+                <SignInInput2 onChange={passwordChange}></SignInInput2>
+                &lt;이름&gt;
                 <SignInInput onChange={nameChange}></SignInInput>
-                닉네임
+                &lt;닉네임&gt;
                 <SignInInput onChange={nicknameChange}></SignInInput>
-                성별
-                <SignInInput onChange={genderChange}></SignInInput>
-                전화번호
-                <SignInInput onChange={phoneChange}></SignInInput>
-                생년월일
-                <SignInInput onChange={birthdateChange}></SignInInput>
-                운전가능여부
+                &lt;성별&gt;
+                <ChoiceBox>
+                  <div>남자</div>
+                  <input
+                    type="radio"
+                    name="gender"
+                    value="true"
+                    onChange={genderChange}
+                  />
+                  <div>여자</div>
+                  <input
+                    type="radio"
+                    name="gender"
+                    value="false"
+                    onChange={genderChange}
+                  />
+                </ChoiceBox>
+                &lt;전화번호&gt;
+                <ChoiceBox>
+                  <input
+                    style={{
+                      width: "30px",
+                      "margin-right": "5px",
+                      "margin-left": "5px",
+                    }}
+                    id="first"
+                    onChange={phoneChange}
+                  ></input>
+                  -
+                  <input
+                    style={{
+                      width: "40px",
+                      "margin-right": "5px",
+                      "margin-left": "5px",
+                    }}
+                    id="second"
+                    onChange={phoneChange}
+                  ></input>
+                  -
+                  <input
+                    style={{
+                      width: "40px",
+                      "margin-right": "5px",
+                      "margin-left": "5px",
+                    }}
+                    id="third"
+                    onChange={phoneChange}
+                  ></input>
+                </ChoiceBox>
+                {/* <SignInInput onChange={phoneChange}></SignInInput> */}
+                &lt;생년월일&gt;
+                <ChoiceBox>
+                  <input
+                    style={{
+                      width: "40px",
+                      "margin-right": "5px",
+                      "margin-left": "5px",
+                    }}
+                    placeholder="YYYY"
+                    id="year"
+                    onChange={birthdateChange}
+                  ></input>
+                  <input
+                    style={{
+                      width: "30px",
+                      "margin-right": "5px",
+                      "margin-left": "5px",
+                    }}
+                    placeholder="MM"
+                    id="month"
+                    onChange={birthdateChange}
+                  ></input>
+                  <input
+                    style={{
+                      width: "30px",
+                      "margin-right": "5px",
+                      "margin-left": "5px",
+                    }}
+                    placeholder="DD"
+                    id="day"
+                    onChange={birthdateChange}
+                  ></input>
+                </ChoiceBox>
+                {/* <SignInInput onChange={birthdateChange}></SignInInput> */}
+                &lt;운전가능여부&gt;
                 <ChoiceBox>
                   <div>예</div>
                   <input
@@ -353,8 +462,6 @@ const Main = (props) => {
                     name="driverCheck"
                     value="true"
                     onChange={isDriverChange}
-                    // defaultChecked={regular === true ? true : false}
-                    // onChange={regularChange}
                   />
                   <div>아니오</div>
                   <input
@@ -362,11 +469,9 @@ const Main = (props) => {
                     name="driverCheck"
                     value="false"
                     onChange={isDriverChange}
-                    // defaultChecked={regular === false ? true : false}
-                    // onChange={regularChange}
                   />
                 </ChoiceBox>
-                자차여부
+                &lt;자차여부&gt;
                 <ChoiceBox>
                   <div>예</div>
                   <input
@@ -400,7 +505,7 @@ const Main = (props) => {
                   &gt;&gt;
                 </Link>
               </button>
-              님 환영합니다
+              {loggedId}님 환영합니다
             </>
           )}
         </LoginBox>

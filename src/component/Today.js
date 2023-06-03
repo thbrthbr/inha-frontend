@@ -17,7 +17,7 @@ import { Icon } from "@iconify/react";
 // `;
 
 const TodayContainer = styled.div`
-  width: 800px;
+  width: 1500px;
   height: 800px;
   display: flex;
   flex-direction: column;
@@ -30,8 +30,8 @@ const TodayLine = styled.div`
 `;
 
 const TodayBox = styled.div`
-  width: 200px;
-  height: 300px;
+  width: 300px;
+  height: 450px;
   border: 0.5px solid #c0c0c0;
 `;
 
@@ -39,7 +39,7 @@ const Today = (props) => {
   return (
     <>
       <TodayContainer>
-        <h3> 오늘의 이동거리입니다.</h3>
+        <h3> Today's Summary</h3>
         <TodayLine>
           <Icon
             icon="bi:arrow-left-circle-fill"

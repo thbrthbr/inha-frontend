@@ -252,11 +252,23 @@ const LoginStore = create((set, get) => ({
   gender: "",
   setGender: (input) => set({ gender: input }),
 
-  phone: "",
-  setPhone: (input) => set({ phone: input }),
+  phoneF: "",
+  setPhoneF: (input) => set({ phoneF: input }),
 
-  birthdate: "",
-  setBirthdate: (input) => set({ birthdate: input }),
+  phoneS: "",
+  setPhoneS: (input) => set({ phoneS: input }),
+
+  phoneT: "",
+  setPhoneT: (input) => set({ phoneT: input }),
+
+  birthdateY: "",
+  setBirthdateY: (input) => set({ birthdateY: input }),
+
+  birthdateM: "",
+  setBirthdateM: (input) => set({ birthdateM: input }),
+
+  birthdateD: "",
+  setBirthdateD: (input) => set({ birthdateD: input }),
 
   isDriver: false,
   setIsDriver: (input) => set({ isDriver: input }),

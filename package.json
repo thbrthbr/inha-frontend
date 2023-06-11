@@ -59,6 +59,14 @@
     ]
   },
   "devDependencies": {
-    "@iconify/react": "^4.1.0"
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@iconify/react": "^4.1.0",
+    "prettier": "2.8.8"
+  },
+  "prettier": {
+    "singleQuote": true,
+    "semi": false,
+    "useTabs": true,
+    "printWidth": 120
   }
 }

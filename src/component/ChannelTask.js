@@ -1,12 +1,18 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 import axios from "axios";
-import { MasterStore2, ChannelStore } from "./store/store.js";
+import { MasterStore2, ChannelStore, MasterStore3 } from "./store/store.js";
+import postit from "./img/postit.png";
 
 const Container = styled.div`
   overflow: auto;
   height: 550px;
   width: 1048px;
+  // margin-left: 50px;
+  background-color: orange;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const ChannelRow = styled.div`
@@ -14,15 +20,35 @@ const ChannelRow = styled.div`
   flex-direction: row;
 `;
 
-const ChannelItem = styled.div`
-  border: 0.5px solid #c0c0c0;
+const Temp = styled.div`
+border: 0.5px solid #c0c0c0;
   height: 200px;
   width: 150px;
-  margin-top: 50px;
+
+  background-image: url(./img/postit.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+`
+
+const ChannelItem = styled.div`
+  // border: 0.5px solid #c0c0c0;
+
+  // background-image: url('./img/postit.png');
+  // background-position: center;
+  // background-repeat: no-repeat;
+  // background-size: cover;
+
+  // background-color: white;
+  height: 200px;
+  width: 150px;
+  margin-top: -250px;
   margin-left: 50px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: absolute;
+  z-index: 5;
 `;
 
 const Title = styled.div`
@@ -60,6 +86,7 @@ const PersonnelBox = styled.div`
 
 const ButtonX = styled.button`
   margin-left: 130px;
+  margin-top: 10px;
   border: none;
   background-color: white;
   cursor: pointer;
@@ -67,6 +94,7 @@ const ButtonX = styled.button`
 
 const ChannelTask = (props) => {
   const { loggedId } = MasterStore2();
+  const { loggedRealId } = MasterStore3();
   const {
     myCarpools,
     setMyCarpools,
@@ -83,6 +111,62 @@ const ChannelTask = (props) => {
   let five = 5;
   let count = 0;
   const forLayout = [];
+
+  const getChannels2 = async () => {
+    try {
+      const res1 = await axios.get(`http://localhost:8080/api/carpools?userId=${loggedRealId }`, {
+        withCredentials: true,
+      });
+
+      console.log(res1);
+      
+
+      let tempArr = [];
+      for (let i = 0; i < res1.data.data.length; i++) {
+        // console.log(res1.data[i].hostNickname);
+        // console.log(loggedId);
+        if (res1.data.data[i].hostId == loggedRealId) {
+          console.log(res1.data.data[i].hostId);
+          tempArr.push(res1.data.data[i]);
+        } else {
+          for (let j = 0; j < res1.data.data[i].userHasChannelList.length; j++) {
+            if (res1.data.data[i].userHasChannelList[j].userId == loggedRealId) {
+              tempArr.push(res1.data.data[i]);
+            }
+          }
+        }
+      }
+
+      let set = new Set(tempArr);
+      tempArr = Array.from(set);
+      console.log(tempArr);
+      setMyCarpools(tempArr.reverse());
+      lastRow = Math.floor(tempArr.length / 4) + 1;
+      console.log(lastRow);
+
+      let tempArr2 = [];
+      for (let i = 0; i < tempArr.length; i++) {
+        let tempMiniArr = [];
+        for (let j = 0; j < tempArr[i].userHasChannelList.length; j++) {
+          tempMiniArr.push(tempArr[i].userHasChannelList[j].nickname);
+        }
+        tempArr2.push(tempMiniArr.sort());
+      }
+
+      console.log(tempArr2);
+      setRoomPeople(tempArr2);
+
+      for (let i = 0; i < lastRow; i++) {
+        forLayout.push(true);
+      }
+      console.log(tempArr.reverse());
+
+      setForLayOut(forLayout);
+      // return res1.data;
+    } catch (e) {
+      console.log("error: " + e);
+    }
+  };
 
   const getChannels = async () => {
     try {
@@ -143,59 +227,42 @@ const ChannelTask = (props) => {
       console.log(id);
       console.log(hostId);
       console.log(loggedId);
-      if (hostId == loggedId) {
+      if (hostId == loggedRealId) {
         let confirm = window.confirm("채널을 삭제하시겠습니까?");
         if (confirm) {
-          // const res3 = await fetch(`http://localhost:4000/posts/${id}`, {
-          //   method: "DELETE",
-          // });
-          // const res4 = await fetch(`http://localhost:4000/carpools/${id}`, {
-          //   method: "DELETE",
-          // });
-          // const res2 = axios({
-          //   url: `http://localhost:4000/posts/${id}`,
-          //   method: "delete",
-          //   withCredentials: true,
-          // });
-          // const res1 = axios({
-          //   url: `http://localhost:4000/carpools/${id}`,
-          //   method: "delete",
-          //   withCredentials: true,
-          // });
-          const res2 = await axios.delete(`http://localhost:4000/posts/${id}`, {
+          const res2 = await axios.delete(`http://localhost:8080/api/posts?postId=${id}&userId=${loggedRealId }`, {
             withCredentials: true,
           });
-          const res1 = await axios.delete(
-            `http://localhost:4000/carpools/${id}`,
-            {
-              withCredentials: true,
-            }
-          );
+          alert("채널이 삭제 되었습니다")
+          window.location.reload();
+
         } else {
           return;
         }
       } else {
         let confirm = window.confirm("채널에서 나가시겠습니까?");
         if (confirm) {
-          const res3 = await axios(
-            {
-              method: "patch",
-              url: `http://localhost:4000/posts/${id}`,
-              data: {
-                curPersonnel: num - 1,
-              },
-              headers: { "Content-Type": "application/json" },
-            },
-            {
-              withCredentials: true,
-            }
-          );
-          const res1 = await axios.delete(
-            `http://localhost:4000/carpools/${id}`,
-            {
-              withCredentials: true,
-            }
-          );
+          // const res3 = await axios(
+          //   {
+          //     method: "patch",
+          //     url: `http://localhost:4000/posts/${id}`,
+          //     data: {
+          //       curPersonnel: num - 1,
+          //     },
+          //     headers: { "Content-Type": "application/json" },
+          //   },
+          //   {
+          //     withCredentials: true,
+          //   }
+          // );
+          // const res1 = await axios.delete(
+          //   `http://localhost:4000/carpools/${id}`,
+          //   {
+          //     withCredentials: true,
+          //   }
+          // );
+
+          alert("미구현");
         }
       }
     } catch (e) {
@@ -203,15 +270,17 @@ const ChannelTask = (props) => {
     }
   };
   useEffect(() => {
-    getChannels();
+    getChannels2();
   }, []);
 
   return (
     <Container>
+      {/* <button onClick={getChannels2}>임시</button> */}
       {forLayOut.map((people) => {
         return (
           <ChannelRow>
             {myCarpools.map((channel) => {
+              // console.log(channel);
               channelCount++;
               if (channelCount2 <= channelCount) {
                 channelCount2++;
@@ -219,13 +288,17 @@ const ChannelTask = (props) => {
                   channelCount2 = 122131433551343;
                 } else {
                   return (
-                    <ChannelItem>
+                    <div style={{position: "relative"}}>
+                      <div>
+                        <img src={postit} style={{height: "300px", width: "250px"}}/>
+                      </div>
+                    <ChannelItem> 
                       <ButtonX
                         onClick={(e) => {
                           deleteChannel(
-                            channel.id,
-                            channel.hostNickname,
-                            channel.userChannelList.length
+                            channel.channelId,
+                            channel.hostId,
+                            channel.userHasChannelList.length
                           );
                         }}
                       >
@@ -242,11 +315,12 @@ const ChannelTask = (props) => {
                       </DriverBox>
                       <PersonnelBox>
                         탑승자:
-                        {channel.userChannelList.map((person) => {
+                        {channel.userHasChannelList.map((person) => {
                           return <div>{person.nickname}</div>;
                         })}
                       </PersonnelBox>
                     </ChannelItem>
+                    </div>
                   );
                 }
               }

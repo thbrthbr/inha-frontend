@@ -193,7 +193,7 @@ function Header(props) {
         deny()
       )} */}
       <>
-        <HeaderArea>
+        <HeaderArea id="header">
           <span style={{ height: "100px" }}>
             <Link
               to="/login/today/*"

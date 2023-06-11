@@ -4,10 +4,10 @@ import { Link, Outlet } from "react-router-dom";
 import { ProfileStore } from "./store/store.js";
 
 const PageBox = styled.div`
-  border: 0.5px solid #c0c0c0;
+  // border: 0.5px solid #c0c0c0;
   height: 600px;
   width: 1048px;
-  margin-left: 10px;
+  margin-left: 70px;
   oveflow: scroll;
 `;
 
@@ -16,10 +16,24 @@ const UpperBar = styled.div`
   align-items: center;
 `;
 
-const PageCategory = styled.div`
+const PageCategory1 = styled.div`
+padding-left: 5px;
   height: 50px;
   width: 100px;
-  border: 0.5px solid #c0c0c0;
+  font-size: 30px;
+  background-color: orange;
+  font-family: 'Lobster', cursive;
+  // border: 0.5px solid #c0c0c0;
+`;
+const PageCategory2 = styled.div`
+padding-left: 15px;
+  height: 50px;
+  width: 100px;
+  font-size: 30px;
+  color: white;
+  background-color: blue;
+  font-family: 'Lobster', cursive;
+  // border: 0.5px solid #c0c0c0;
 `;
 
 const MyPage = (props) => {
@@ -32,22 +46,22 @@ const MyPage = (props) => {
     <>
       <PageBox>
         <UpperBar>
-          <PageCategory onClick={stateInit}>
+          <PageCategory1 onClick={stateInit}>
             <Link
               to="/login/mypage/channeltask"
               style={{ color: "inherit", textDecoration: "none" }}
             >
-              채널관리
+              Channel
             </Link>
-          </PageCategory>
-          <PageCategory onClick={stateInit}>
+          </PageCategory1>
+          <PageCategory2 onClick={stateInit}>
             <Link
               to="/login/mypage/profiletask"
               style={{ color: "inherit", textDecoration: "none" }}
             >
-              프로필수정
+              Profile
             </Link>
-          </PageCategory>
+          </PageCategory2>
         </UpperBar>
         <Outlet />
       </PageBox>

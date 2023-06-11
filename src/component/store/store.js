@@ -61,13 +61,13 @@ const ProfileStore = create(
     phoneNumber: "",
     setPhoneNumber: (input) => set({ phoneNumber: input }),
 
-    ownCar: "",
+    ownCar: false,
     setOwnCar: (input) => set({ ownCar: input }),
 
-    canDrive: "",
+    canDrive: false,
     setCanDrive: (input) => set({ canDrive: input }),
 
-    gender: "",
+    gender: false,
     setGender: (input) => set({ gender: input }),
 
     rating: "",
@@ -79,7 +79,7 @@ const ProfileStore = create(
     carPoolCount: "",
     setCarPoolCount: (input) => set({ carPoolCount: input }),
 
-    switchOn: false,
+    switchOn: true,
     setSwitchOn: (input) => set({ switchOn: input }),
   }),
   {
@@ -98,9 +98,71 @@ const calenderStore = create((set, get) => ({
 
   selectedDate: new Date(),
   setSelectedDate: (input) => set({ selectedDate: input }),
+
+  data: null,
+  setData: (input) => set({ data: input }),
+
+  row: null,
+  setRow: (input) => set({ row: input }),
+
+}));
+
+const TodayStore = create((set, get) => ({
+  boxSwitch: false,
+  setBoxSwitch: (input) => set({ boxSwitch: input }),
+
+  emission: 0,
+  setEmission: (input) => set({ emission: input }),
+
+  point: 0,
+  setPoint: (input) => set({ point: input }),
+
+  level: 0,
+  setLevel: (input) => set({ level: input }),
+
+  lastDate: 0,
+  setLastDate: (input) => set({ lastDate: input }),
+
+  emission2: 0,
+  setEmission2: (input) => set({ emission2: input }),
+
+  point2: 0,
+  setPoint2: (input) => set({ point2: input }),
+
+  level2: 0,
+  setLevel2: (input) => set({ level2: input }),
+
 }));
 
 const ChannelStore = create((set, get) => ({
+
+  flag: false,
+  setFlag: (input) => set({ flag: input }),
+
+  locationMaster: [],
+  setLocationMaster: (input) => set({ locationMaster: input }),
+
+  roomDriverId: null,
+  setRoomDriverId: (input) => set({ roomDriverId: input }),
+
+  enteredPostId: null,
+  setEnteredPostId: (input) => set({ enteredPostId: input }),
+
+  roomContent: null,
+  setRoomContent: (input) => set({ roomContent: input }),
+
+  contentEdit: false,
+  setContentEdit: (input) => set({ contentEdit: input }),
+
+  searchWord: null,
+  setSearchWord: (input) => set({ searchWord: input }),
+
+  tempIdSave: null,
+  setTempIdSave: (input) => set({ tempIdSave: input }),
+
+  clicked: false,
+  setClicked: (input) => set({ clicked: input }),
+
   userId: null,
   setUserId: (input) => set({ userId: input }),
 
@@ -174,6 +236,9 @@ const ChannelStore = create((set, get) => ({
 
   channelPg: 0,
   setChannelPg: (input) => set({ channelPg: input }),
+
+  channelPg2: 0,
+  setChannelPg2: (input) => set({ channelPg2: input }),
 
   pageNum: 0,
   setPageNum: (input) => set({ pageNum: input }),
@@ -324,4 +389,5 @@ export {
   MasterStore,
   MasterStore2,
   MasterStore3,
+  TodayStore
 };

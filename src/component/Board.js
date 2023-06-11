@@ -1,8 +1,8 @@
 import React, { useEffect, useState, Suspense } from "react";
 import { GlobalStyle } from "./noScroll.js";
 import { BsMegaphone } from "react-icons/bs";
-import { AiOutlineSearch } from "react-icons/ai";
 import { BiRefresh } from "react-icons/bi";
+import { AiOutlineSearch } from "react-icons/ai";
 // import { useIsFocused } from "@react-navigation/native";
 import styled from "styled-components";
 import axios from "axios";
@@ -117,10 +117,11 @@ const RoomContainer = styled.div`
   margin-left: -50px;
   // left: 0%;
   // display: none;
-  width: 2000px;
+  width: 5000px;
   height: 2000px;
   // background-color: rgba(0, 0, 0, 0.5);
   // background-color: red;
+  // z-index: 6;
 `;
 
 const Room = styled.div`
@@ -134,6 +135,7 @@ const Room = styled.div`
   // height: 500px;
   // width: 500px;
   // display: flex;
+  padding: 30px;
   border: 0.5px solid #c0c0c0;
   border-radius: 10%;
   top: 15%;
@@ -142,7 +144,7 @@ const Room = styled.div`
   width: 500px;
   margin-left: 300px;
   background-color: white;
-  // z-index: 5;
+  z-index: 5;
 `;
 
 const FirstRow = styled.div`
@@ -190,8 +192,8 @@ const ButtonX2 = styled.button`
 `;
 
 const ButtonX3 = styled.button`
-  margin-top: 20px;
-  margin-left: 450px;
+  // margin-top: 20px;
+  margin-left: 480px;
   border: none;
   background-color: white;
   cursor: pointer;
@@ -324,6 +326,38 @@ const ChannelPages = styled.div`
   align-items: center;
 `;
 
+const ProfileBox = styled.div`
+border: 0.5px solid #c0c0c0;
+width: 200px;
+  height: 100px;
+  position: absoulte;
+  margin-left: 100px;
+
+`
+
+const RoomPeopleBox = styled.span`
+  display: flex;
+  flex-direction: column;
+`
+
+const RoomPeople = styled.span`
+width: 100px;
+position:relative;
+cursor: pointer;
+`
+
+const GetOut = styled.button`
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  font-size: 10px;
+  cursor: pointer;
+`
+
+const HiddenInfo = styled.div`
+display: none;
+`
+
 const { kakao } = window;
 
 const Board = ({ searchPlace }) => {
@@ -337,6 +371,8 @@ const Board = ({ searchPlace }) => {
   let completeXY = [];
   let completeDA = [];
   let usersCount = 0;
+  let whichPoint = null;
+  let tempflag = 0;
 
   const { nickname } = ProfileStore();
   const {
@@ -419,6 +455,26 @@ const Board = ({ searchPlace }) => {
     setRoomPeople,
     isMaster,
     setIsMaster,
+    clicked,
+    setClicked,
+    tempIdSave,
+    setTempIdSave,
+    searchWord,
+    setSearchWord,
+    contentEdit,
+    setContentEdit,
+    roomContent,
+    setRoomContent,
+    enteredPostId,
+    setEnteredPostId,
+    roomDriverId,
+    setRoomDriverId,
+    locationMaster,
+    setLocationMaster,
+    channelPg2,
+    setChannelPg2,
+    flag,
+    setFlag
   } = ChannelStore();
   const { loggedId, setLoggedId } = MasterStore2();
   const { loggedRealId, setLoggedRealId } = MasterStore3();
@@ -481,52 +537,59 @@ const Board = ({ searchPlace }) => {
 
   const closeRoom = (event) => {
     document.getElementById("channelBox").style.cssText = "";
+    document.getElementById("header").style.cssText = ``;
     setIsRoomOn(false);
     setIsMaster(false);
+    setClicked(false);
+    setTempIdSave(null);
   };
 
   const reload = (event) => {
     setRender(!render);
   };
 
-  const reload2 = async (event) => {
-    try {
-      // setRender(!render);
-      console.log("셋째트염");
-      const res = await axios.get("http://localhost:4000/posts", {
-        withCredentials: true,
-      });
-      // 진짜 서버 연결하면 수정해야하는 부분 @@@@
-      document.getElementById(`${1}`).style.color = "blue";
-      channelNum = res.data.length;
-      channelPages =
-        channelNum % 10 === 0
-          ? Math.floor(channelNum / 10)
-          : Math.floor(channelNum / 10) + 1;
-      setChannelPg(channelPages);
-      const reverseData = res.data.slice(0).reverse();
-      for (let i = 0; i < channelPages; i++) {
-        let tempStartNum = 0;
-        let tempNum = 10;
-        let tempArr = [];
-        tempStartNum = tempNum * i;
-        tempNum = tempNum * (i + 1);
-        for (let j = tempStartNum; j < tempNum; j++) {
-          if (reverseData[j] === undefined) {
-            break;
-          }
-          tempArr.push(reverseData[j]);
-        }
-        addChannelArr(tempArr);
-        console.log(channelArr);
-        tempArr = [];
-      }
-      window.scrollTo(0, 0);
-      return res.data;
-    } catch (e) {
-      console.log("error: " + e);
-    }
-  };
+  const showProfile = (event) => {
+    setClicked(true);
+  }
+
+  // const reload2 = async (event) => {
+  //   try {
+  //     // setRender(!render);
+  //     console.log("셋째트염");
+  //     const res = await axios.get("http://localhost:4000/posts", {
+  //       withCredentials: true,
+  //     });
+  //     // 진짜 서버 연결하면 수정해야하는 부분 @@@@
+  //     document.getElementById(`${1}`).style.color = "blue";
+  //     channelNum = res.data.length;
+  //     channelPages =
+  //       channelNum % 10 === 0
+  //         ? Math.floor(channelNum / 10)
+  //         : Math.floor(channelNum / 10) + 1;
+  //     setChannelPg(channelPages);
+  //     const reverseData = res.data.slice(0).reverse();
+  //     for (let i = 0; i < channelPages; i++) {
+  //       let tempStartNum = 0;
+  //       let tempNum = 10;
+  //       let tempArr = [];
+  //       tempStartNum = tempNum * i;
+  //       tempNum = tempNum * (i + 1);
+  //       for (let j = tempStartNum; j < tempNum; j++) {
+  //         if (reverseData[j] === undefined) {
+  //           break;
+  //         }
+  //         tempArr.push(reverseData[j]);
+  //       }
+  //       addChannelArr(tempArr);
+  //       console.log(channelArr);
+  //       tempArr = [];
+  //     }
+  //     window.scrollTo(0, 0);
+  //     return res.data;
+  //   } catch (e) {
+  //     console.log("error: " + e);
+  //   }
+  // };
 
   const driverChange = (e) => {
     if (e.target.value === "true") {
@@ -536,15 +599,317 @@ const Board = ({ searchPlace }) => {
     }
   };
 
+
+  const showAttendeeProfile = async (id) => {
+    try{
+      const res = await axios.get(`http://localhost:8080/api/users/${id}?userId=${loggedRealId}`,
+      {
+        withCredentials: true,
+      })
+      console.log(res.data.data);
+      // /api/users/{targetUserId}
+      const attendeeProfBox = document.createElement("div");
+      attendeeProfBox.id = "me";
+      console.log(attendeeProfBox);
+      attendeeProfBox.style.cssText = `
+        border: 0.5px solid #c0c0c0;
+        border-radius: 5%;
+        width: 300px;
+        background-color: white;
+        height: 200px;
+        position: fixed;
+        margin-top: -80px;
+        margin-left: 100px;
+        font-family: "GangwonEduPowerExtraBoldA";
+        padding: 20px;
+        font-size: 25px;
+      `;
+      attendeeProfBox.innerHTML = "<div> 닉네임: " + res.data.data.nickname + "</div>"
+      + "<div> 평점: " + res.data.data.rating + "</div>"
+      + "<div> 성별: " + (res.data.data.sex === true ? "남자" : "여자") + "</div>"
+      + "<div> 자차: " + (res.data.data.ownCar === true ? "있음" : "없음") + "</div>"
+      + "<div> 운전가능여부: " + (res.data.data.driving === true ? "가능" : "불가") + "</div>";
+      attendeeProfBox.onclick = function(event){event.stopPropagation(); 
+        while ( document.getElementById("temp").lastChild.id !== "notMe" )
+          {
+            document.getElementById("temp").removeChild( document.getElementById("temp").lastChild );       
+          };
+        };
+      document.getElementById("temp").appendChild(attendeeProfBox);
+    }
+    catch (e)
+    {
+      console.log("error: " + e);
+    }
+  };
+
+  const showAttendeeProfile2 = async (id) => {
+    try{
+      console.log(document.getElementById(`hidden_${id}`).children);
+      const res = await axios.get(`http://localhost:8080/api/users/${id}?userId=${loggedRealId}`,
+      {
+        withCredentials: true,
+      })
+      console.log(res.data.data);
+      // /api/users/{targetUserId}
+      const attendeeProfBox = document.createElement("div");
+      attendeeProfBox.id = "me";
+      attendeeProfBox.style.cssText = `
+        border: 0.5px solid #c0c0c0;
+        border-radius: 5%;
+        width: 300px;
+        background-color: white;
+        height: 200px;
+        position: fixed;
+        margin-top: -80px;
+        margin-left: 100px;
+        font-family: "GangwonEduPowerExtraBoldA";
+        padding: 20px;
+        font-size: 25px;
+      `;
+      attendeeProfBox.innerHTML = "<div> 출발지: " + document.getElementById(`hidden_${id}`).children[0].innerHTML + "</div>"
+      + "<div> 목적지: " + document.getElementById(`hidden_${id}`).children[1].innerHTML + "</div>";
+      attendeeProfBox.onclick = function(event){event.stopPropagation(); 
+        while ( document.getElementById("temp").lastChild.id !== "notMe")
+        {
+          document.getElementById("temp").removeChild( document.getElementById("temp").lastChild );       
+        };
+      };
+      document.getElementById("temp").appendChild(attendeeProfBox);
+    }
+    catch (e)
+    {
+      console.log("error: " + e);
+    }
+  };
+
+
+  const generateProfileBox =  (e) => {
+ 
+      const peopleId = e.target.id;
+      console.log(e.target.id);
+      console.log(e.target.innerText);
+      console.log(e);
+      if(clicked === true)
+      {
+        // if(loggedId === )
+        document.getElementById(tempIdSave).removeChild(document.getElementById("temp"));
+        setTempIdSave(e.target.id);
+        const profBox = document.createElement("div");
+        const profText1 = document.createElement("p");
+        profText1.id = "notMe";
+        const profText2 = document.createElement("p");
+        profText2.id = "notMe";
+        profBox.style.cssText = `
+          // border: 0.5px solid #c0c0c0;
+          border-radius: 5%;
+          background-color: rgba(0, 0, 255, 0.2);
+          width: 150px;
+          height: 100px;
+          position: fixed;
+          margin-left: 100px;
+          font-family: "GangwonEduPowerExtraBoldA";
+          padding: 20px;
+          z-index: 6;
+        `;
+        profBox.id = "temp";
+        profBox.onclick = function(event){document.getElementById(e.target.id).removeChild(document.getElementById("temp")); setClicked(false);};
+        // profBox.onclick = function(event){document.getElementById("room").removeChild(profBox);};
+        profText1.innerHTML = "<div>유저프로필</div>";
+        profText1.onclick = function(event){event.stopPropagation(); showAttendeeProfile(peopleId);};
+        profText2.innerHTML = "<div>개인 출발/도착지</div>";
+        profText2.onclick = function(event){event.stopPropagation(); showAttendeeProfile2(peopleId);};
+        profBox.appendChild(profText1);
+        profBox.appendChild(profText2);
+        // if(isMaster === true && e.target.innerText !== loggedId)
+        // {
+        //   const profText3 = document.createElement("p");
+        //   profText3.id = "notMe";
+        //   profText3.innerHTML = "<div>강퇴</div>";
+        //   profText3.onclick = function(event){event.stopPropagation(); alert("3");};
+        //   profBox.appendChild(profText3);
+        // }
+        document.getElementById(e.target.id).appendChild(profBox);
+      }
+      else
+      {
+        setTempIdSave(e.target.id);
+        const profBox = document.createElement("div");
+        const profText1 = document.createElement("p");
+        profText1.id = "notMe";
+        const profText2 = document.createElement("p");
+        profText2.id = "notMe";
+        
+        profBox.style.cssText = `
+          // border: 1px solid rgba(0, 0, 255, 0.5);
+          border-radius: 5%;
+          // background-color: blue;
+          background-color: rgba(0, 0, 255, 0.2);
+          width: 150px;
+          height: 100px;
+          position: fixed;
+          font-family: "GangwonEduPowerExtraBoldA";
+          margin-left: 100px;
+          padding: 20px;
+          z-index: 6;
+        `;
+        profBox.id = "temp";
+        profBox.onclick = function(event){document.getElementById(e.target.id).removeChild(document.getElementById("temp")); setClicked(false);};
+        // profBox.onclick = function(event){document.getElementById("room").removeChild(profBox);};
+        profText1.innerHTML = "<div>유저프로필</div>";
+        profText1.onclick = function(event){event.stopPropagation(); showAttendeeProfile(peopleId);};
+          profText2.innerHTML = "<div>개인 출발/도착지</div>";
+        profText2.onclick = function(event){event.stopPropagation(); showAttendeeProfile2(peopleId);};
+        profBox.appendChild(profText1);
+        profBox.appendChild(profText2);
+        // if(isMaster === true && e.target.innerText !== loggedId)
+        // {
+        //   const profText3 = document.createElement("p");
+        //   profText3.id = "notMe";
+        //   profText3.innerHTML = "<div>강퇴</div>";
+        //   profText3.onclick = function(event){event.stopPropagation(); alert("3");};
+        //   profBox.appendChild(profText3);
+        // }
+        document.getElementById(e.target.id).appendChild(profBox);
+        setClicked(true);
+      } 
+    
+  };
+
+  const closeProfile = (event) => {
+    console.log(event);
+    // document.getElementById("room").removeChild(
+    //   document.getElementById(event.target.id));
+  };
+
+  const enterChannel2 = async (curpersonnel, channelId, roomId, departures,
+    departuresLatitude,
+    departuresLongitude,
+    arrivals,
+    arrivalsLatitude,
+    arrivalsLongitude,
+    content,
+    driverId,
+    hostId) => {
+    try {
+      let locationing = [];
+      let d_xy = [];
+      let a_xy = [];
+      d_xy.push(departuresLatitude);
+      d_xy.push(departuresLongitude);
+      a_xy.push(arrivalsLatitude);
+      a_xy.push(arrivalsLongitude);
+      locationing.push([d_xy, a_xy, [departures, arrivals]])
+      setLocationMaster(locationing);
+      console.log(channelId);
+      setRoomDriverId(driverId);
+      setEnteredPostId(channelId);
+      document.getElementById("channelBox").style.cssText = `
+    overflow: hidden;`;
+    document.getElementById("header").style.cssText = `
+    pointer-events: none;`;
+    console.log(hostId);
+    console.log(loggedRealId);
+      if (hostId == loggedRealId) {
+        console.log("주인님");
+        setIsMaster(true);
+      }
+
+      const res3= await axios.get(
+        `http://localhost:8080/api/posts/${channelId}`,
+        {
+          withCredentials: true,
+        }
+      );
+
+      console.log(res3);
+
+      const res2= await axios.get(
+        `http://localhost:8080/api/carpools/participation?channelId=${channelId}`,
+        {
+          withCredentials: true,
+        }
+      );
+
+      console.log(res2);
+      setRoomContent(content);
+      setRoomHost(res3.data.data.hostNickname);
+      setRoomDeparture(res3.data.data.departures);
+      setRoomArrival(res3.data.data.arrivals);
+      setRoomDriver(res3.data.data.driverNickname);
+      let tempArr = [];
+      for (let j = 0; j < res2.data.data.length; j++) {
+        let tempArr_1 = [];
+        tempArr_1.push(res2.data.data[j].nickname);
+        tempArr_1.push(res2.data.data[j].userId);
+        tempArr_1.push(res2.data.data[j].departures);
+        tempArr_1.push(res2.data.data[j].arrivals);
+        console.log(res2.data.data[j]);
+        tempArr.push(tempArr_1);
+      }
+      setRoomPeople(tempArr);
+      console.log(tempArr.flat(2));
+
+
+      if (!tempArr.flat(2).includes(loggedId)) {
+        if (res3.data.data.personnel == res3.data.data.curPersonnel) {
+          alert("인원이 가득 찼습니다");
+          document.getElementById("channelBox").style.cssText = ``;
+          document.getElementById("header").style.cssText = ``;
+          setIsRoomOn(false);
+          setIsMaster(false);
+          return;
+        }
+        const letMeIn = {
+          channelId : channelId, 
+          userId: loggedRealId,
+          departures: departures,
+          departuresLatitude: departuresLatitude,
+          departuresLongitude: departuresLongitude,
+          arrivals: arrivals,
+          arrivalsLatitude: arrivalsLatitude,
+          arrivalsLongitude: arrivalsLongitude
+      }
+        let result = window.confirm("해당 채널에 입장하시겠습니까?");
+        if (result) {
+          const res1 = await axios.post(
+            `http://localhost:8080/api/carpools`,
+            letMeIn
+          ,
+            {
+              withCredentials: true,
+            }
+          );
+          let tempArr2 = [];
+          let tempArr3 = [];
+          tempArr3.push(loggedId);
+          tempArr3.push(loggedRealId);
+          tempArr2 = [...tempArr, tempArr2]
+          setRoomPeople(tempArr2);
+          setIsRoomOn(true);
+          
+        } else {
+          document.getElementById("channelBox").style.cssText = ``;
+          document.getElementById("header").style.cssText = ``;
+          setIsRoomOn(false);
+          setIsMaster(false);
+        }
+      }
+      else{
+        setIsRoomOn(true);
+      }
+    } catch (e) {
+      console.log("error: " + e);
+    }
+  };
+
   //@@@@@@@@@@@@@@@@@@@@@@@@@@
   const enterChannel = async (curpersonnel, channelId, roomId) => {
     try {
       document.getElementById("channelBox").style.cssText = `
-    overflow: hidden;
-    // width: 100%;`;
-      console.log(channelId);
-      console.log(roomId);
-      console.log(loggedId);
+    overflow: hidden;`;
+    document.getElementById("header").style.cssText = `
+    pointer-events: none;`;
       if (roomId == loggedId) {
         setIsMaster(true);
       }
@@ -625,6 +990,8 @@ const Board = ({ searchPlace }) => {
             }
           );
         } else {
+          document.getElementById("channelBox").style.cssText = ``;
+          document.getElementById("header").style.cssText = ``;
           setIsRoomOn(false);
         }
       }
@@ -636,6 +1003,49 @@ const Board = ({ searchPlace }) => {
   };
   //@@@@@@@@@@@@@@@@@@@@@@@@@@
 
+  const realGetChannelData = async () => {
+    try {
+      setFlag(false);
+      const temp = 1;
+      // setPageNum(0);
+      const res = await axios.get(
+        `http://localhost:8080/api/posts/lists/${temp}`,
+        {
+          withCredentials: true,
+        }
+      );
+      const res2 = await axios.get(
+        `http://localhost:8080/api/carpools/count`,
+        {
+          withCredentials: true,
+        }
+      );
+
+      for (let i = 1; i <= pageArr.length; i++) {
+        if (document.getElementById(`${i}`).id == 1) {
+          document.getElementById(`${i}`).style.color = "blue";
+        } else {
+          document.getElementById(`${i}`).style.color = "black";
+        }
+      }
+
+      setChannelCount(res.data.data[res.data.data.length - 1].postId);
+      channelNum = res2.data.data;
+      channelPages =
+        channelNum % 10 === 0
+          ? Math.floor(channelNum / 10)
+          : Math.floor(channelNum / 10) + 1;
+      setChannelPg(channelPages);
+      console.log(res.data.data.slice(0).reverse());
+      setChannelArr(res.data.data);
+      setChannelList(res.data.data);
+      setFirstTake(true);
+      return res.data;
+    } catch (e) {
+      console.log("error: " + e);
+    }
+  };
+
   const kariGetChannelData = async () => {
     try {
       const temp = 1;
@@ -645,6 +1055,17 @@ const Board = ({ searchPlace }) => {
           withCredentials: true,
         }
       );
+
+      const res2 = await axios.get(
+        `http://localhost:8080/api/carpools/count`,
+        {
+          withCredentials: true,
+        }
+      );
+
+
+      console.log(res);
+      console.log(res2.data.data);
 
       return res.data;
     } catch (e) {
@@ -670,6 +1091,8 @@ const Board = ({ searchPlace }) => {
           ? Math.floor(channelNum / 10)
           : Math.floor(channelNum / 10) + 1;
       setChannelPg(channelPages);
+
+
       let tempAllArr = [];
       const reverseData = res.data.slice(0).reverse();
       for (let i = 0; i < channelPages; i++) {
@@ -697,6 +1120,47 @@ const Board = ({ searchPlace }) => {
       console.log("error: " + e);
     }
   };
+
+
+  const getPageChannel2 = async (e) => {
+    try {
+      console.log(e);
+      console.log(e.target.id);
+      console.log("둘째트염");
+      // setChannelArr([]);
+      const res = await axios.get(`http://localhost:8080/api/posts/lists/${e.target.id}`, {
+        withCredentials: true,
+      });
+      const res2 = await axios.get(
+        `http://localhost:8080/api/carpools/count`,
+        {
+          withCredentials: true,
+        }
+      );
+      for (let i = 1; i <= pageArr.length; i++) {
+        if (document.getElementById(`${i}`).id == e.target.id) {
+          document.getElementById(`${i}`).style.color = "blue";
+        } else {
+          document.getElementById(`${i}`).style.color = "black";
+        }
+      }
+      channelNum = res2.data.data;
+      channelPages =
+        channelNum % 10 === 0
+          ? Math.floor(channelNum / 10)
+          : Math.floor(channelNum / 10) + 1;
+      setChannelPg(channelPages);
+      setChannelArr(res.data.data);
+      document.getElementById("channelBox").scrollTo(0, 0);
+      // window.scrollTo(0, 0);
+      setChannelArr(res.data.data);
+      return res.data;
+    } catch (e) {
+      console.log("error: " + e);
+    }
+  };
+
+  
 
   const getPageChannel = async (e) => {
     try {
@@ -842,10 +1306,8 @@ const Board = ({ searchPlace }) => {
 
       setInputStartPoint(null);
       setInputEndPoint(null);
-
-      // window.location.reload();
       closeCreateChannel();
-      getChannelData();
+      realGetChannelData();
 
       return res.data;
     } catch (e) {
@@ -853,7 +1315,154 @@ const Board = ({ searchPlace }) => {
     }
   };
 
-  let whichPoint = null;
+
+  const openChannel2 = async () => {
+    try {
+      if (inputStartPoint === null) {
+        alert("출발지를 정해주세요");
+        return;
+      }
+      if (inputEndPoint === null) {
+        alert("도착지를 정해주세요");
+        return;
+      }
+
+      // if(personnel > 47)
+      // {
+
+      // }
+
+      let today = new Date;
+      const yy = today.getFullYear().toString();
+      const mm = (today.getMonth()+1).toString().length === 1 ? "0" + (today.getMonth()+1).toString() : (today.getMonth()+1).toString();
+      const dd = today.getDate().toString().length === 1 ? "0" + today.getDate().toString() : today.getDate().toString();
+      today = yy + "-" + mm + "-" + dd;
+      // count = channelCount + 1;
+      console.log(today);
+
+      const channelData = {
+        nickname: loggedId,
+        userId: loggedRealId,
+        title: "제목없음",
+        departures: inputStartPoint,
+        departuresLatitude: departuresLatitude,
+        departuresLongitude: departuresLongitude,
+        arrivals: inputEndPoint,
+        arrivalsLatitude: arrivalsLatitude,
+        arrivalsLongitude: arrivalsLongitude,
+        personnel: personnel,
+        content: content === null ? "내용없음" : content,
+        regular: regular,
+        carpoolDate: today,
+      };
+
+      const res = await axios.post("http://localhost:8080/api/posts", channelData, {
+        withCredentials: true,
+      });
+
+      setInputStartPoint(null);
+      setInputEndPoint(null);
+      closeCreateChannel();
+      realGetChannelData();
+
+      return res.data;
+    } catch (e) {
+      console.log("error: " + e);
+    }
+  };
+
+  const realSearch = async () => {
+     try{
+      
+      const res = await axios.get(`http://localhost:8080/api/posts?keyword=${searchWord}`, {
+        withCredentials: true,
+      });
+      console.log(res);
+      channelNum = res.data.data.length;
+      channelPages =
+        channelNum % 10 === 0
+          ? Math.floor(channelNum / 10)
+          : Math.floor(channelNum / 10) + 1;
+      // setChannelPg(channelPages);
+      setChannelPg2(channelPages);
+
+      let tempAllArr = [];
+      const reverseData = res.data.data.slice(0).reverse();
+      console.log(reverseData);
+      for (let i = 0; i < channelPages; i++) {
+        let tempStartNum = 0;
+        let tempNum = 10;
+        let tempArr = [];
+        tempStartNum = tempNum * i;
+        tempNum = tempNum * (i + 1);
+        for (let j = tempStartNum; j < tempNum; j++) {
+          if (reverseData[j] === undefined) {
+            break;
+          }
+          tempArr.push(reverseData[j]);
+        }
+        tempAllArr = [...tempAllArr, tempArr];
+        console.log(tempAllArr.flat(1));
+        tempArr = [];
+      }
+      setChannelArr(tempAllArr.flat(1));
+      setChannelList(tempAllArr.flat(1));
+      setFlag(true);
+      // setChannelArr(res.data.data.slice(0).reverse());
+      // setSearchWord(null);
+     }
+     catch (e) 
+     {
+      if(e.response.status === 500)
+      {
+        alert("검색결과가 존재하지 않습니다");
+      }
+      console.log("error: " + e);
+     }
+  }
+
+  const changeWord = (e) =>
+  {
+    setSearchWord(e.target.value);
+    console.log(e.target.value);
+  }
+
+  const changeWord2 = (e) =>
+  {
+    setRoomContent(e.target.value);
+    console.log(e.target.value);
+  }
+
+  const editSwitch = async (e) => {
+    try{
+      if(contentEdit === false)
+      {
+        setContentEdit(true);
+      }
+      else{
+        const res = await axios.patch(`http://localhost:8080/api/posts`,
+        {
+          postId: enteredPostId,
+          driverId: roomDriverId,
+          userId: loggedRealId,
+          content: roomContent
+        }, {
+        withCredentials: true,
+      });
+      setContentEdit(false);
+
+      }
+      
+    }
+    catch (e) {
+
+    }
+  }
+
+
+
+
+  // let whichPoint = null;
 
   const handleOnKeyPress = (e) => {
     if (e.key === "Enter") {
@@ -882,7 +1491,7 @@ const Board = ({ searchPlace }) => {
                 cursor: "pointer",
                 marginRight: "20px",
               }}
-              onClick={getPageChannel}
+              onClick={getPageChannel2}
             >
               {i}
             </span>
@@ -897,7 +1506,7 @@ const Board = ({ searchPlace }) => {
                 cursor: "pointer",
                 marginRight: "20px",
               }}
-              onClick={getPageChannel}
+              onClick={getPageChannel2}
             >
               {i}
             </span>
@@ -913,7 +1522,7 @@ const Board = ({ searchPlace }) => {
                 fontSize: "25px",
                 cursor: "pointer",
               }}
-              onClick={getPageChannel}
+              onClick={getPageChannel2}
             >
               {i}
             </span>
@@ -927,7 +1536,76 @@ const Board = ({ searchPlace }) => {
                 fontSize: "25px",
                 cursor: "pointer",
               }}
-              onClick={getPageChannel}
+              onClick={getPageChannel2}
+            >
+              {i}
+            </span>
+          );
+        }
+      }
+    }
+    return pageArr;
+  };
+
+  const searchPageGenerator = () => {
+    for (let i = 1; i <= channelPg2; i++) {
+      if (i !== channelPg2) {
+        if (i == 1) {
+          pageArr.push(
+            <span
+              id={i}
+              style={{
+                color: "blue",
+                fontSize: "25px",
+                cursor: "pointer",
+                marginRight: "20px",
+              }}
+              onClick={realSearch}
+            >
+              {i}
+            </span>
+          );
+        } else {
+          pageArr.push(
+            <span
+              id={i}
+              style={{
+                color: "black",
+                fontSize: "25px",
+                cursor: "pointer",
+                marginRight: "20px",
+              }}
+              onClick={realSearch}
+            >
+              {i}
+            </span>
+          );
+        }
+      } else {
+        if (i == 1) {
+          pageArr.push(
+            <span
+              id={i}
+              style={{
+                color: "blue",
+                fontSize: "25px",
+                cursor: "pointer",
+              }}
+              onClick={realSearch}
+            >
+              {i}
+            </span>
+          );
+        } else {
+          pageArr.push(
+            <span
+              id={i}
+              style={{
+                color: "black",
+                fontSize: "25px",
+                cursor: "pointer",
+              }}
+              onClick={realSearch}
             >
               {i}
             </span>
@@ -1055,23 +1733,8 @@ const Board = ({ searchPlace }) => {
           }
         }
 
-        function Play() {
-          testAsync.waterfall(
-            [
-              ps.keywordSearch(findD, placesSearchCBD),
-              ps.keywordSearch(findA, placesSearchCBA),
-            ],
-            function (err, result) {
-              if (err) console.log(err);
-              else console.log("작업 완료");
-            }
-          );
-        }
-
-        Play();
-
-        // ps.keywordSearch(findD, placesSearchCBD);
-        // ps.keywordSearch(findA, placesSearchCBA);
+        ps.keywordSearch(findD, placesSearchCBD);
+        ps.keywordSearch(findA, placesSearchCBA);
       }
     }
 
@@ -1109,60 +1772,45 @@ const Board = ({ searchPlace }) => {
 
     const searchChannel = async (DorA, location, locationName) => {
       try {
-        const res = await axios.get("http://localhost:4000/posts");
-        // let paginationElD = null;
-        // let paginationElA = null;
+        // const res = await axios.get("http://localhost:4000/posts");
+
         if (DorA === "findD") {
           completeXY.unshift(location);
           completeDA.unshift(locationName);
-          // for (let i = 0; i < res.data.length; i++) {
-          //   let tempArr = [];
-          //   tempArr.push(res.data[i].arrivalsLatitude);
-          //   tempArr.push(res.data[i].arrivalsLongtitude);
-          //   dbLocation.push(tempArr);
-          // }
-          // console.log(dbLocation);
-          // console.log(res.data);
         } else {
           completeXY.push(location);
           completeDA.push(locationName);
           console.log(completeXY);
           console.log(completeDA);
-          // completeXY[0][0]; // 출발지의 lat
-          // completeXY[0][1]; // 출발지의 lon
-          // dbLocation[i][0][0]
-          // dbLocation[i][0][1]
-          const dbLocation = [];
-          for (let i = 0; i < res.data.length; i++) {
-            let tempArrD = [];
-            let tempArrA = [];
-            tempArrD.push(res.data[i].departuresLatitude);
-            tempArrD.push(res.data[i].departuresLongitude);
-            tempArrA.push(res.data[i].arrivalsLatitude);
-            tempArrA.push(res.data[i].arrivalsLongitude);
-            dbLocation.push([
-              tempArrD,
-              tempArrA,
-              [res.data[i].departures, res.data[i].arrivals],
-              res.data[i].id,
-            ]);
-            // [0] == [2][0] / [1] == [2][1]
+          
+          // const dbLocation = [];
+          // for (let i = 0; i < res.data.length; i++) {
+          //   let tempArrD = [];
+          //   let tempArrA = [];
+          //   tempArrD.push(res.data[i].departuresLatitude);
+          //   tempArrD.push(res.data[i].departuresLongitude);
+          //   tempArrA.push(res.data[i].arrivalsLatitude);
+          //   tempArrA.push(res.data[i].arrivalsLongitude);
+          //   dbLocation.push([
+          //     tempArrD,
+          //     tempArrA,
+          //     [res.data[i].departures, res.data[i].arrivals],
+          //     res.data[i].id,
+          //   ]);
+          // }
+          // console.log(dbLocation);
 
-            //dbLocation[i][2][0] === completeDA[0]
-          }
-          console.log(dbLocation);
           let tempArr1 = [];
           let R = 6372.8 * 1000;
-          for (let i = 0; i < dbLocation.length; i++) {
-            let confirm = [];
-            const latD1 = parseFloat(completeXY[0][0]);
-            const latD2 = parseFloat(dbLocation[i][0][0]);
-            const lonD1 = parseFloat(completeXY[0][1]);
-            const lonD2 = parseFloat(dbLocation[i][0][1]);
-            console.log("정상");
-            let dLat = ((latD2 - latD1) * Math.PI) / 180;
-            let dLon = ((lonD2 - lonD1) * Math.PI) / 180;
-            let a =
+
+
+          const latD1 = parseFloat(completeXY[0][0]);
+          const latD2 = parseFloat(locationMaster[0][0][0]);
+          const lonD1 = parseFloat(completeXY[0][1]);
+          const lonD2 = parseFloat(locationMaster[0][0][1]);
+          let dLat = ((latD2 - latD1) * Math.PI) / 180;
+          let dLon = ((lonD2 - lonD1) * Math.PI) / 180;
+          let a =
               Math.pow(Math.sin(dLat / 2), 2.0) +
               Math.pow(Math.sin(dLon / 2), 2.0) *
                 Math.cos((latD1 * Math.PI) / 180) *
@@ -1170,25 +1818,11 @@ const Board = ({ searchPlace }) => {
             let c = 2 * Math.asin(Math.sqrt(a));
             let finalD = R * c;
 
-            console.log(finalD);
-
-            // if (finalD <= 100) {
-            //   confirm.push("D");
-            // }
-
-            // 여기까지가 출발지에서 100미터 전방에 있는 것들
-
-            console.log("정상");
-            const latA1 = parseFloat(completeXY[1][0]);
-            console.log(latA1);
-            const latA2 = parseFloat(dbLocation[i][1][0]);
-            console.log(latA2);
-            const lonA1 = parseFloat(completeXY[1][1]);
-            console.log(lonA1);
-            const lonA2 = parseFloat(dbLocation[i][1][1]);
-            console.log(lonA2);
-
-            let ALat = ((latA2 - latA1) * Math.PI) / 180;
+          const latA1 = parseFloat(completeXY[1][0]);
+          const latA2 = parseFloat(locationMaster[0][1][0]);
+          const lonA1 = parseFloat(completeXY[1][1]);
+          const lonA2 = parseFloat(locationMaster[0][1][1]);
+          let ALat = ((latA2 - latA1) * Math.PI) / 180;
             let ALon = ((lonA2 - lonA1) * Math.PI) / 180;
             let a2 =
               Math.pow(Math.sin(ALat / 2), 2.0) +
@@ -1198,202 +1832,125 @@ const Board = ({ searchPlace }) => {
             let c2 = 2 * Math.asin(Math.sqrt(a2));
             let finalA = R * c2;
 
-            // if (finalA <= 100) {
-            //   confirm.push("A");
+            if (finalD <= 100 && finalA <= 100) {
+
+              // tempArr1.push(locationMaster[0][3]);
+              console.log(finalD);
+              console.log(finalA);
+
+            }
+            else
+            {
+              alert("100미터 이내에 존재하는 주소가 아닙니다.");
+              completeXY = [];
+              completeDA = [];
+            }
+
+            // if (tempArr1.length === 0) {
+            //   alert("검색 결과가 존재하지 않습니다.");
+            //   completeXY = [];
+            //   completeDA = [];
             // }
 
-            // console.log(final);
-            console.log(finalA);
-            if (finalD <= 100 && finalA <= 100) {
-              tempArr1.push(dbLocation[i][3]);
-            }
-          }
-          console.log(tempArr1);
-          if (tempArr1.length === 0) {
-            alert("검색결과가 없습니다");
-            completeXY = [];
-            completeDA = [];
-          } else {
-            setPageNum(0);
-            channelNum = tempArr1.length;
-            channelPages =
-              channelNum % 10 === 0
-                ? Math.floor(channelNum / 10)
-                : Math.floor(channelNum / 10) + 1;
-            setChannelPg(channelPages);
-            let result = [];
-            for (let i = 0; i < res.data.length; i++) {
-              for (let j = 0; j < tempArr1.length; j++) {
-                if (res.data[i].id === tempArr1[j]) {
-                  result.push(res.data[i]);
-                }
-              }
-            }
-            console.log(result);
 
-            let tempAllArr = [];
-            const reverseData = result.slice(0).reverse();
-            for (let i = 0; i < channelPages; i++) {
-              let tempStartNum = 0;
-              let tempNum = 10;
-              let tempArr = [];
-              tempStartNum = tempNum * i;
-              tempNum = tempNum * (i + 1);
-              for (let j = tempStartNum; j < tempNum; j++) {
-                if (reverseData[j] !== undefined) {
-                  tempArr.push(reverseData[j]);
-                }
-              }
-              tempAllArr = [...tempAllArr, tempArr];
-              // addChannelArr(tempArr);
-              // console.log(channelArr);
-              tempArr = [];
-            }
-            setChannelArr(tempAllArr);
-            completeXY = [];
-            completeDA = [];
-          }
+          // for (let i = 0; i < dbLocation.length; i++) {
+          //   let confirm = [];
+          //   const latD1 = parseFloat(completeXY[0][0]);
+          //   const latD2 = parseFloat(dbLocation[i][0][0]);
+          //   const lonD1 = parseFloat(completeXY[0][1]);
+          //   const lonD2 = parseFloat(dbLocation[i][0][1]);
+          //   let dLat = ((latD2 - latD1) * Math.PI) / 180;
+          //   let dLon = ((lonD2 - lonD1) * Math.PI) / 180;
+          //   let a =
+          //     Math.pow(Math.sin(dLat / 2), 2.0) +
+          //     Math.pow(Math.sin(dLon / 2), 2.0) *
+          //       Math.cos((latD1 * Math.PI) / 180) *
+          //       Math.cos((latD2 * Math.PI) / 180);
+          //   let c = 2 * Math.asin(Math.sqrt(a));
+          //   let finalD = R * c;
 
-          // document.getElementById("1").style.color = "blue";
-          // setChannelList(res.data);
+          //   // if (finalD <= 100) {
+          //   //   confirm.push("D");
+          //   // }
+
+          //   // 여기까지가 출발지에서 100미터 전방에 있는 것들
+
+          //   console.log("정상");
+          //   const latA1 = parseFloat(completeXY[1][0]);
+          //   const latA2 = parseFloat(dbLocation[i][1][0]);
+          //   const lonA1 = parseFloat(completeXY[1][1]);
+          //   const lonA2 = parseFloat(dbLocation[i][1][1]);
+            
+
+          //   let ALat = ((latA2 - latA1) * Math.PI) / 180;
+          //   let ALon = ((lonA2 - lonA1) * Math.PI) / 180;
+          //   let a2 =
+          //     Math.pow(Math.sin(ALat / 2), 2.0) +
+          //     Math.pow(Math.sin(ALon / 2), 2.0) *
+          //       Math.cos((latA1 * Math.PI) / 180) *
+          //       Math.cos((latA2 * Math.PI) / 180);
+          //   let c2 = 2 * Math.asin(Math.sqrt(a2));
+          //   let finalA = R * c2;
+          //   console.log(finalA);
+          //   if (finalD <= 100 && finalA <= 100) {
+          //     tempArr1.push(dbLocation[i][3]);
+          //   }
+          // }
+          // console.log(tempArr1);
+          // if (tempArr1.length === 0) {
+          //   alert("검색 결과가 존재하지 않습니다.");
+          //   completeXY = [];
+          //   completeDA = [];
+          // } else {
+          //   // setPageNum(0);
+          //   channelNum = tempArr1.length;
+          //   channelPages =
+          //     channelNum % 10 === 0
+          //       ? Math.floor(channelNum / 10)
+          //       : Math.floor(channelNum / 10) + 1;
+          //   setChannelPg(channelPages);
+          //   let result = [];
+          //   for (let i = 0; i < res.data.length; i++) {
+          //     for (let j = 0; j < tempArr1.length; j++) {
+          //       if (res.data[i].id === tempArr1[j]) {
+          //         result.push(res.data[i]);
+          //       }
+          //     }
+          //   }
+          //   console.log(result);
+
+          //   let tempAllArr = [];
+          //   const reverseData = result.slice(0).reverse();
+          //   for (let i = 0; i < channelPages; i++) {
+          //     let tempStartNum = 0;
+          //     let tempNum = 10;
+          //     let tempArr = [];
+          //     tempStartNum = tempNum * i;
+          //     tempNum = tempNum * (i + 1);
+          //     for (let j = tempStartNum; j < tempNum; j++) {
+          //       if (reverseData[j] !== undefined) {
+          //         tempArr.push(reverseData[j]);
+          //       }
+          //     }
+          //     tempAllArr = [...tempAllArr, tempArr];
+          //     // addChannelArr(tempArr);
+          //     // console.log(channelArr);
+          //     tempArr = [];
+          //   }
+          //   setChannelArr(tempAllArr);
+          //   completeXY = [];
+          //   completeDA = [];
+          // }
+
         }
 
-        return res.data;
+        // return res.data;
       } catch (e) {
         console.log("error: " + e);
         alert("검색결과가 없습니다");
         // window.location.reload();
       }
     };
-
-    // const searchChannel = async (data, pagination, DorA) => {
-    //   try {
-    //     // const res = await axios.get("http://localhost:4000/carpools");
-    //     // 진짜 서버 연결하면 수정해야하는 부분 @@@@
-    //     let paginationElD = null;
-    //     let paginationElA = null;
-    //     if (DorA === "findD") {
-    //       const dataD = data;
-    //       const paginationD = pagination;
-
-    //       const listElD = document.getElementById("invisible1");
-    //       const fragmentD = document.createDocumentFragment();
-    //       removeAllChildNods(listElD);
-    //       for (let i = 0; i < dataD.length; i++) {
-    //         const itemElD = getListItem(i, dataD[i]);
-    //         fragmentD.appendChild(itemElD);
-    //       }
-
-    //       listElD?.appendChild(fragmentD);
-
-    //       // const pagination1 = pagination;
-
-    //       paginationElD = document.getElementById("invisible1Sub");
-    //       // const fragmentD = document.createDocumentFragment();
-    //       while (paginationElD?.hasChildNodes()) {
-    //         paginationElD.removeChild(paginationElD.lastChild);
-    //       }
-
-    //       for (let i = 1; i <= paginationD.last; i++) {
-    //         const elD = document.createElement("a");
-    //         elD.href = "#";
-    //         elD.innerHTML = String(i);
-
-    //         if (i === paginationD.current) {
-    //           elD.className = "on";
-    //         } else {
-    //           elD.onclick = setTimeout(
-    //             (function (i) {
-    //               return function () {
-    //                 paginationD.gotoPage(i);
-    //                 return false;
-    //               };
-    //             })(i),
-    //             1000
-    //           );
-    //         }
-
-    //         fragmentD.appendChild(elD);
-    //       }
-    //       paginationElD?.appendChild(fragmentD);
-    //       // console.log(paginationElD.children);
-
-    //       let k = 1;
-    //       Array.from(paginationElD.children).map((link) => {
-    //         // pagination.current = k;
-    //         setTimeout(link.click(), 1000);
-    //         Array.from(listElD.children).map((item) => {
-    //           startArround.push(
-    //             item.lastChild.firstChild.nextElementSibling.childNodes[0].data
-    //           );
-    //         });
-    //         k++;
-    //       });
-
-    //       // Array.from(listElD.children).map((item) => {
-    //       //   startArround.push(
-    //       //     item.lastChild.firstChild.nextElementSibling.childNodes[0].data
-    //       //   );
-    //       // });
-
-    //       // console.log(listElD.children);
-    //       // for (let i = 1; i <= paginationD.last; i++) {
-    //       //   Array.from(listElD.children).map((item) => {
-    //       //     startArround.push(
-    //       //       item.lastChild.firstChild.nextElementSibling.childNodes[0].data
-    //       //     );
-    //       //   });
-    //       //   if (i < paginationD.last)
-    //       //     document.getElementById("invisible1Sub").click();
-    //       // }
-    // let num2 = new Set(startArround);
-    // startArround = Array.from(num2);
-    // console.log(startArround);
-    //     } else {
-    //       const dataA = data;
-    //       const paginationA = pagination;
-
-    //       const listElA = document.getElementById("invisible1");
-    //       const fragmentA = document.createDocumentFragment();
-    //       removeAllChildNods(listElA);
-    //       for (let i = 0; i < dataA.length; i++) {
-    //         const itemElD = getListItem(i, dataA[i]);
-    //         fragmentA.appendChild(itemElD);
-    //       }
-
-    //       listElA?.appendChild(fragmentA);
-
-    //       paginationElA = document.getElementById("invisible2Sub");
-    //       // const fragmentD = document.createDocumentFragment();
-    //       while (paginationElA?.hasChildNodes()) {
-    //         paginationElA.removeChild(paginationElA.lastChild);
-    //       }
-
-    //       for (let i = 1; i <= paginationA.last; i++) {
-    //         const elA = document.createElement("a");
-    //         elA.href = "#";
-    //         elA.innerHTML = String(i);
-
-    //         if (i === paginationA.current) {
-    //           elA.className = "on";
-    //         } else {
-    //           listElA.onclick = (function (i) {
-    //             return function () {
-    //               paginationA.gotoPage(i);
-    //             };
-    //           })(i);
-    //         }
-
-    //         fragmentA.appendChild(elA);
-    //       }
-    //       paginationElA?.appendChild(fragmentA);
-    //     }
-
-    //     // return res.data;
-    //   } catch (e) {
-    //     console.log("error: " + e);
-    //   }
-    // };
 
     function displayPlaces(places) {
       if (whichPoint === "start") {
@@ -1749,18 +2306,688 @@ const Board = ({ searchPlace }) => {
     });
   }, []);
 
-  // const isFocused = useIsFocused();
-
   useEffect(() => {
-    getChannelData();
+    realGetChannelData();
     console.log("된거니");
   }, []);
 
-  const check = () => {
-    console.log(channelList);
-    console.log(channelArr[pageNum].slice(0).reverse());
-    console.log(typeof pageNum);
-  };
+
+  useEffect(() => {
+    var markers = [];
+    const container = document.getElementById("map");
+    const options = {
+      center: new kakao.maps.LatLng(33.450701, 126.570667),
+      level: 3,
+    };
+    const map = new kakao.maps.Map(container, options);
+
+    const markerPosition = new window.kakao.maps.LatLng(
+      38.2313466,
+      128.2139293
+    );
+
+    const marker = new window.kakao.maps.Marker({
+      position: markerPosition,
+    });
+
+    marker.setMap(map);
+
+    const ps = new kakao.maps.services.Places();
+
+    var infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
+
+    const searchForm = document.getElementById("submit_btn1");
+    searchForm?.addEventListener("click", function (e) {
+      let keyword = document.getElementById("keyword1").value;
+      if (!keyword.replace(/^\s+|\s+$/g, "")) {
+        e.stopImmediatePropagation();
+        alert("키워드를 입력해주세요!");
+        setShowListA(false);
+        setShowListD(false);
+        return false;
+      }
+      whichPoint = e.target.classList[0];
+      // console.log(whichPoint);
+      e.preventDefault();
+      setShowListD(true);
+      searchPlaces(whichPoint);
+    });
+
+    const searchForm2 = document.getElementById("submit_btn2");
+    searchForm2?.addEventListener("click", function (e) {
+      let keyword = document.getElementById("keyword2").value;
+      if (!keyword.replace(/^\s+|\s+$/g, "")) {
+        e.stopImmediatePropagation();
+        alert("키워드를 입력해주세요!");
+        setShowListA(false);
+        setShowListD(false);
+        return false;
+      }
+      whichPoint = e.target.classList[0];
+      // console.log(whichPoint);
+      e.preventDefault();
+      setShowListA(true);
+      searchPlaces(whichPoint);
+    });
+
+    const findDA = document.getElementById("find");
+    findDA?.addEventListener("click", function (e) {
+      let findD = document.getElementById("findD").value;
+      let findA = document.getElementById("findA").value;
+      console.log(findD);
+      console.log(findA);
+      if (
+        !findD.replace(/^\s+|\s+$/g, "") ||
+        !findA.replace(/^\s+|\s+$/g, "")
+      ) {
+        e.stopImmediatePropagation();
+        alert("출발지와 목적지를 모두 입력해주세요!");
+        return false;
+      }
+      e.preventDefault();
+      whichPoint = "both";
+      searchPlaces(whichPoint);
+    });
+
+    function searchPlaces(whichPoint) {
+      let keyword = null;
+      let findD = null;
+      let findA = null;
+      if (whichPoint === "start") {
+        keyword = document.getElementById("keyword1").value;
+        ps.keywordSearch(keyword, placesSearchCB);
+      } else if (whichPoint === "end") {
+        keyword = document.getElementById("keyword2").value;
+        ps.keywordSearch(keyword, placesSearchCB);
+      } else {
+        findD = document.getElementById("findD").value;
+        findA = document.getElementById("findA").value;
+
+        function placesSearchCBD(data, status, pagination) {
+          if (status === window.kakao.maps.services.Status.OK) {
+            const dataD = data;
+            // console.log(dataD);
+            const locationD = [dataD[0].x, dataD[0].y];
+            const locationD_name = dataD[0].place_name;
+            console.log(locationD_name);
+            searchChannel("findD", locationD, locationD_name);
+          } else if (status === window.kakao.maps.services.Status.ZERO_RESULT) {
+            alert("검색 결과가 존재하지 않습니다.");
+          } else if (status === window.kakao.maps.services.Status.ERROR) {
+            alert("검색 결과 중 오류가 발생했습니다.");
+          }
+        }
+
+        function placesSearchCBA(data, status, pagination) {
+          if (status === window.kakao.maps.services.Status.OK) {
+            const dataA = data;
+            // console.log(dataA);
+            const locationA = [dataA[0].x, dataA[0].y];
+            const locationA_name = dataA[0].place_name;
+            console.log(locationA_name);
+            searchChannel("findA", locationA, locationA_name);
+          } else if (status === window.kakao.maps.services.Status.ZERO_RESULT) {
+            alert("검색 결과가 존재하지 않습니다.");
+          } else if (status === window.kakao.maps.services.Status.ERROR) {
+            alert("검색 결과 중 오류가 발생했습니다.");
+          }
+        }
+
+        ps.keywordSearch(findD, placesSearchCBD);
+        ps.keywordSearch(findA, placesSearchCBA);
+      }
+    }
+
+    function placesSearchCB(data, status, pagination) {
+      if (status === window.kakao.maps.services.Status.OK) {
+        if (whichPoint === "start") {
+          const data1 = data;
+          const pagination1 = pagination;
+          displayPlaces(data1);
+          displayPagination(pagination1);
+          const bounds = new window.kakao.maps.LatLngBounds();
+          for (let i = 0; i < data.length; i++) {
+            displayMarker(data[i]);
+            bounds.extend(new window.kakao.maps.LatLng(data[i].y, data[i].x));
+          }
+          map.setBounds(bounds);
+        } else if (whichPoint === "end") {
+          const data2 = data;
+          const pagination2 = pagination;
+          displayPlaces(data2);
+          displayPagination(pagination2);
+          const bounds = new window.kakao.maps.LatLngBounds();
+          for (let i = 0; i < data.length; i++) {
+            displayMarker(data[i]);
+            bounds.extend(new window.kakao.maps.LatLng(data[i].y, data[i].x));
+          }
+          map.setBounds(bounds);
+        }
+      } else if (status === window.kakao.maps.services.Status.ZERO_RESULT) {
+        alert("검색 결과가 존재하지 않습니다.");
+      } else if (status === window.kakao.maps.services.Status.ERROR) {
+        alert("검색 결과 중 오류가 발생했습니다.");
+      }
+    }
+
+    const searchChannel = async (DorA, location, locationName) => {
+      try {
+        // const res = await axios.get("http://localhost:4000/posts");
+
+        if (DorA === "findD") {
+          completeXY.unshift(location);
+          completeDA.unshift(locationName);
+          console.log(completeXY);
+          console.log(completeDA);
+          if(completeXY.length == 2 && completeDA.length == 2)
+          {
+            let tempArr1 = [];
+          let R = 6372.8 * 1000;
+
+
+          const latD1 = parseFloat(completeXY[0][0]);
+          const latD2 = parseFloat(locationMaster[0][0][0]);
+          const lonD1 = parseFloat(completeXY[0][1]);
+          const lonD2 = parseFloat(locationMaster[0][0][1]);
+          let dLat = ((latD2 - latD1) * Math.PI) / 180;
+          let dLon = ((lonD2 - lonD1) * Math.PI) / 180;
+          let a =
+              Math.pow(Math.sin(dLat / 2), 2.0) +
+              Math.pow(Math.sin(dLon / 2), 2.0) *
+                Math.cos((latD1 * Math.PI) / 180) *
+                Math.cos((latD2 * Math.PI) / 180);
+            let c = 2 * Math.asin(Math.sqrt(a));
+            let finalD = R * c;
+
+          const latA1 = parseFloat(completeXY[1][0]);
+          const latA2 = parseFloat(locationMaster[0][1][0]);
+          const lonA1 = parseFloat(completeXY[1][1]);
+          const lonA2 = parseFloat(locationMaster[0][1][1]);
+          let ALat = ((latA2 - latA1) * Math.PI) / 180;
+            let ALon = ((lonA2 - lonA1) * Math.PI) / 180;
+            let a2 =
+              Math.pow(Math.sin(ALat / 2), 2.0) +
+              Math.pow(Math.sin(ALon / 2), 2.0) *
+                Math.cos((latA1 * Math.PI) / 180) *
+                Math.cos((latA2 * Math.PI) / 180);
+            let c2 = 2 * Math.asin(Math.sqrt(a2));
+            let finalA = R * c2;
+
+            if (finalD <= 100 && finalA <= 100) {
+
+              // tempArr1.push(locationMaster[0][3]);
+              console.log(finalD);
+              console.log(finalA);
+              console.log("성공");
+              const changedDA = {
+                channelId: enteredPostId,    
+                userId: loggedRealId,
+                departures: completeDA[0],
+                departuresLatitude: completeXY[0][0],
+                departuresLongitude: completeXY[0][1],
+                arrivals: completeDA[1],
+                arrivalsLatitude: completeXY[1][0],
+                arrivalsLongitude: completeXY[1][1],
+              }
+              const res = await axios.patch("http://localhost:8080/api/carpools", changedDA, {
+                withCredentials: true,
+              });
+              alert("변경 되었습니다.");
+              completeXY = [];
+              completeDA = [];
+
+            }
+            else
+            {
+              alert("100미터 이내에 존재하는 주소가 아닙니다.");
+              completeXY = [];
+              completeDA = [];
+            }
+          }
+          else{
+            console.log("이건 버림");
+          }
+        } else {
+          completeXY.push(location);
+          completeDA.push(locationName);
+          console.log(completeXY);
+          console.log(completeDA);
+          if(completeXY.length == 2 && completeDA.length == 2)
+          {
+            let tempArr1 = [];
+          let R = 6372.8 * 1000;
+
+          const latD1 = parseFloat(completeXY[0][0]);
+          const latD2 = parseFloat(locationMaster[0][0][0]);
+          const lonD1 = parseFloat(completeXY[0][1]);
+          const lonD2 = parseFloat(locationMaster[0][0][1]);
+          let dLat = ((latD2 - latD1) * Math.PI) / 180;
+          let dLon = ((lonD2 - lonD1) * Math.PI) / 180;
+          let a =
+              Math.pow(Math.sin(dLat / 2), 2.0) +
+              Math.pow(Math.sin(dLon / 2), 2.0) *
+                Math.cos((latD1 * Math.PI) / 180) *
+                Math.cos((latD2 * Math.PI) / 180);
+            let c = 2 * Math.asin(Math.sqrt(a));
+            let finalD = R * c;
+
+          const latA1 = parseFloat(completeXY[1][0]);
+          const latA2 = parseFloat(locationMaster[0][1][0]);
+          const lonA1 = parseFloat(completeXY[1][1]);
+          const lonA2 = parseFloat(locationMaster[0][1][1]);
+          let ALat = ((latA2 - latA1) * Math.PI) / 180;
+            let ALon = ((lonA2 - lonA1) * Math.PI) / 180;
+            let a2 =
+              Math.pow(Math.sin(ALat / 2), 2.0) +
+              Math.pow(Math.sin(ALon / 2), 2.0) *
+                Math.cos((latA1 * Math.PI) / 180) *
+                Math.cos((latA2 * Math.PI) / 180);
+            let c2 = 2 * Math.asin(Math.sqrt(a2));
+            let finalA = R * c2;
+
+            if (finalD <= 100 && finalA <= 100) {
+
+              // tempArr1.push(locationMaster[0][3]);
+              console.log(finalD);
+              console.log(finalA);
+              console.log(completeXY);
+              console.log(completeDA);
+              console.log("성공");
+              const changedDA = {
+                channelId: enteredPostId,    
+                userId: loggedRealId,
+                departures: completeDA[0],
+                departuresLatitude: completeXY[0][0],
+                departuresLongitude: completeXY[0][1],
+                arrivals: completeDA[1],
+                arrivalsLatitude: completeXY[1][0],
+                arrivalsLongitude: completeXY[1][1],
+              }
+              const res = await axios.patch("http://localhost:8080/api/carpools", changedDA, {
+                withCredentials: true,
+              });
+              alert("변경 되었습니다.");
+              completeXY = [];
+              completeDA = [];
+
+            }
+            else
+            {
+              alert("100미터 이내에 존재하는 주소가 아닙니다.");
+              completeXY = [];
+              completeDA = [];
+            }
+          }
+          else{
+            console.log("이건 버림");
+          }
+        }
+
+        // return res.data;
+      } catch (e) {
+        console.log("error: " + e);
+        alert("검색결과가 없습니다");
+        // window.location.reload();
+      }
+    };
+
+    function displayPlaces(places) {
+      if (whichPoint === "start") {
+        const listEl = document.getElementById("placesList1");
+        const fragment = document.createDocumentFragment();
+        removeAllChildNods(listEl);
+        removeMarker();
+        for (let i = 0; i < places.length; i++) {
+          const placePosition = new window.kakao.maps.LatLng(
+            places[i].y,
+            places[i].x
+          );
+          const marker = addMarker(placePosition, i);
+          const itemEl = getListItem(i, places[i]);
+          (function (marker, title) {
+            window.kakao.maps.event.addListener(
+              marker,
+              "mouseover",
+              function () {
+                displayInfowindow(marker, title);
+              }
+            );
+
+            window.kakao.maps.event.addListener(
+              marker,
+              "mouseout",
+              function () {
+                infowindow.close();
+              }
+            );
+
+            itemEl.addEventListener("click", function (e) {
+              displayInfowindow(marker, title);
+              setPlace(places[i]);
+              setSearch(places[i].place_name);
+              setInputStartPoint(places[i].place_name);
+              setDeparturesLatitude(places[i].x);
+              setDeparturesLongitude(places[i].y);
+              setShowListD(false);
+
+              map.panTo(placePosition);
+            });
+          })(marker, places[i].place_name);
+
+          fragment.appendChild(itemEl);
+        }
+
+        listEl?.appendChild(fragment);
+      } else if (whichPoint === "end") {
+        const listEl2 = document.getElementById("placesList2");
+        const fragment = document.createDocumentFragment();
+        removeAllChildNods(listEl2);
+        removeMarker();
+        for (let i = 0; i < places.length; i++) {
+          const placePosition = new window.kakao.maps.LatLng(
+            places[i].y,
+            places[i].x
+          );
+          const marker = addMarker(placePosition, i);
+          const itemEl2 = getListItem2(i, places[i]);
+
+          (function (marker, title) {
+            window.kakao.maps.event.addListener(
+              marker,
+              "mouseover",
+              function () {
+                displayInfowindow(marker, title);
+              }
+            );
+
+            window.kakao.maps.event.addListener(
+              marker,
+              "mouseout",
+              function () {
+                infowindow.close();
+              }
+            );
+
+            itemEl2.addEventListener("click", function (e) {
+              displayInfowindow(marker, title);
+              setPlace(places[i]);
+              setSearch2(places[i].place_name);
+              setInputEndPoint(places[i].place_name);
+              setArrivalsLatitude(places[i].x);
+              setArrivalsLongitude(places[i].y);
+              setShowListA(false);
+
+              map.panTo(placePosition);
+            });
+          })(marker, places[i].place_name);
+
+          fragment.appendChild(itemEl2);
+        }
+        listEl2?.appendChild(fragment);
+      }
+    }
+
+    function getListItem(index, places) {
+      const el = document.createElement("li");
+      el.style.cursor = "pointer";
+
+      let itemStr =
+        '<span class="markerbg marker_ ' +
+        (index + 1) +
+        '"></span>' +
+        '<div class="info">' +
+        "   <h5>" +
+        places.place_name +
+        "</h5>";
+
+      if (places.road_address_name) {
+        itemStr +=
+          "    <span>" +
+          places.road_address_name +
+          "</span>" +
+          '   <span class="jibun gray">' +
+          `<img src="https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/places_jibun.png">
+              </img>` +
+          places.address_name +
+          "</span>";
+      } else {
+        itemStr += "    <span>" + places.address_name + "</span>";
+      }
+
+      itemStr += '  <span class="tel">' + places.phone + "</span>" + "</div>";
+
+      el.innerHTML = itemStr;
+      el.className = "item";
+      // console.log(itemStr);
+      return el;
+    }
+
+    function getListItem2(index, places) {
+      const el2 = document.createElement("li");
+      el2.style.cursor = "pointer";
+
+      let itemStr =
+        '<span class="markerbg marker_ ' +
+        (index + 1) +
+        '"></span>' +
+        '<div class="info">' +
+        "   <h5>" +
+        places.place_name +
+        "</h5>";
+
+      if (places.road_address_name) {
+        itemStr +=
+          "    <span>" +
+          places.road_address_name +
+          "</span>" +
+          '   <span class="jibun gray">' +
+          `<img src="https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/places_jibun.png">
+              </img>` +
+          places.address_name +
+          "</span>";
+      } else {
+        itemStr += "    <span>" + places.address_name + "</span>";
+      }
+
+      itemStr += '  <span class="tel">' + places.phone + "</span>" + "</div>";
+
+      el2.innerHTML = itemStr;
+      el2.className = "item";
+
+      return el2;
+    }
+
+    function addMarker(position, idx) {
+      const imageSrc =
+        "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png";
+      const imageSize = new window.kakao.maps.Size(36, 37);
+      const imgOptions = {
+        spriteSize: new window.kakao.maps.Size(36, 691),
+        spriteOrigin: new window.kakao.maps.Point(0, idx * 46 + 10),
+        offset: new window.kakao.maps.Point(13, 37),
+      };
+
+      const markerImage = new window.kakao.maps.MarkerImage(
+        imageSrc,
+        imageSize,
+        imgOptions
+      );
+
+      const marker = new window.kakao.maps.Marker({
+        position,
+        image: markerImage,
+      });
+
+      marker.setMap(map);
+      markers.push(marker);
+
+      return marker;
+    }
+
+    function removeMarker() {
+      for (let i = 0; i < markers.length; i++) {
+        markers[i].setMap(null);
+      }
+      markers = [];
+    }
+
+    function displayPagination(pagination) {
+      let paginationEl = null;
+      let paginationEl2 = null;
+      if (whichPoint === "start") {
+        const pagination1 = pagination;
+
+        paginationEl = document.getElementById("pagination1");
+        const fragment = document.createDocumentFragment();
+
+        paginationEl.style.display = "flex";
+        paginationEl.style.justifyContent = "center";
+        paginationEl.style.marginTop = "-15px";
+        while (paginationEl?.hasChildNodes()) {
+          paginationEl.removeChild(paginationEl.lastChild);
+        }
+
+        for (let i = 1; i <= pagination1.last; i++) {
+          const el = document.createElement("a");
+          el.style.textDecoration = "none";
+          if (i !== pagination1.last) {
+            el.style.marginRight = "10px";
+          }
+          el.href = "#";
+          el.innerHTML = String(i);
+          el.id = "el" + String(i);
+          el.style.color = "black";
+
+          if (i === pagination1.current) {
+            el.className = "on";
+            el.style.color = "blue";
+          } else {
+            el.onclick = (function (i) {
+              return function () {
+                whichPoint = "start";
+                pagination1.gotoPage(i);
+              };
+            })(i);
+          }
+
+          fragment.appendChild(el);
+        }
+        paginationEl?.appendChild(fragment);
+      } else if (whichPoint === "end") {
+        const pagination2 = pagination;
+        paginationEl2 = document.getElementById("pagination2");
+        const fragment = document.createDocumentFragment();
+
+        paginationEl2.style.display = "flex";
+        paginationEl2.style.justifyContent = "center";
+        paginationEl2.style.marginTop = "-15px";
+        while (paginationEl2?.hasChildNodes()) {
+          paginationEl2.removeChild(paginationEl2.lastChild);
+        }
+
+        for (let i = 1; i <= pagination2.last; i++) {
+          const el2 = document.createElement("a");
+          el2.style.textDecoration = "none";
+          if (i !== pagination2.last) {
+            el2.style.marginRight = "10px";
+          }
+          el2.href = "#";
+          el2.innerHTML = String(i);
+          el2.id = "el2" + String(i);
+          el2.style.color = "black";
+
+          if (i === pagination2.current) {
+            el2.className = "on";
+            el2.style.color = "blue";
+          } else {
+            el2.onclick = (function (i) {
+              return function () {
+                whichPoint = "end";
+                pagination2.gotoPage(i);
+              };
+            })(i);
+          }
+
+          fragment.appendChild(el2);
+        }
+        paginationEl2?.appendChild(fragment);
+      }
+    }
+
+    function displayInfowindow(marker, title) {
+      const content = '<div style="padding:5px;z-index:1;">' + title + "</div>";
+
+      infowindow.setContent(content);
+      infowindow.open(map, marker);
+    }
+
+    function removeAllChildNods(el) {
+      while (el.hasChildNodes()) {
+        el.removeChild(el.lastChild);
+      }
+    }
+
+    function displayMarker(place) {
+      const marker = new window.kakao.maps.Marker({
+        map,
+        position: new window.kakao.maps.LatLng(place.y, place.x),
+      });
+      window.kakao.maps.event.addListener(
+        marker,
+        "click",
+        function (mouseEvent) {
+          setPlace(place);
+          infowindow.setContent(`
+              <span>
+              ${place.place_name}
+              </span>
+              `);
+          infowindow.open(map, marker);
+          const moveLatLon = new window.kakao.maps.LatLng(place.y, place.x);
+          map.panTo(moveLatLon);
+        }
+      );
+    }
+
+    setTimeout(function () {
+      map.relayout();
+    }, 1000);
+
+    kakao.maps.event.addListener(map, "click", function (mouseEvent) {
+      var latlng = mouseEvent.latLng;
+
+      var markerPosition = new kakao.maps.LatLng(
+        latlng.getLat(),
+        latlng.getLng()
+      );
+
+      var marker = new kakao.maps.Marker({
+        position: markerPosition,
+      });
+
+      marker.setMap(map);
+
+      kakao.maps.event.addListener(marker, "click", function () {
+        marker.setMap(null);
+      });
+
+      // if (startPoint === true) {
+      //   var stDiv = document.getElementById("stpt");
+      //   stDiv.innerHTML = latlng.getLat() + " / " + latlng.getLng();
+      // }
+      // if (startPoint === false) {
+      //   var edDiv = document.getElementById("edpt");
+      //   edDiv.innerHTML = latlng.getLat() + " / " + latlng.getLng();
+      // }
+
+      var message = "클릭한 위치의 위도는 " + latlng.getLat() + " 이고, ";
+      message += "경도는 " + latlng.getLng() + " 입니다";
+    });
+  }, [isRoomOn]);
+
+
+
+
 
   return (
     <Container>
@@ -1768,6 +2995,7 @@ const Board = ({ searchPlace }) => {
       <Suspense fallback={<PacmanLoader color="#000000" size={25} />}>
         <BoardBox>
           <SearchSection>
+            {/* <button onClick={realGetChannelData}>temp</button> */}
             <button
               style={{
                 width: "20px",
@@ -1781,30 +3009,32 @@ const Board = ({ searchPlace }) => {
                 boxShadow: "none",
                 borderWidth: "1px",
               }}
-              onClick={getChannelData}
+              onClick={realGetChannelData}
             >
               <BiRefresh style={{ marginLeft: "-3.5px" }} />
             </button>
-            <Searchbar id="findD" placeholder="출발지"></Searchbar>
+            {/* <Searchbar id="findD" placeholder="출발지"></Searchbar> */}
             {/* <div style={{ marginLeft: "40px" }}>목적지</div> */}
-            <Searchbar2 id="findA" placeholder="도착지"></Searchbar2>
+            <Searchbar placeholder="출발지or도착지" onChange={changeWord}></Searchbar>
             <button
-              id="find"
+              // id="find"
+              // type="submit"
               style={{
                 width: "20px",
                 height: "20px",
                 borderRadius: "15%",
                 backgroundColor: "white",
                 marginBottom: "8px",
-                marginLeft: "20px",
+                // marginLeft: "20px",
                 cursor: "pointer",
                 borderStyle: "solid",
                 borderColor: "black",
                 boxShadow: "none",
                 borderWidth: "1px",
               }}
+              onClick={realSearch}
             >
-              <AiOutlineSearch style={{ marginLeft: "-5px" }} />
+              <AiOutlineSearch style={{ marginLeft: "-4px" }} />
             </button>
           </SearchSection>
           <Assemble onClick={createChannel}>
@@ -1816,19 +3046,26 @@ const Board = ({ searchPlace }) => {
           </Assemble>
           <ChannelBox id="channelBox">
             {firstTake === false
-              ? channelList
-                  .slice(0)
-                  .reverse()
-                  .map((channel) => {
+              ? channelList.map((channel) => {
+                    // console.log(channel);
                     firstCount++;
                     if (firstCount < 10) {
-                      return (
-                        <Channel
+                      return channel.regular === true ? (
+                        <Channel2
                           onClick={(e) => {
-                            enterChannel(
+                            enterChannel2(
                               channel.curPersonnel,
-                              channel.id,
-                              channel.nickname
+                              channel.postId,
+                              channel.hostNickname,
+                              channel.departures,
+                              channel.departuresLatitude,
+                              channel.departuresLongitude,
+                              channel.arrivals,
+                              channel.arrivalsLatitude,
+                              channel.arrivalsLongitude,
+                              channel.content,
+                              channel.driverId,
+                              channel.hostId
                             );
                           }}
                         >
@@ -1869,21 +3106,91 @@ const Board = ({ searchPlace }) => {
                           <ContactTool>
                             <BsMegaphone /> {channel.content}
                           </ContactTool>
-                          <div>
+                          <RegularSticker>
                             {channel.regular === true ? "정기" : "비정기"}
-                          </div>
+                          </RegularSticker>
+                        </Channel2>
+                      )  : (
+                        <Channel
+                          onClick={(e) => {
+                            enterChannel2(
+                              channel.curPersonnel,
+                              channel.postId,
+                              channel.hostNickname,
+                              channel.departures,
+                              channel.departuresLatitude,
+                              channel.departuresLongitude,
+                              channel.arrivals,
+                              channel.arrivalsLatitude,
+                              channel.arrivalsLongitude,
+                              channel.content,
+                              channel.driverId,
+                              channel.hostId
+                            );
+                          }}
+                        >
+                          <ChannelFirstRow>
+                            <FirstItem>
+                              <div
+                                style={{
+                                  fontSize: "30px",
+                                  fontStyle: "italic",
+                                  fontFamily: "establishRetrosansOTF",
+                                }}
+                              >
+                                출발
+                              </div>
+                              {channel.departures}
+                            </FirstItem>
+                            <img
+                              src={arrow}
+                              alt="arrow"
+                              style={{ height: "32px" }}
+                            />
+                            <FirstItem>
+                              <div
+                                style={{
+                                  fontSize: "30px",
+                                  fontStyle: "italic",
+                                  fontFamily: "establishRetrosansOTF",
+                                }}
+                              >
+                                도착
+                              </div>
+                              {channel.arrivals}
+                            </FirstItem>
+                          </ChannelFirstRow>
+                          <PersonnelSticker>
+                            인원수 {channel.curPersonnel} / {channel.personnel}{" "}
+                          </PersonnelSticker>
+                          <ContactTool>
+                            <BsMegaphone /> {channel.content}
+                          </ContactTool>
+                          <RegularSticker2>
+                        {channel.regular === true ? "정기" : "비정기"}
+                      </RegularSticker2>
                         </Channel>
                       );
                     }
                   })
-              : channelArr[pageNum].map((channel) => {
+              : channelArr.map((channel) => {
+                // console.log(channel);
                   return channel.regular === true ? (
                     <Channel2
                       onClick={(e) => {
-                        enterChannel(
+                        enterChannel2(
                           channel.curPersonnel,
-                          channel.id,
-                          channel.nickname
+                          channel.postId,
+                          channel.hostNickname,
+                          channel.departures,
+                              channel.departuresLatitude,
+                              channel.departuresLongitude,
+                              channel.arrivals,
+                              channel.arrivalsLatitude,
+                              channel.arrivalsLongitude,
+                              channel.content,
+                              channel.driverId,
+                              channel.hostId
                         );
                       }}
                     >
@@ -1931,10 +3238,19 @@ const Board = ({ searchPlace }) => {
                   ) : (
                     <Channel
                       onClick={(e) => {
-                        enterChannel(
+                        enterChannel2(
                           channel.curPersonnel,
-                          channel.id,
-                          channel.nickname
+                          channel.postId,
+                          channel.hostNickname,
+                          channel.departures,
+                              channel.departuresLatitude,
+                              channel.departuresLongitude,
+                              channel.arrivals,
+                              channel.arrivalsLatitude,
+                              channel.arrivalsLongitude,
+                              channel.content,
+                              channel.driverId,
+                              channel.hostId
                         );
                       }}
                     >
@@ -1985,52 +3301,69 @@ const Board = ({ searchPlace }) => {
             {isRoomOn === true &&
               (isMaster ? (
                 <RoomContainer>
-                  <Room>
+                  <Room id="room">
                     <ButtonX3 onClick={closeRoom}>X</ButtonX3>
                     <div>방장: {roomHost}</div>
-                    <div>출발지:{roomDeparture} </div>
-                    <div>목적지:{roomArrival} </div>
+                    <div>출발지: {roomDeparture} </div>
+                    <div>목적지: {roomArrival} </div>
                     <div>
                       운전자: {roomDriver === null ? "없음" : roomDriver}
                     </div>
                     <div>
-                      탑승자:
-                      {roomPeople.sort().map((people) => {
+                      소통창구: {contentEdit === false ? (<>{roomContent} <span><button onClick={editSwitch}>편집</button></span></>) : <><span><input placeholder={roomContent} onChange={changeWord2}></input></span> <span><button onClick={editSwitch}>편집</button></span></>} 
+                    </div>
+                    
+                    <div style={{ zIndex : 7}}>
+                      탑승자:<RoomPeopleBox>{roomPeople.sort().map((people) => {
                         usersCount++;
                         if (usersCount === roomPeople.length)
-                          return (
-                            <span>
-                              {people} <span>X</span>
-                            </span>
-                          );
-                        else
-                          return (
-                            <span>
-                              {people} <span>X</span>,
-                            </span>
-                          );
-                      })}
+                          return (<>
+                          <RoomPeople id={people[1]} onClick={generateProfileBox}>{people[0]}
+                          <HiddenInfo id={`hidden_${people[1]}`}><div>{people[2]}</div>
+                          <div>{people[3]}</div></HiddenInfo></RoomPeople>
+                          </>);
+                        else return (<><RoomPeople id={people[1]} onClick={generateProfileBox}> {people[0]} 
+                        <HiddenInfo id={`hidden_${people[1]}`}><div>{people[2]}</div>
+                          <div>{people[3]}</div></HiddenInfo></RoomPeople>
+                        </>);
+                      })}</RoomPeopleBox>
                     </div>
+                    
                   </Room>
                 </RoomContainer>
               ) : (
                 <RoomContainer>
-                  <Room>
+                  <Room id="room">
                     <ButtonX3 onClick={closeRoom}>X</ButtonX3>
-                    <div>방장: {roomHost}</div>
-                    <div>출발지:{roomDeparture} </div>
-                    <div>목적지:{roomArrival} </div>
-                    <div>
+                    <div style={{marginBottom: "10px"}}>방장: {roomHost}</div>
+                    <div style={{marginBottom: "10px"}}>출발지: {roomDeparture} </div>
+                    <div style={{marginBottom: "10px"}}>목적지: {roomArrival} </div>
+                    <div style={{marginBottom: "10px"}}>
                       운전자: {roomDriver === null ? "없음" : roomDriver}
                     </div>
-                    <div>
-                      탑승자:
-                      {roomPeople.sort().map((people) => {
+                    <div style={{marginBottom: "10px"}}>
+                      소통창구: {roomContent}
+                    </div>
+                    <div style={{marginBottom: "10px"}}>개인 출발지 / 도착지 지정하기 </div>
+                    <span><input id="findD"></input></span>
+                    <span><input id="findA"></input></span>
+                    <span><button id="find">변경</button></span>
+                    
+                    <div style={{marginBottom: "10px"}}>
+                      탑승자:<RoomPeopleBox>{roomPeople.sort().map((people) => {
                         usersCount++;
                         if (usersCount === roomPeople.length)
-                          return <span>{people}</span>;
-                        else return <span> {people}, </span>;
-                      })}
+                          return (<>
+                          <RoomPeople id={people[1]} onClick={generateProfileBox}>{people[0]}
+                          <HiddenInfo id={`hidden_${people[1]}`}><div>{people[2]}</div>
+                          <div>{people[3]}</div></HiddenInfo></RoomPeople>
+                          </>);
+                        else return (<><RoomPeople id={people[1]} onClick={generateProfileBox}> {people[0]} 
+                        <HiddenInfo id={`hidden_${people[1]}`}><div>{people[2]}</div>
+                          <div>{people[3]}</div></HiddenInfo>
+                        </RoomPeople>
+                        </>);
+                      })}</RoomPeopleBox>  
                     </div>
                   </Room>
                 </RoomContainer>
@@ -2146,11 +3479,11 @@ const Board = ({ searchPlace }) => {
                     <input onChange={contentChange}></input>
                   </div>
                 </SecondRow>
-                <button onClick={openChannel}>채널생성</button>
+                <button onClick={openChannel2}>채널생성</button>
               </ModalBox>
             </ModalContainer>
           </ChannelBox>
-          <ChannelPages>{pageGenerator()}</ChannelPages>
+          <ChannelPages>{flag === false ? pageGenerator() : searchPageGenerator()}</ChannelPages>
         </BoardBox>
       </Suspense>
     </Container>

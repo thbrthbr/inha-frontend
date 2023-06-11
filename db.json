@@ -468,6 +468,41 @@
       "regular": false,
       "carpoolDate": "2",
       "driverId": "NICKNAME8"
+    },
+    {
+      "id": 25,
+      "nickname": "NICKNAME1",
+      "userId": "ID1",
+      "channelId": 25,
+      "title": "제목없음",
+      "departures": "인하대역 수인분당선",
+      "departuresLatitude": "126.649763418519",
+      "departuresLongitude": "37.4483386165197",
+      "arrivals": "금천구청역 1호선",
+      "arrivalsLatitude": "126.893608614581",
+      "arrivalsLongitude": "37.4561943743749",
+      "personnel": "2",
+      "curPersonnel": 1,
+      "content": null,
+      "regular": true,
+      "carpoolDate": "2",
+      "driverId": "NICKNAME1"
+    },
+    {
+      "nickname": "NICKNAME1",
+      "userId": 1,
+      "title": "제목없음",
+      "departures": "H 2호점",
+      "departuresLatitude": "127.028306398668",
+      "departuresLongitude": "37.6407543927766",
+      "arrivals": "S",
+      "arrivalsLatitude": "127.07163886814647",
+      "arrivalsLongitude": "37.5425837806368",
+      "personnel": 2,
+      "content": null,
+      "regular": false,
+      "carpoolDate": "2023function toString() { [native code] }9",
+      "id": 26
     }
   ],
   "carpools": [
@@ -1227,6 +1262,38 @@
           "arrivals": "인하대학교 용현캠퍼스",
           "arrivalsLatitude": "126.65435131686084",
           "arrivalsLongitude": "37.44939909637399",
+          "rating": 4.2
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "carpoolId": 25,
+      "hostId": "ID1",
+      "hostNickname": "NICKNAME1",
+      "driverId": null,
+      "driverNickname": null,
+      "departures": "인하대역 수인분당선",
+      "departuresLatitude": "126.649763418519",
+      "departuresLongitude": "37.4483386165197",
+      "arrivals": "금천구청역 1호선",
+      "arrivalsLatitude": "126.893608614581",
+      "arrivalsLongitude": "37.4561943743749",
+      "personnel": "2",
+      "curPersonnel": 1,
+      "content": null,
+      "regular": true,
+      "userChannelList": [
+        {
+          "id": 25,
+          "userId": 1,
+          "nickname": "NICKNAME1",
+          "departures": "인하대역 수인분당선",
+          "departuresLatitude": "126.649763418519",
+          "departuresLongitude": "37.4483386165197",
+          "arrivals": "금천구청역 1호선",
+          "arrivalsLatitude": "126.893608614581",
+          "arrivalsLongitude": "37.4561943743749",
           "rating": 4.2
         }
       ]

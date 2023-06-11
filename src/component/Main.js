@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 import logoImg from "./img/logo.png";
+import { AiOutlineArrowLeft } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
 import {
   LoginStore,
@@ -14,45 +15,62 @@ const Container = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
-  flex-direction: row;
+ flex-direction: row;
   justify-content: center;
   align-items: center;
 `;
 
 const LoginBox = styled.div`
-  margin-top: 200px;
+  margin-top: 120px;
   margin-right: 50px;
-  border: 0.5px solid #c0c0c0;
+  border: 4px solid black;
   height: 500px;
   width: 500px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  position: relative;
 `;
 
 const LoginButton = styled.button`
   margin-top: 10px;
+  background-color: white;
 `;
 
 const SigninButton = styled.button`
   margin-top: 10px;
+  background-color: white;
 `;
 
 const SignInInput = styled.input`
   margin-bottom: 5px;
+  border-color: black;
 `;
 
 const SignInInput2 = styled.input.attrs((props) => ({
   type: "password",
 }))`
   margin-bottom: 5px;
+  border-color: black;
 `;
 
 const ChoiceBox = styled.div`
   display: flex;
   // flex-direction: column;
   margin-bottom: 5px;
+`;
+
+const Transparent = styled.button`
+background-color: white;
+border: none;
+cursor: pointer;
+`
+
+const Radio = styled.input.attrs((props) => ({
+  type: "radio",
+}))`
+//  accent-color: black;
 `;
 
 const Main = (props) => {
@@ -178,7 +196,7 @@ const Main = (props) => {
 
       if (res.data.httpStatus === "OK") {
         alert("회원가입에 성공하셨습니다");
-        // window.location.reload();
+        window.location.reload();
       } else {
         alert(res.data.message);
       }
@@ -205,6 +223,7 @@ const Main = (props) => {
       if (res.status === 200) {
         alert("로그인 되셨습니다");
         setLoggedin(true);
+        console.log(res.data);
         console.log(res.data.nickname);
         console.log(res.data.userId);
         setLoggedId(res.data.nickname);
@@ -340,27 +359,26 @@ const Main = (props) => {
         <img
           src={logoImg}
           alt="logo"
-          style={{ marginTop: "100px", marginRight: "100px" }}
+          style={{ marginTop: "80px", marginRight: "100px" }}
         />
 
-        <LoginBox>
           {loggedin === false ? (
             isSignIn === false ? (
-              <>
-                {/* <div>
-                  <button onClick={kariLogInRequest}>임시로그인</button>
-                </div> */}
-                <div>ID</div>
-                <input type="text" onChange={idChange}></input>
-                <div>비밀번호</div>
-                <input type="password" onChange={passwordChange}></input>
-                <LoginButton onClick={logInRequest}>로그인</LoginButton>
-                <SigninButton onClick={startSignIn}>회원가입</SigninButton>
-              </>
+              <LoginBox>
+                <div>
+                  <Transparent onClick={kariLogInRequest}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</Transparent>
+                </div>
+                <div style={{fontSize:"20px"}}>ID</div>
+                <input type="text" onChange={idChange} style={{marginBottom: "20px", borderColor: "black"}}></input>
+                <div style={{fontSize:"20px"}}>PASSword</div>
+                <input type="password" onChange={passwordChange} style={{marginBottom: "20px",  borderColor: "black"}}></input>
+                <LoginButton onClick={logInRequest}>LOGin</LoginButton>
+                <SigninButton onClick={startSignIn}>SIGNin</SigninButton>
+              </LoginBox>
             ) : (
-              <>
-                <button style={{ marginLeft: "-260px" }} onClick={startSignIn}>
-                  &lt;&lt;
+              <LoginBox>
+                <button style={{ position: "absolute", left: "0%", border: "none", cursor:"pointer", backgroundColor: "white", height: "30px", marginTop: "-470px" }} onClick={startSignIn}>
+                  <AiOutlineArrowLeft/>
                 </button>
                 &lt;아이디&gt;
                 <SignInInput onChange={idChange}></SignInInput>
@@ -377,6 +395,9 @@ const Main = (props) => {
                     type="radio"
                     name="gender"
                     value="true"
+                    style={{
+                      borderColor: "black"
+                    }}
                     onChange={genderChange}
                   />
                   <div>여자</div>
@@ -384,6 +405,9 @@ const Main = (props) => {
                     type="radio"
                     name="gender"
                     value="false"
+                    style={{
+                      borderColor: "black"
+                    }}
                     onChange={genderChange}
                   />
                 </ChoiceBox>
@@ -392,8 +416,9 @@ const Main = (props) => {
                   <input
                     style={{
                       width: "30px",
-                      "margin-right": "5px",
-                      "margin-left": "5px",
+                      marginRight: "5px",
+                      marginLeft: "5px",
+                      borderColor: "black"
                     }}
                     id="first"
                     onChange={phoneChange}
@@ -402,8 +427,9 @@ const Main = (props) => {
                   <input
                     style={{
                       width: "40px",
-                      "margin-right": "5px",
-                      "margin-left": "5px",
+                      marginRight: "5px",
+                      marginLeft: "5px",
+                      borderColor: "black"
                     }}
                     id="second"
                     onChange={phoneChange}
@@ -412,8 +438,9 @@ const Main = (props) => {
                   <input
                     style={{
                       width: "40px",
-                      "margin-right": "5px",
-                      "margin-left": "5px",
+                      marginRight: "5px",
+                      marginLeft: "5px",
+                      borderColor: "black"
                     }}
                     id="third"
                     onChange={phoneChange}
@@ -425,8 +452,9 @@ const Main = (props) => {
                   <input
                     style={{
                       width: "40px",
-                      "margin-right": "5px",
-                      "margin-left": "5px",
+                      marginRight: "5px",
+                      marginLeft: "5px",
+                      borderColor: "black"
                     }}
                     placeholder="YYYY"
                     id="year"
@@ -435,8 +463,9 @@ const Main = (props) => {
                   <input
                     style={{
                       width: "30px",
-                      "margin-right": "5px",
-                      "margin-left": "5px",
+                      marginRight: "5px",
+                      marginLeft: "5px",
+                      borderColor: "black"
                     }}
                     placeholder="MM"
                     id="month"
@@ -445,8 +474,9 @@ const Main = (props) => {
                   <input
                     style={{
                       width: "30px",
-                      "margin-right": "5px",
-                      "margin-left": "5px",
+                      marginRight: "5px",
+                      marginLeft: "5px",
+                      borderColor: "black"
                     }}
                     placeholder="DD"
                     id="day"
@@ -457,19 +487,13 @@ const Main = (props) => {
                 &lt;운전가능여부&gt;
                 <ChoiceBox>
                   <div>예</div>
-                  <input
-                    type="radio"
-                    name="driverCheck"
+                  <Radio name="driverCheck"
                     value="true"
-                    onChange={isDriverChange}
-                  />
+                    onChange={isDriverChange}></Radio>
                   <div>아니오</div>
-                  <input
-                    type="radio"
-                    name="driverCheck"
+                  <Radio name="driverCheck"
                     value="false"
-                    onChange={isDriverChange}
-                  />
+                    onChange={isDriverChange}></Radio>
                 </ChoiceBox>
                 &lt;자차여부&gt;
                 <ChoiceBox>
@@ -492,11 +516,14 @@ const Main = (props) => {
                     // onChange={regularChange}
                   />
                 </ChoiceBox>
-                <button onClick={signInRequest}>회원가입</button>
-              </>
+                <button style={{
+                      borderColor: "black",
+                      backgroundColor: "white"
+                    }} onClick={signInRequest}>SUBmit</button>
+              </LoginBox>
             )
           ) : (
-            <>
+            <LoginBox>
               <button>
                 <Link
                   to="/login/today/*"
@@ -506,9 +533,9 @@ const Main = (props) => {
                 </Link>
               </button>
               {loggedId}님 환영합니다
-            </>
+            </LoginBox>
           )}
-        </LoginBox>
+
       </Container>
     </>
   );

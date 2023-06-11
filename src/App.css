@@ -37,6 +37,7 @@
   }
 } */
 
+
 @font-face {
   font-family: "GangwonEduPowerExtraBoldA";
   src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2201-2@1.0/GangwonEduPowerExtraBoldA.woff")
@@ -49,6 +50,13 @@
   font-family: "establishRetrosansOTF";
   src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2112@1.0/establishRetrosansOTF.woff")
     format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Tenada';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2210-2@1.0/Tenada.woff2') format('woff2');
   font-weight: normal;
   font-style: normal;
 }

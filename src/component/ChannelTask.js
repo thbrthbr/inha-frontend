@@ -33,14 +33,6 @@ border: 0.5px solid #c0c0c0;
 `
 
 const ChannelItem = styled.div`
-  // border: 0.5px solid #c0c0c0;
-
-  // background-image: url('./img/postit.png');
-  // background-position: center;
-  // background-repeat: no-repeat;
-  // background-size: cover;
-
-  // background-color: white;
   height: 200px;
   width: 150px;
   margin-top: -250px;
@@ -64,7 +56,6 @@ const Contents = styled.div`
 
 const DriverBox = styled.div`
   margin-top: 20px;
-  // border: 0.5px solid #c0c0c0;
   height: 20px;
   width: 100px;
   font-size: 8px;
@@ -76,7 +67,6 @@ const DriverBox = styled.div`
 
 const PersonnelBox = styled.div`
   margin-top: 5px;
-  // border: 0.5px solid #c0c0c0;
   height: 80px;
   width: 100px;
   font-size: 8px;
@@ -125,8 +115,6 @@ const ChannelTask = (props) => {
 
       let tempArr = [];
       for (let i = 0; i < res1.data.data.length; i++) {
-        // console.log(res1.data[i].hostNickname);
-        // console.log(loggedId);
         if (res1.data.data[i].hostId == loggedRealId) {
           tempArr.push(res1.data.data[i]);
         } else {
@@ -140,10 +128,8 @@ const ChannelTask = (props) => {
 
       let set = new Set(tempArr);
       tempArr = Array.from(set);
-      console.log(tempArr);
       setMyCarpools(tempArr.reverse());
       lastRow = Math.floor(tempArr.length / 4) + 1;
-      console.log(lastRow);
 
       let tempArr2 = [];
       for (let i = 0; i < tempArr.length; i++) {
@@ -160,64 +146,9 @@ const ChannelTask = (props) => {
       for (let i = 0; i < lastRow; i++) {
         forLayout.push(true);
       }
-      console.log(tempArr.reverse());
 
       setForLayOut(forLayout);
       // return res1.data;
-    } catch (e) {
-      console.log("error: " + e);
-    }
-  };
-
-  const getChannels = async () => {
-    try {
-      const res1 = await axios.get(`http://localhost:4000/carpools`, {
-        withCredentials: true,
-      });
-
-      console.log(res1);
-
-      let tempArr = [];
-      for (let i = 0; i < res1.data.length; i++) {
-        // console.log(res1.data[i].hostNickname);
-        // console.log(loggedId);
-        if (res1.data[i].hostNickname == loggedId) {
-          tempArr.push(res1.data[i]);
-        } else {
-          for (let j = 0; j < res1.data[i].userChannelList.length; j++) {
-            if (res1.data[i].userChannelList[j].nickname == loggedId) {
-              tempArr.push(res1.data[i]);
-            }
-          }
-        }
-      }
-
-      let set = new Set(tempArr);
-      tempArr = Array.from(set);
-      console.log(tempArr);
-      setMyCarpools(tempArr.reverse());
-      lastRow = Math.floor(tempArr.length / 4) + 1;
-      console.log(lastRow);
-
-      let tempArr2 = [];
-      for (let i = 0; i < tempArr.length; i++) {
-        let tempMiniArr = [];
-        for (let j = 0; j < tempArr[i].userChannelList.length; j++) {
-          tempMiniArr.push(tempArr[i].userChannelList[j].nickname);
-        }
-        tempArr2.push(tempMiniArr.sort());
-      }
-
-      console.log(tempArr2);
-      setRoomPeople(tempArr2);
-
-      for (let i = 0; i < lastRow; i++) {
-        forLayout.push(true);
-      }
-      console.log(tempArr.reverse());
-
-      setForLayOut(forLayout);
-      return res1.data;
     } catch (e) {
       console.log("error: " + e);
     }
@@ -270,18 +201,17 @@ const ChannelTask = (props) => {
       console.log("error: " + e);
     }
   };
+
   useEffect(() => {
     getChannels2();
   }, []);
 
   return (
     <Container>
-      {/* <button onClick={getChannels2}>임시</button> */}
       {forLayOut.map((people) => {
         return (
           <ChannelRow>
             {myCarpools.map((channel) => {
-              // console.log(channel);
               channelCount++;
               if (channelCount2 <= channelCount) {
                 channelCount2++;

@@ -60,12 +60,6 @@ function Header(props) {
   const { loggedin, setLoggedin } = MasterStore();
   const { loggedId, setLoggedId } = MasterStore2();
   const location = useLocation();
-  // console.log(location.pathname);
-  // console.log(switchOn);
-
-  // if (location.pathname !== "/login/mypage/profiletask") {
-  //   setSwitchOn(false);
-  // }
 
   const stateInit = () => {
     setSwitchOn(true);
@@ -87,17 +81,8 @@ function Header(props) {
     
   };
 
-  const deny = () => {
-    alert("Access Denied");
-    movePage("/");
-  };
-  // useEffect(() => {
-  //   deny();
-  // }, []);
-
   useEffect(() => {
     if (loggedin === false) {
-      console.log("두번찍히나");
       alert("Access Denied");
       movePage("/");
     }
@@ -129,7 +114,6 @@ function Header(props) {
                 style={
                   location.pathname === "/login/today/*"
                     ? {
-                        // fontSize: "30px",
                         color: "blue",
                         textDecoration: "none",
                         marginLeft: "15px",
@@ -137,7 +121,6 @@ function Header(props) {
                         marginTop: "60px",
                       }
                     : {
-                        // fontSize: "30px",
                         color: "inherit",
                         textDecoration: "none",
                         marginLeft: "15px",
@@ -160,14 +143,12 @@ function Header(props) {
                 style={
                   location.pathname === "/login/calendar/*"
                     ? {
-                        // fontSize: "30px",
                         color: "blue",
                         textDecoration: "none",
                         marginRight: "30px",
                         marginTop: "60px",
                       }
                     : {
-                        // fontSize: "30px",
                         color: "inherit",
                         textDecoration: "none",
                         marginRight: "30px",
@@ -189,14 +170,12 @@ function Header(props) {
                 style={
                   location.pathname === "/login/board/*"
                     ? {
-                        // fontSize: "30px",
                         color: "blue",
                         textDecoration: "none",
                         marginRight: "30px",
                         marginTop: "60px",
                       }
                     : {
-                        // fontSize: "30px",
                         color: "inherit",
                         textDecoration: "none",
                         marginRight: "30px",
@@ -218,14 +197,12 @@ function Header(props) {
                 style={
                   location.pathname.includes("/login/mypage")
                     ? {
-                        // fontSize: "30px",
                         color: "blue",
                         textDecoration: "none",
                         marginRight: "30px",
                         marginTop: "60px",
                       }
                     : {
-                        // fontSize: "30px",
                         color: "inherit",
                         textDecoration: "none",
                         marginRight: "30px",
@@ -245,12 +222,8 @@ function Header(props) {
                 style={{ cursor: "pointer", height: "60px", marginRight: "10px",  marginTop: "27px"}}
               />
           </Section2>
-          <Line></Line>
-          
+          <Line></Line>         
           </Section1>
-          
-          
-          {/* <button onClick={logOut}>로그아웃</button> */}
         </HeaderArea>
         <Outlet />
       </>

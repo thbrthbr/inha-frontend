@@ -224,9 +224,8 @@ const Main = (props) => {
       );
       console.log(res.status);
 
-      // 나중에 다시 확인
       if (res.status === 200) {
-        alert("로그인 되셨습니다");
+        alert("로그인 되었습니다");
         setLoggedin(true);
         console.log(res.data);
         console.log(res.data.nickname);
@@ -248,50 +247,6 @@ const Main = (props) => {
     }
   };
 
-
-  const kariLogInRequest = async (e) => {
-    try {
-      // e.preventDefault();
-      const res = await axios.get(`http://localhost:4000/joins`);
-
-      console.log(res);
-
-      let count = 0;
-      for (let i = 0; i < res.data.length; i++) {
-        if (res.data[i].realId === id) {
-          if (res.data[i].password === password) {
-            alert("로그인 되셨습니다");
-            setLoggedin(true);
-            setLoggedId(res.data[i].nickname);
-            setLoggedRealId(res.data[i].realId);
-            console.log(res.data[i].nickname);
-            movePage("login/today/*");
-            count++;
-            return;
-          } else {
-            alert("비밀번호를 확인해주세요");
-            count++;
-            window.location.reload();
-            return;
-          }
-          // if (count === 0) {
-          //   alert("비밀번호를 확인해주세요");
-          //   count++;
-          //   window.location.reload();
-          //   return;
-          // }
-        }
-      }
-      if (count === 0) {
-        alert("입력하신 아이디가 가입되어있지 않습니다");
-        window.location.reload();
-        return;
-      }
-    } catch (e) {
-      console.log("error: " + e);
-    }
-  };
-
   return (
     <>
       <Container>
@@ -305,7 +260,6 @@ const Main = (props) => {
             isSignIn === false ? (
               <LoginBox>
                 <div>
-                  {/* <Transparent onClick={kariLogInRequest}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</Transparent> */}
                 </div>
                 <div style={{fontSize:"20px"}}>ID</div>
                 <input type="text" onChange={idChange} style={{borderRadius: "5px", marginBottom: "20px", borderColor: "black"}}></input>
@@ -388,7 +342,6 @@ const Main = (props) => {
                     onChange={phoneChange}
                   ></input>
                 </ChoiceBox>
-                {/* <SignInInput onChange={phoneChange}></SignInInput> */}
                 &lt;생년월일&gt;
                 <ChoiceBox>
                   <input
@@ -428,7 +381,6 @@ const Main = (props) => {
                     onChange={birthdateChange}
                   ></input>
                 </ChoiceBox>
-                {/* <SignInInput onChange={birthdateChange}></SignInInput> */}
                 &lt;운전가능여부&gt;
                 <ChoiceBox>
                   <div>예</div>

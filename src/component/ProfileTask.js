@@ -23,25 +23,17 @@ height: 380px;
 width: 936px;
 padding-top: 70px;
 border: 2px solid blue;
-// position: relative;
 `
 
 const ProfileBox1 = styled.div`
-// padding-top: 100px;
   padding: 10px;
   font-size: 30px;
   font-family: 'S-CoreDream-3Light';
   margin-left: 150px;
-  // border: 0.5px solid #c0c0c0;
   width: 600px;
   height: 300px;
   display: grid;
   background-color: white;
-  
-
-  // grid-template-areas:
-  //   "nickname gender level"
-  //   "point    haveCar    rate";
 `;
 
 const ProfileBox2 = styled.div`
@@ -49,37 +41,26 @@ padding: 10px;
 font-family: 'S-CoreDream-3Light';
 margin-left: 150px;
   background-color: white;
-  // border: 0.5px solid #c0c0c0;
   width: 600px;
   height: 300px;
   display: grid;
-  // grid-template-areas:
-  //   "nickname gender level"
-  //   "point    haveCar    rate";
 `;
 
 const Nickname = styled.div`
-  // grid-area: nickname;
 `;
 const Gender = styled.div`
-  // grid-area: gender;
 `;
 const PhoneNumber = styled.div`
-  // grid-area: level;
 `;
 const Point = styled.div`
-  // grid-area: point;
 `;
 const HaveCar = styled.div`
-  // grid-area: haveCar;
 `;
 
 const IsDriver = styled.div`
-  // grid-area: haveCar;
 `;
 
 const Rate = styled.div`
-  // grid-area: rate;
 `;
 
 
@@ -124,8 +105,7 @@ const ProfileTask = (props) => {
     if (switchOn === true) {
       setSwitchOn(false);
       console.log(switchOn);
-    }
-    
+    }   
   };
 
   const nickNameChange = (e) => {
@@ -141,13 +121,7 @@ const ProfileTask = (props) => {
     else{
       setGender(e.currentTarget.value);
     }
-    // setGender(e.currentTarget.value);
     console.log(gender);
-  };
-
-  const phoneNumberChange = (e) => {
-    setPhoneNumber(e.currentTarget.value);
-    console.log(phoneNumber);
   };
 
   const phoneChange = (e) => {
@@ -250,9 +224,6 @@ const ProfileTask = (props) => {
         <ProfileBox2>
           <Nickname>
             닉네임: <input style={{
-                      // width: "30px",
-                      // marginRight: "5px",
-                      // marginLeft: "5px",
                       borderColor: "black",
                       borderRadius: "5px"
                     }} onChange={nickNameChange}></input>
@@ -315,7 +286,6 @@ const ProfileTask = (props) => {
                     id="third"
                     onChange={phoneChange}
                   ></input>
-            {/* <input onChange={phoneNumberChange}></input> */}
           </PhoneNumber>
           <IsDriver>
           <div>운전가능여부:</div>
@@ -358,7 +328,6 @@ const ProfileTask = (props) => {
               onChange={hasCarChange}
             />
             미보유
-             {/* <input onChange={isCarChange}></input> */}
           </HaveCar>
           
         </ProfileBox2>

@@ -73,14 +73,6 @@ const Today = (props) => {
   const Olhae = today.getFullYear();
   const Ibundal = today.getMonth()+1;
   const Haru = today.getDate();
-  // let emmissions = 0;
-  // let point = 0;
-  // let level = 0;
-
-  // let emmissions2 = 0;
-  // let point2 = 0;
-  // let level2 = 0;
-
   const swticher = () => 
   {
     setBoxSwitch(!boxSwitch);
@@ -152,9 +144,7 @@ const Today = (props) => {
       console.log(res1.data);
       console.log(res2.data);
       }
-
       
-
       return res1.data;
     } catch (e) {
       console.log("error: " + e);
@@ -211,9 +201,6 @@ const Today = (props) => {
       console.log(res2.data.data);
       setLevel2(res2.data.data.level);
       }
-
-      
-
       return res1.data;
     } catch (e) {
       console.log("error: " + e);

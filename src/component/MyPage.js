@@ -66,7 +66,6 @@ const MyPage = (props) => {
             >
               Profile
             </Link>
-            {/* <div style={{position: "absolute", marginTop: "10px", marginLeft: "-15px", width: "115px", height: "200px", backgroundColor: "white"}}></div> */}
           </PageCategory2>
         </UpperBar>
         <Outlet />

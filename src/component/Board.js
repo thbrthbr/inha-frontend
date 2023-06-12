@@ -5,8 +5,6 @@ import { BiRefresh } from "react-icons/bi";
 import { AiOutlineSearch } from "react-icons/ai";
 import { BiPencil } from "react-icons/bi";
 import { TbArrowsExchange2 } from "react-icons/tb";
-
-// import { useIsFocused } from "@react-navigation/native";
 import styled from "styled-components";
 import axios from "axios";
 import {
@@ -30,7 +28,6 @@ const Container = styled.div`
 `;
 
 const BoardBox = styled.div`
-  // border: 0.5px solid #c0c0c0;
   height: 300px;
   width: 1048px;
   margin-left: 10px;
@@ -45,8 +42,6 @@ const SearchSection = styled.div`
 const Searchbar = styled.input`
   border: 0.5px solid black;
   margin-left: 20px;
-  // border: none;
-  // background-color: #eeeeee;
   border-radius: 10px;
   margin-bottom: 10px;
   margin-right: 20px;
@@ -78,7 +73,6 @@ const Channel = styled.div`
   border-radius: 30px;
   height: 150px;
   width: 1000px;
-  // margin-left: 20px;
   margin-bottom: 20px;
   cursor: pointer;
   display: flex;
@@ -93,7 +87,6 @@ const Channel2 = styled.div`
   border-radius: 30px;
   height: 150px;
   width: 1000px;
-  // margin-left: 20px;
   margin-bottom: 20px;
   cursor: pointer;
   display: flex;
@@ -111,7 +104,6 @@ const ChannelFirstRow = styled.div`
 `;
 
 const FirstItem = styled.div`
-  // border: 0.5px solid #c0c0c0;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -124,26 +116,11 @@ const RoomContainer = styled.div`
   top: 0%;
   margin-top: -500px;
   margin-left: -50px;
-  // left: 0%;
-  // display: none;
   width: 5000px;
   height: 2000px;
-  // background-color: rgba(0, 0, 0, 0.5);
-  // background-color: red;
-  // z-index: 6;
 `;
 
 const Room = styled.div`
-  // background-color: white;
-  // margin-left: 300px;
-  // top: 15%;
-  // position: fixed;
-  // align-items: center;
-  // flex-direction: column;
-  // border: 0.5px solid #c0c0c0;
-  // height: 500px;
-  // width: 500px;
-  // display: flex;
   padding: 30px;
   border: 0.5px solid black;
   border-radius: 0px 0px 20px 20px;
@@ -165,9 +142,6 @@ const FirstRow = styled.div`
 
 const SecondRow = styled.div`
   margin-top: 20px;
-  // display: flex;
-  // align-items: center;
-  // justify-content: center;
 `;
 
 const StartPoint = styled.div`
@@ -203,7 +177,6 @@ const ButtonX2 = styled.button`
 `;
 
 const ButtonX3 = styled.button`
-  // margin-top: -20px;
   margin-left: 480px;
   border: none;
   background-color: white;
@@ -219,7 +192,6 @@ const ModalContainer = styled.div`
   display: none;
   width: 2000px;
   height: 2000px;
-  // background-color: rgba(0, 0, 0, 0.5);
 `;
 
 const ModalBox = styled.div`
@@ -277,9 +249,6 @@ const PersonnelSticker = styled.div`
   position: absolute;
   margin-right: -900px;
   margin-top: -150px;
-  // font-family: "GangwonEduPowerExtraBoldA";
-  // -webkit-text-stroke: 1px orange;
-  // color: white;
 `;
 
 const KakaoMap = styled.div`
@@ -289,11 +258,9 @@ const KakaoMap = styled.div`
 `;
 
 const PlaceList = styled.ul`
-  // position: absolute;
   width: 250px;
   height: 200px;
   background-color: #fff;
-
   margin-top: 0px;
   overflow: scroll;
   z-index: 5;
@@ -323,15 +290,9 @@ const SubModal2 = styled.div`
 `;
 
 const Pagination = styled.div`
-  // border: 0.5px solid #c0c0c0;
-  // height: 100px;
-  // display = "flex";
-  // justify-content = "space-between";
-  // margin-top = "-10px";
 `;
 
 const ChannelPages = styled.div`
-  // border: 0.5px solid #c0c0c0;
   width: 1040px;
   height: 60px;
   display: flex;
@@ -456,19 +417,14 @@ const Board = ({ searchPlace }) => {
     secondArr,
     addSecondArr,
     setSecondArr,
-
     roomDeparture,
     setRoomDeparture,
-
     roomArrival,
     setRoomArrival,
-
     roomHost,
     setRoomHost,
-
     roomDriver,
     setRoomDriver,
-
     roomPeople,
     setRoomPeople,
     isMaster,
@@ -497,19 +453,15 @@ const Board = ({ searchPlace }) => {
   const { loggedId, setLoggedId } = MasterStore2();
   const { loggedRealId, setLoggedRealId } = MasterStore3();
 
-  const testAsync = require("async");
-
   const createChannel = () => {
     setContent(null);
     document.getElementById("modalbox").style.display = "block";
     document.body.style.cssText = `
     position: fixed; 
     top: -${window.scrollY}px;
-    overflow-y: scroll;
-    // width: 100%;`;
+    overflow-y: scroll;`;
     document.getElementById("channelBox").style.cssText = `
-    overflow: hidden;
-    // width: 100%;`;
+    overflow: hidden;`;
   };
   const closeCreateChannel = () => {
     setContent(null);
@@ -562,52 +514,9 @@ const Board = ({ searchPlace }) => {
     setTempIdSave(null);
   };
 
-  const reload = (event) => {
-    setRender(!render);
-  };
-
   const showProfile = (event) => {
     setClicked(true);
   }
-
-  // const reload2 = async (event) => {
-  //   try {
-  //     // setRender(!render);
-  //     console.log("셋째트염");
-  //     const res = await axios.get("http://localhost:4000/posts", {
-  //       withCredentials: true,
-  //     });
-  //     // 진짜 서버 연결하면 수정해야하는 부분 @@@@
-  //     document.getElementById(`${1}`).style.color = "blue";
-  //     channelNum = res.data.length;
-  //     channelPages =
-  //       channelNum % 10 === 0
-  //         ? Math.floor(channelNum / 10)
-  //         : Math.floor(channelNum / 10) + 1;
-  //     setChannelPg(channelPages);
-  //     const reverseData = res.data.slice(0).reverse();
-  //     for (let i = 0; i < channelPages; i++) {
-  //       let tempStartNum = 0;
-  //       let tempNum = 10;
-  //       let tempArr = [];
-  //       tempStartNum = tempNum * i;
-  //       tempNum = tempNum * (i + 1);
-  //       for (let j = tempStartNum; j < tempNum; j++) {
-  //         if (reverseData[j] === undefined) {
-  //           break;
-  //         }
-  //         tempArr.push(reverseData[j]);
-  //       }
-  //       addChannelArr(tempArr);
-  //       console.log(channelArr);
-  //       tempArr = [];
-  //     }
-  //     window.scrollTo(0, 0);
-  //     return res.data;
-  //   } catch (e) {
-  //     console.log("error: " + e);
-  //   }
-  // };
 
   const driverChange = (e) => {
     if (e.target.value === "true") {
@@ -624,11 +533,8 @@ const Board = ({ searchPlace }) => {
       {
         withCredentials: true,
       })
-      console.log(res.data.data);
-      // /api/users/{targetUserId}
       const attendeeProfBox = document.createElement("div");
       attendeeProfBox.id = "me";
-      console.log(attendeeProfBox);
       attendeeProfBox.style.cssText = `
         border: 0.5px solid orange;
         border-radius: 5%;
@@ -668,8 +574,6 @@ const Board = ({ searchPlace }) => {
       {
         withCredentials: true,
       })
-      console.log(res.data.data);
-      // /api/users/{targetUserId}
       const attendeeProfBox = document.createElement("div");
       attendeeProfBox.id = "me";
       attendeeProfBox.style.cssText = `
@@ -701,16 +605,44 @@ const Board = ({ searchPlace }) => {
     }
   };
 
+  const selectDriver = async (id) => {
+    try{
+
+      console.log(id);
+      let confirm = window.confirm("해당유저를 운전자로 지정하시겠습니까?");
+      if(confirm)
+      {
+        const res = await axios.patch(`http://localhost:8080/api/posts`,
+        {
+          postId: enteredPostId,    
+          driverId: id,
+          userId: loggedRealId
+        },
+        {
+          withCredentials: true,
+        });
+
+        console.log(res);
+
+        alert("수정되었습니다.");
+        window.location.reload();
+      }
+      else
+      {
+        return false;
+      }
+    }
+    catch (e)
+    {
+      console.log("error: " + e);
+    }
+  };
+
 
   const generateProfileBox =  (e) => {
- 
       const peopleId = e.target.id;
-      console.log(e.target.id);
-      console.log(e.target.innerText);
-      console.log(e);
       if(clicked === true)
       {
-        // if(loggedId === )
         document.getElementById(tempIdSave).removeChild(document.getElementById("temp"));
         setTempIdSave(e.target.id);
         const profBox = document.createElement("div");
@@ -723,7 +655,7 @@ const Board = ({ searchPlace }) => {
         border-radius: 5%;
         background-color: white;
           width: 150px;
-          height: 100px;
+          // height: 100px;
           position: fixed;
           margin-left: 100px;
           font-family: 'S-CoreDream-3Light';
@@ -732,21 +664,20 @@ const Board = ({ searchPlace }) => {
         `;
         profBox.id = "temp";
         profBox.onclick = function(event){document.getElementById(e.target.id).removeChild(document.getElementById("temp")); setClicked(false);};
-        // profBox.onclick = function(event){document.getElementById("room").removeChild(profBox);};
         profText1.innerHTML = "<div>유저프로필</div>";
         profText1.onclick = function(event){event.stopPropagation(); showAttendeeProfile(peopleId);};
         profText2.innerHTML = "<div>개인 출발/도착지</div>";
         profText2.onclick = function(event){event.stopPropagation(); showAttendeeProfile2(peopleId);};
         profBox.appendChild(profText1);
         profBox.appendChild(profText2);
-        // if(isMaster === true && e.target.innerText !== loggedId)
-        // {
-        //   const profText3 = document.createElement("p");
-        //   profText3.id = "notMe";
-        //   profText3.innerHTML = "<div>강퇴</div>";
-        //   profText3.onclick = function(event){event.stopPropagation(); alert("3");};
-        //   profBox.appendChild(profText3);
-        // }
+        if(isMaster === true)
+        {
+          const profText3 = document.createElement("p");
+          profText3.id = "notMe";
+          profText3.innerHTML = "<div>운전자 지정</div>";
+          profText3.onclick = function(event){event.stopPropagation(); selectDriver(peopleId);};
+          profBox.appendChild(profText3);
+        }
         document.getElementById(e.target.id).appendChild(profBox);
       }
       else
@@ -757,14 +688,13 @@ const Board = ({ searchPlace }) => {
         profText1.id = "notMe";
         const profText2 = document.createElement("p");
         profText2.id = "notMe";
-        
         profBox.style.cssText = `
           border: 1px solid blue;
           border-radius: 5%;
           background-color: white;
           // background-color: rgba(0, 0, 255, 0.2);
           width: 150px;
-          height: 100px;
+          // height: 100px;
           position: fixed;
           font-family: 'S-CoreDream-3Light';
           margin-left: 100px;
@@ -773,21 +703,20 @@ const Board = ({ searchPlace }) => {
         `;
         profBox.id = "temp";
         profBox.onclick = function(event){document.getElementById(e.target.id).removeChild(document.getElementById("temp")); setClicked(false);};
-        // profBox.onclick = function(event){document.getElementById("room").removeChild(profBox);};
         profText1.innerHTML = "<div>유저프로필</div>";
         profText1.onclick = function(event){event.stopPropagation(); showAttendeeProfile(peopleId);};
           profText2.innerHTML = "<div>개인 출발/도착지</div>";
         profText2.onclick = function(event){event.stopPropagation(); showAttendeeProfile2(peopleId);};
         profBox.appendChild(profText1);
         profBox.appendChild(profText2);
-        // if(isMaster === true && e.target.innerText !== loggedId)
-        // {
-        //   const profText3 = document.createElement("p");
-        //   profText3.id = "notMe";
-        //   profText3.innerHTML = "<div>강퇴</div>";
-        //   profText3.onclick = function(event){event.stopPropagation(); alert("3");};
-        //   profBox.appendChild(profText3);
-        // }
+        if(isMaster === true)
+        {
+          const profText3 = document.createElement("p");
+          profText3.id = "notMe";
+          profText3.innerHTML = "<div>운전자 지정</div>";
+          profText3.onclick = function(event){event.stopPropagation(); selectDriver(peopleId);};
+          profBox.appendChild(profText3);
+        }
         document.getElementById(e.target.id).appendChild(profBox);
         setClicked(true);
       } 
@@ -796,8 +725,6 @@ const Board = ({ searchPlace }) => {
 
   const closeProfile = (event) => {
     console.log(event);
-    // document.getElementById("room").removeChild(
-    //   document.getElementById(event.target.id));
   };
 
   const enterChannel2 = async (curpersonnel, channelId, roomId, departures,
@@ -819,17 +746,13 @@ const Board = ({ searchPlace }) => {
       a_xy.push(arrivalsLongitude);
       locationing.push([d_xy, a_xy, [departures, arrivals]])
       setLocationMaster(locationing);
-      console.log(channelId);
       setRoomDriverId(driverId);
       setEnteredPostId(channelId);
       document.getElementById("channelBox").style.cssText = `
     overflow: hidden;`;
     document.getElementById("header").style.cssText = `
     pointer-events: none;`;
-    console.log(hostId);
-    console.log(loggedRealId);
       if (hostId == loggedRealId) {
-        console.log("주인님");
         setIsMaster(true);
       }
 
@@ -840,8 +763,6 @@ const Board = ({ searchPlace }) => {
         }
       );
 
-      console.log(res3);
-
       const res2= await axios.get(
         `http://localhost:8080/api/carpools/participation?channelId=${channelId}`,
         {
@@ -849,13 +770,12 @@ const Board = ({ searchPlace }) => {
         }
       );
 
-      console.log(res2);
       setRoomContent(content);
       setRoomHost(res3.data.data.hostNickname);
       setRoomDeparture(res3.data.data.departures);
       setRoomArrival(res3.data.data.arrivals);
-      console.log(res3.data.data);
       setRoomDriver(res3.data.data.driverNickname);
+
       let tempArr = [];
       for (let j = 0; j < res2.data.data.length; j++) {
         let tempArr_1 = [];
@@ -863,12 +783,9 @@ const Board = ({ searchPlace }) => {
         tempArr_1.push(res2.data.data[j].userId);
         tempArr_1.push(res2.data.data[j].departures);
         tempArr_1.push(res2.data.data[j].arrivals);
-        console.log(res2.data.data[j]);
         tempArr.push(tempArr_1);
       }
       setRoomPeople(tempArr);
-      console.log(tempArr.flat(2));
-
 
       if (!tempArr.flat(2).includes(loggedId)) {
         if (res3.data.data.personnel == res3.data.data.curPersonnel) {
@@ -926,7 +843,6 @@ const Board = ({ searchPlace }) => {
     try {
       setFlag(false);
       const temp = 1;
-      // setPageNum(0);
       const res = await axios.get(
         `http://localhost:8080/api/posts/lists/${temp}`,
         {
@@ -955,7 +871,6 @@ const Board = ({ searchPlace }) => {
           ? Math.floor(channelNum / 10)
           : Math.floor(channelNum / 10) + 1;
       setChannelPg(channelPages);
-      console.log(res.data.data.slice(0).reverse());
       setChannelArr(res.data.data);
       setChannelList(res.data.data);
       setFirstTake(true);
@@ -965,88 +880,8 @@ const Board = ({ searchPlace }) => {
     }
   };
 
-  const kariGetChannelData = async () => {
-    try {
-      const temp = 1;
-      const res = await axios.get(
-        `http://localhost:8080/api/posts/lists/${temp}`,
-        {
-          withCredentials: true,
-        }
-      );
-
-      const res2 = await axios.get(
-        `http://localhost:8080/api/carpools/count`,
-        {
-          withCredentials: true,
-        }
-      );
-
-
-      console.log(res);
-      console.log(res2.data.data);
-
-      return res.data;
-    } catch (e) {
-      console.log("error: " + e);
-    }
-  };
-
-  const getChannelData = async () => {
-    try {
-      // window.location.reload();
-      console.log(channelArr);
-      console.log("첫트염");
-      console.log(channelCount);
-      setPageNum(0);
-      const res = await axios.get("http://localhost:4000/posts", {
-        withCredentials: true,
-      });
-      setChannelCount(res.data[res.data.length - 1].id);
-      // 진짜 서버 연결하면 수정해야하는 부분 @@@@
-      channelNum = res.data.length;
-      channelPages =
-        channelNum % 10 === 0
-          ? Math.floor(channelNum / 10)
-          : Math.floor(channelNum / 10) + 1;
-      setChannelPg(channelPages);
-
-
-      let tempAllArr = [];
-      const reverseData = res.data.slice(0).reverse();
-      for (let i = 0; i < channelPages; i++) {
-        let tempStartNum = 0;
-        let tempNum = 10;
-        let tempArr = [];
-        tempStartNum = tempNum * i;
-        tempNum = tempNum * (i + 1);
-        for (let j = tempStartNum; j < tempNum; j++) {
-          if (reverseData[j] !== undefined) {
-            tempArr.push(reverseData[j]);
-          }
-        }
-        tempAllArr = [...tempAllArr, tempArr];
-        // addChannelArr(tempArr);
-        console.log(channelArr);
-        tempArr = [];
-      }
-      setChannelArr(tempAllArr);
-      // document.getElementById("1").style.color = "blue";
-      setChannelList(res.data);
-      setFirstTake(true);
-      return res.data;
-    } catch (e) {
-      console.log("error: " + e);
-    }
-  };
-
-
   const getPageChannel2 = async (e) => {
     try {
-      console.log(e);
-      console.log(e.target.id);
-      console.log("둘째트염");
-      // setChannelArr([]);
       const res = await axios.get(`http://localhost:8080/api/posts/lists/${e.target.id}`, {
         withCredentials: true,
       });
@@ -1071,169 +906,12 @@ const Board = ({ searchPlace }) => {
       setChannelPg(channelPages);
       setChannelArr(res.data.data);
       document.getElementById("channelBox").scrollTo(0, 0);
-      // window.scrollTo(0, 0);
       setChannelArr(res.data.data);
       return res.data;
     } catch (e) {
       console.log("error: " + e);
     }
   };
-
-  
-
-  const getPageChannel = async (e) => {
-    try {
-      console.log("둘째트염");
-      // setChannelArr([]);
-      const res = await axios.get("http://localhost:4000/posts", {
-        withCredentials: true,
-      });
-      // 진짜 서버 연결하면 수정해야하는 부분 @@@@
-      setPageNum(e.target.id - 1);
-      for (let i = 1; i <= pageArr.length; i++) {
-        if (document.getElementById(`${i}`).id == e.target.id) {
-          document.getElementById(`${i}`).style.color = "blue";
-        } else {
-          document.getElementById(`${i}`).style.color = "black";
-        }
-      }
-      channelNum = res.data.length;
-      channelPages =
-        channelNum % 10 === 0
-          ? Math.floor(channelNum / 10)
-          : Math.floor(channelNum / 10) + 1;
-      setChannelPg(channelPages);
-      let tempAllArr = [];
-      const reverseData = res.data.slice(0).reverse();
-      for (let i = 0; i < channelPages; i++) {
-        let tempStartNum = 0;
-        let tempNum = 10;
-        let tempArr = [];
-        tempStartNum = tempNum * i;
-        tempNum = tempNum * (i + 1);
-        for (let j = tempStartNum; j < tempNum; j++) {
-          if (reverseData[j] === undefined) {
-            break;
-          }
-          tempArr.push(reverseData[j]);
-        }
-        tempAllArr = [...tempAllArr, tempArr];
-        tempArr = [];
-      }
-      setChannelArr(tempAllArr);
-      document.getElementById("channelBox").scrollTo(0, 0);
-      // window.scrollTo(0, 0);
-      setChannelList(res.data);
-      return res.data;
-    } catch (e) {
-      console.log("error: " + e);
-    }
-  };
-
-  const openChannel = async () => {
-    try {
-      if (inputStartPoint === null) {
-        alert("출발지를 정해주세요");
-        return;
-      }
-      if (inputEndPoint === null) {
-        alert("도착지를 정해주세요");
-        return;
-      }
-      // if(personnel > 47)
-      // {
-
-      // }
-      count = channelCount + 1;
-      const channelData = {
-        id: channelCount + 1,
-        nickname: loggedId,
-        userId: loggedRealId,
-        channelId: channelCount + 1,
-        title: "제목없음",
-        departures: inputStartPoint,
-        departuresLatitude: departuresLatitude,
-        departuresLongitude: departuresLongitude,
-        arrivals: inputEndPoint,
-        arrivalsLatitude: arrivalsLatitude,
-        arrivalsLongitude: arrivalsLongitude,
-        personnel: personnel,
-        curPersonnel: 1,
-        content: content,
-        regular: regular,
-        carpoolDate: "2", // 수정해야함
-        driverId: loggedId,
-      };
-      // const res = axios({
-      //   url: "http://localhost:4000/posts",
-      //   method: "post",
-      //   channelData,
-      //   withCredentials: true,
-      // });
-
-      const roomData = {
-        id: channelCount + 1,
-        carpoolId: channelCount + 1,
-        hostId: loggedRealId,
-        hostNickname: loggedId,
-        driverId: driverExsist === true ? loggedRealId : null,
-        driverNickname: driverExsist === true ? loggedId : null,
-        departures: inputStartPoint,
-        departuresLatitude: departuresLatitude,
-        departuresLongitude: departuresLongitude,
-        arrivals: inputEndPoint,
-        arrivalsLatitude: arrivalsLatitude,
-        arrivalsLongitude: arrivalsLongitude,
-        personnel: personnel,
-        curPersonnel: 1,
-        content: content,
-        regular: regular,
-        userChannelList: [
-          {
-            id: channelCount + 1,
-            userId: 1,
-            nickname: loggedId,
-            departures: inputStartPoint,
-            departuresLatitude: departuresLatitude,
-            departuresLongitude: departuresLongitude,
-            arrivals: inputEndPoint,
-            arrivalsLatitude: arrivalsLatitude,
-            arrivalsLongitude: arrivalsLongitude,
-            rating: 4.2, // 수정해야함
-          },
-        ],
-      };
-
-      const res = await axios.post("http://localhost:4000/posts", channelData, {
-        withCredentials: true,
-      });
-
-      const res2 = await axios.post(
-        "http://localhost:4000/carpools",
-        roomData,
-        {
-          withCredentials: true,
-        }
-      );
-      console.log(roomData);
-      // const res2 = axios({
-      //   url: "http://localhost:4000/carpools",
-      //   method: "post",
-      //   roomData,
-      //   withCredentials: true,
-      // });
-
-      setInputStartPoint(null);
-      setInputEndPoint(null);
-      closeCreateChannel();
-      realGetChannelData();
-
-      return res.data;
-    } catch (e) {
-      console.log("error: " + e);
-    }
-  };
-
 
   const openChannel2 = async () => {
     try {
@@ -1256,8 +934,6 @@ const Board = ({ searchPlace }) => {
       const mm = (today.getMonth()+1).toString().length === 1 ? "0" + (today.getMonth()+1).toString() : (today.getMonth()+1).toString();
       const dd = today.getDate().toString().length === 1 ? "0" + today.getDate().toString() : today.getDate().toString();
       today = yy + "-" + mm + "-" + dd;
-      // count = channelCount + 1;
-      console.log(today);
 
       const channelData = {
         nickname: loggedId,
@@ -1297,18 +973,14 @@ const Board = ({ searchPlace }) => {
       const res = await axios.get(`http://localhost:8080/api/posts?keyword=${searchWord}`, {
         withCredentials: true,
       });
-      console.log(res);
       channelNum = res.data.data.length;
       channelPages =
         channelNum % 10 === 0
           ? Math.floor(channelNum / 10)
           : Math.floor(channelNum / 10) + 1;
-      // setChannelPg(channelPages);
       setChannelPg2(channelPages);
-
       let tempAllArr = [];
       const reverseData = res.data.data.slice(0).reverse();
-      console.log(reverseData);
       for (let i = 0; i < channelPages; i++) {
         let tempStartNum = 0;
         let tempNum = 10;
@@ -1328,8 +1000,6 @@ const Board = ({ searchPlace }) => {
       setChannelArr(tempAllArr.flat(1));
       setChannelList(tempAllArr.flat(1));
       setFlag(true);
-      // setChannelArr(res.data.data.slice(0).reverse());
-      // setSearchWord(null);
      }
      catch (e) 
      {
@@ -1344,13 +1014,11 @@ const Board = ({ searchPlace }) => {
   const changeWord = (e) =>
   {
     setSearchWord(e.target.value);
-    console.log(e.target.value);
   }
 
   const changeWord2 = (e) =>
   {
     setRoomContent(e.target.value);
-    console.log(e.target.value);
   }
 
   const editSwitch = async (e) => {
@@ -1378,11 +1046,6 @@ const Board = ({ searchPlace }) => {
 
     }
   }
-
-
-
-
-  // let whichPoint = null;
 
   const handleOnKeyPress = (e) => {
     if (e.key === "Enter") {
@@ -1571,7 +1234,6 @@ const Board = ({ searchPlace }) => {
         return false;
       }
       whichPoint = e.target.classList[0];
-      // console.log(whichPoint);
       e.preventDefault();
       setShowListD(true);
       searchPlaces(whichPoint);
@@ -1588,7 +1250,6 @@ const Board = ({ searchPlace }) => {
         return false;
       }
       whichPoint = e.target.classList[0];
-      // console.log(whichPoint);
       e.preventDefault();
       setShowListA(true);
       searchPlaces(whichPoint);
@@ -1692,37 +1353,15 @@ const Board = ({ searchPlace }) => {
 
     const searchChannel = async (DorA, location, locationName) => {
       try {
-        // const res = await axios.get("http://localhost:4000/posts");
-
         if (DorA === "findD") {
           completeXY.unshift(location);
           completeDA.unshift(locationName);
         } else {
           completeXY.push(location);
           completeDA.push(locationName);
-          console.log(completeXY);
-          console.log(completeDA);
           
-          // const dbLocation = [];
-          // for (let i = 0; i < res.data.length; i++) {
-          //   let tempArrD = [];
-          //   let tempArrA = [];
-          //   tempArrD.push(res.data[i].departuresLatitude);
-          //   tempArrD.push(res.data[i].departuresLongitude);
-          //   tempArrA.push(res.data[i].arrivalsLatitude);
-          //   tempArrA.push(res.data[i].arrivalsLongitude);
-          //   dbLocation.push([
-          //     tempArrD,
-          //     tempArrA,
-          //     [res.data[i].departures, res.data[i].arrivals],
-          //     res.data[i].id,
-          //   ]);
-          // }
-          // console.log(dbLocation);
-
           let tempArr1 = [];
           let R = 6372.8 * 1000;
-
 
           const latD1 = parseFloat(completeXY[0][0]);
           const latD2 = parseFloat(locationMaster[0][0][0]);
@@ -1753,11 +1392,7 @@ const Board = ({ searchPlace }) => {
             let finalA = R * c2;
 
             if (finalD <= 100 && finalA <= 100) {
-
-              // tempArr1.push(locationMaster[0][3]);
-              console.log(finalD);
-              console.log(finalA);
-
+              console.log("프로토타입");
             }
             else
             {
@@ -1765,110 +1400,10 @@ const Board = ({ searchPlace }) => {
               completeXY = [];
               completeDA = [];
             }
-
-            // if (tempArr1.length === 0) {
-            //   alert("검색 결과가 존재하지 않습니다.");
-            //   completeXY = [];
-            //   completeDA = [];
-            // }
-
-
-          // for (let i = 0; i < dbLocation.length; i++) {
-          //   let confirm = [];
-          //   const latD1 = parseFloat(completeXY[0][0]);
-          //   const latD2 = parseFloat(dbLocation[i][0][0]);
-          //   const lonD1 = parseFloat(completeXY[0][1]);
-          //   const lonD2 = parseFloat(dbLocation[i][0][1]);
-          //   let dLat = ((latD2 - latD1) * Math.PI) / 180;
-          //   let dLon = ((lonD2 - lonD1) * Math.PI) / 180;
-          //   let a =
-          //     Math.pow(Math.sin(dLat / 2), 2.0) +
-          //     Math.pow(Math.sin(dLon / 2), 2.0) *
-          //       Math.cos((latD1 * Math.PI) / 180) *
-          //       Math.cos((latD2 * Math.PI) / 180);
-          //   let c = 2 * Math.asin(Math.sqrt(a));
-          //   let finalD = R * c;
-
-          //   // if (finalD <= 100) {
-          //   //   confirm.push("D");
-          //   // }
-
-          //   // 여기까지가 출발지에서 100미터 전방에 있는 것들
-
-          //   console.log("정상");
-          //   const latA1 = parseFloat(completeXY[1][0]);
-          //   const latA2 = parseFloat(dbLocation[i][1][0]);
-          //   const lonA1 = parseFloat(completeXY[1][1]);
-          //   const lonA2 = parseFloat(dbLocation[i][1][1]);
-            
-
-          //   let ALat = ((latA2 - latA1) * Math.PI) / 180;
-          //   let ALon = ((lonA2 - lonA1) * Math.PI) / 180;
-          //   let a2 =
-          //     Math.pow(Math.sin(ALat / 2), 2.0) +
-          //     Math.pow(Math.sin(ALon / 2), 2.0) *
-          //       Math.cos((latA1 * Math.PI) / 180) *
-          //       Math.cos((latA2 * Math.PI) / 180);
-          //   let c2 = 2 * Math.asin(Math.sqrt(a2));
-          //   let finalA = R * c2;
-          //   console.log(finalA);
-          //   if (finalD <= 100 && finalA <= 100) {
-          //     tempArr1.push(dbLocation[i][3]);
-          //   }
-          // }
-          // console.log(tempArr1);
-          // if (tempArr1.length === 0) {
-          //   alert("검색 결과가 존재하지 않습니다.");
-          //   completeXY = [];
-          //   completeDA = [];
-          // } else {
-          //   // setPageNum(0);
-          //   channelNum = tempArr1.length;
-          //   channelPages =
-          //     channelNum % 10 === 0
-          //       ? Math.floor(channelNum / 10)
-          //       : Math.floor(channelNum / 10) + 1;
-          //   setChannelPg(channelPages);
-          //   let result = [];
-          //   for (let i = 0; i < res.data.length; i++) {
-          //     for (let j = 0; j < tempArr1.length; j++) {
-          //       if (res.data[i].id === tempArr1[j]) {
-          //         result.push(res.data[i]);
-          //       }
-          //     }
-          //   }
-          //   console.log(result);
-
-          //   let tempAllArr = [];
-          //   const reverseData = result.slice(0).reverse();
-          //   for (let i = 0; i < channelPages; i++) {
-          //     let tempStartNum = 0;
-          //     let tempNum = 10;
-          //     let tempArr = [];
-          //     tempStartNum = tempNum * i;
-          //     tempNum = tempNum * (i + 1);
-          //     for (let j = tempStartNum; j < tempNum; j++) {
-          //       if (reverseData[j] !== undefined) {
-          //         tempArr.push(reverseData[j]);
-          //       }
-          //     }
-          //     tempAllArr = [...tempAllArr, tempArr];
-          //     // addChannelArr(tempArr);
-          //     // console.log(channelArr);
-          //     tempArr = [];
-          //   }
-          //   setChannelArr(tempAllArr);
-          //   completeXY = [];
-          //   completeDA = [];
-          // }
-
         }
-
-        // return res.data;
       } catch (e) {
         console.log("error: " + e);
         alert("검색결과가 없습니다");
-        // window.location.reload();
       }
     };
 
@@ -2228,7 +1763,6 @@ const Board = ({ searchPlace }) => {
 
   useEffect(() => {
     realGetChannelData();
-    console.log("된거니");
   }, []);
 
 
@@ -2267,7 +1801,6 @@ const Board = ({ searchPlace }) => {
         return false;
       }
       whichPoint = e.target.classList[0];
-      // console.log(whichPoint);
       e.preventDefault();
       setShowListD(true);
       searchPlaces(whichPoint);
@@ -2284,7 +1817,6 @@ const Board = ({ searchPlace }) => {
         return false;
       }
       whichPoint = e.target.classList[0];
-      // console.log(whichPoint);
       e.preventDefault();
       setShowListA(true);
       searchPlaces(whichPoint);
@@ -2326,10 +1858,8 @@ const Board = ({ searchPlace }) => {
         function placesSearchCBD(data, status, pagination) {
           if (status === window.kakao.maps.services.Status.OK) {
             const dataD = data;
-            // console.log(dataD);
             const locationD = [dataD[0].x, dataD[0].y];
             const locationD_name = dataD[0].place_name;
-            console.log(locationD_name);
             searchChannel("findD", locationD, locationD_name);
           } else if (status === window.kakao.maps.services.Status.ZERO_RESULT) {
             alert("검색 결과가 존재하지 않습니다.");
@@ -2344,7 +1874,6 @@ const Board = ({ searchPlace }) => {
             // console.log(dataA);
             const locationA = [dataA[0].x, dataA[0].y];
             const locationA_name = dataA[0].place_name;
-            console.log(locationA_name);
             searchChannel("findA", locationA, locationA_name);
           } else if (status === window.kakao.maps.services.Status.ZERO_RESULT) {
             alert("검색 결과가 존재하지 않습니다.");
@@ -2392,8 +1921,6 @@ const Board = ({ searchPlace }) => {
 
     const searchChannel = async (DorA, location, locationName) => {
       try {
-        // const res = await axios.get("http://localhost:4000/posts");
-
         if (DorA === "findD") {
           completeXY.unshift(location);
           completeDA.unshift(locationName);
@@ -2403,8 +1930,6 @@ const Board = ({ searchPlace }) => {
           {
             let tempArr1 = [];
           let R = 6372.8 * 1000;
-
-
           const latD1 = parseFloat(completeXY[0][0]);
           const latD2 = parseFloat(locationMaster[0][0][0]);
           const lonD1 = parseFloat(completeXY[0][1]);
@@ -2434,11 +1959,6 @@ const Board = ({ searchPlace }) => {
             let finalA = R * c2;
 
             if (finalD <= 100 && finalA <= 100) {
-
-              // tempArr1.push(locationMaster[0][3]);
-              console.log(finalD);
-              console.log(finalA);
-              console.log("성공");
               const changedDA = {
                 channelId: enteredPostId,    
                 userId: loggedRealId,
@@ -2506,13 +2026,6 @@ const Board = ({ searchPlace }) => {
             let finalA = R * c2;
 
             if (finalD <= 100 && finalA <= 100) {
-
-              // tempArr1.push(locationMaster[0][3]);
-              console.log(finalD);
-              console.log(finalA);
-              console.log(completeXY);
-              console.log(completeDA);
-              console.log("성공");
               const changedDA = {
                 channelId: enteredPostId,    
                 userId: loggedRealId,
@@ -2543,11 +2056,9 @@ const Board = ({ searchPlace }) => {
           }
         }
 
-        // return res.data;
       } catch (e) {
         console.log("error: " + e);
         alert("검색결과가 없습니다");
-        // window.location.reload();
       }
     };
 
@@ -2905,17 +2416,12 @@ const Board = ({ searchPlace }) => {
     });
   }, [isRoomOn]);
 
-
-
-
-
   return (
     <Container>
       <GlobalStyle />
       <Suspense fallback={<PacmanLoader color="#000000" size={25} />}>
         <BoardBox>
           <SearchSection>
-            {/* <button onClick={realGetChannelData}>temp</button> */}
             <button
               style={{
                 width: "20px",
@@ -2933,19 +2439,15 @@ const Board = ({ searchPlace }) => {
             >
               <BiRefresh style={{ marginLeft: "-3.5px" }} />
             </button>
-            {/* <Searchbar id="findD" placeholder="출발지"></Searchbar> */}
-            {/* <div style={{ marginLeft: "40px" }}>목적지</div> */}
+
             <Searchbar placeholder="출발지or도착지" onChange={changeWord}></Searchbar>
             <button
-              // id="find"
-              // type="submit"
               style={{
                 width: "20px",
                 height: "20px",
                 borderRadius: "15%",
                 backgroundColor: "white",
                 marginBottom: "8px",
-                // marginLeft: "20px",
                 cursor: "pointer",
                 borderStyle: "solid",
                 borderColor: "black",
@@ -2967,7 +2469,6 @@ const Board = ({ searchPlace }) => {
           <ChannelBox id="channelBox">
             {firstTake === false
               ? channelList.map((channel) => {
-                    // console.log(channel);
                     firstCount++;
                     if (firstCount < 10) {
                       return channel.regular === true ? (
@@ -3094,7 +2595,6 @@ const Board = ({ searchPlace }) => {
                     }
                   })
               : channelArr.map((channel) => {
-                // console.log(channel);
                   return channel.regular === true ? (
                     <Channel2
                       onClick={(e) => {
@@ -3214,7 +2714,6 @@ const Board = ({ searchPlace }) => {
                       <RegularSticker2>
                         {channel.regular === true ? "정기" : "비정기"}
                       </RegularSticker2>
-                      {/* <div>{channel.regular === true ? "정기" : "비정기"}</div> */}
                     </Channel>
                   );
                 })}
@@ -3299,7 +2798,6 @@ const Board = ({ searchPlace }) => {
                 <FirstRow>
                   <StartPoint>
                     <div>&lt;출발지&gt;</div>
-                    {/* <div id="stpt"></div> */}
                     <div id="form">
                       <input
                         type="text"
@@ -3370,8 +2868,6 @@ const Board = ({ searchPlace }) => {
                       onChange={driverChange}
                     />
                   </span>
-                  
-
                   <div>
                     정기
                     <input
@@ -3400,7 +2896,6 @@ const Board = ({ searchPlace }) => {
                       onChange={personnelChange}
                     ></input>
                   </div>
-                  {/* 인원제한이랑 인원수랑 구분해야함 */}
                   <div>
                     소통창구 &nbsp;
                     <input style={{backgroundColor: "white", borderRadius: "5px" }} onChange={contentChange}></input>

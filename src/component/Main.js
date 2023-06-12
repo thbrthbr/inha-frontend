@@ -31,21 +31,25 @@ const LoginBox = styled.div`
   justify-content: center;
   align-items: center;
   position: relative;
+  border-radius: 10px;
 `;
 
 const LoginButton = styled.button`
   margin-top: 10px;
   background-color: white;
+  border-radius: 5px;
 `;
 
 const SigninButton = styled.button`
   margin-top: 10px;
   background-color: white;
+  border-radius: 5px;
 `;
 
 const SignInInput = styled.input`
   margin-bottom: 5px;
   border-color: black;
+  border-radius: 5px;
 `;
 
 const SignInInput2 = styled.input.attrs((props) => ({
@@ -53,6 +57,7 @@ const SignInInput2 = styled.input.attrs((props) => ({
 }))`
   margin-bottom: 5px;
   border-color: black;
+  border-radius: 5px;
 `;
 
 const ChoiceBox = styled.div`
@@ -243,36 +248,6 @@ const Main = (props) => {
     }
   };
 
-  // useEffect(() => {
-  //   (async () => {
-  //     try {
-  //       const res = await axios.post(
-  //         "/loginProc",
-  //         {
-  //           realId: id,
-  //           password: password,
-  //         },
-  //         {
-  //           headers: {
-  //             "Content-Type": "application/json",
-  //           },
-  //         },
-  //         {
-  //           withCredentials: true,
-  //         }
-  //       );
-  //       console.log(res);
-
-  //       // 나중에 다시 확인
-  //       if (res.status === "200") {
-  //         alert("로그인 되셨습니다");
-  //       }
-  //     } catch (e) {
-  //       alert("로그인 실패");
-  //       console.log("error: " + e);
-  //     }
-  //   })();
-  // }, []);
 
   const kariLogInRequest = async (e) => {
     try {
@@ -280,42 +255,6 @@ const Main = (props) => {
       const res = await axios.get(`http://localhost:4000/joins`);
 
       console.log(res);
-      // const temp = {
-      //   realId: 0,
-      //   password: password,
-      // };
-
-      // const res = axios({
-      //   url: `http://localhost:4000/joins`,
-      //   method: "post",
-      //   temp,
-      // });
-
-      // console.log(res);
-      // console.log(res.ok);
-      // let resFix = await res.json();
-      // console.log(resFix);
-
-      // if (res.ok) {
-      //   let resFix = await res.json();
-      //   console.log(resFix);
-      //   // let count = 0;
-      //   // for (let i = 0; i < resFix.data.length; i++) {
-      //   //   if (resFix.data.realId === id) {
-      //   //     alert("로그인 되셨습니다");
-      //   //     count++;
-      //   //   }
-      //   // }
-      //   // if (count === 0) {
-      //   //   alert("로그인 실패");
-      //   //   window.location.reload();
-      //   // }
-      // } else {
-      //   console.log(res.ok);
-      //   console.log("왜안돼");
-      // }
-
-      // 나중에 다시 확인
 
       let count = 0;
       for (let i = 0; i < res.data.length; i++) {
@@ -366,18 +305,18 @@ const Main = (props) => {
             isSignIn === false ? (
               <LoginBox>
                 <div>
-                  <Transparent onClick={kariLogInRequest}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</Transparent>
+                  {/* <Transparent onClick={kariLogInRequest}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</Transparent> */}
                 </div>
                 <div style={{fontSize:"20px"}}>ID</div>
-                <input type="text" onChange={idChange} style={{marginBottom: "20px", borderColor: "black"}}></input>
+                <input type="text" onChange={idChange} style={{borderRadius: "5px", marginBottom: "20px", borderColor: "black"}}></input>
                 <div style={{fontSize:"20px"}}>PASSword</div>
-                <input type="password" onChange={passwordChange} style={{marginBottom: "20px",  borderColor: "black"}}></input>
+                <input type="password" onChange={passwordChange} style={{borderRadius: "5px", marginBottom: "20px",  borderColor: "black"}}></input>
                 <LoginButton onClick={logInRequest}>LOGin</LoginButton>
                 <SigninButton onClick={startSignIn}>SIGNin</SigninButton>
               </LoginBox>
             ) : (
               <LoginBox>
-                <button style={{ position: "absolute", left: "0%", border: "none", cursor:"pointer", backgroundColor: "white", height: "30px", marginTop: "-470px" }} onClick={startSignIn}>
+                <button style={{ position: "absolute", left: "0%", border: "none", cursor:"pointer", backgroundColor: "white", height: "30px", marginTop: "-470px", borderRadius: "10px"}} onClick={startSignIn}>
                   <AiOutlineArrowLeft/>
                 </button>
                 &lt;아이디&gt;
@@ -418,7 +357,8 @@ const Main = (props) => {
                       width: "30px",
                       marginRight: "5px",
                       marginLeft: "5px",
-                      borderColor: "black"
+                      borderColor: "black",
+                      borderRadius: "5px"
                     }}
                     id="first"
                     onChange={phoneChange}
@@ -429,7 +369,8 @@ const Main = (props) => {
                       width: "40px",
                       marginRight: "5px",
                       marginLeft: "5px",
-                      borderColor: "black"
+                      borderColor: "black",
+                      borderRadius: "5px"
                     }}
                     id="second"
                     onChange={phoneChange}
@@ -440,7 +381,8 @@ const Main = (props) => {
                       width: "40px",
                       marginRight: "5px",
                       marginLeft: "5px",
-                      borderColor: "black"
+                      borderColor: "black",
+                      borderRadius: "5px"
                     }}
                     id="third"
                     onChange={phoneChange}
@@ -454,7 +396,8 @@ const Main = (props) => {
                       width: "40px",
                       marginRight: "5px",
                       marginLeft: "5px",
-                      borderColor: "black"
+                      borderColor: "black",
+                      borderRadius: "5px"
                     }}
                     placeholder="YYYY"
                     id="year"
@@ -465,7 +408,8 @@ const Main = (props) => {
                       width: "30px",
                       marginRight: "5px",
                       marginLeft: "5px",
-                      borderColor: "black"
+                      borderColor: "black",
+                      borderRadius: "5px"
                     }}
                     placeholder="MM"
                     id="month"
@@ -476,7 +420,8 @@ const Main = (props) => {
                       width: "30px",
                       marginRight: "5px",
                       marginLeft: "5px",
-                      borderColor: "black"
+                      borderColor: "black",
+                      borderRadius: "5px"
                     }}
                     placeholder="DD"
                     id="day"
@@ -518,7 +463,8 @@ const Main = (props) => {
                 </ChoiceBox>
                 <button style={{
                       borderColor: "black",
-                      backgroundColor: "white"
+                      backgroundColor: "white",
+                      borderRadius: "5px"
                     }} onClick={signInRequest}>SUBmit</button>
               </LoginBox>
             )

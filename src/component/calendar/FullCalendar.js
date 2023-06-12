@@ -1,6 +1,7 @@
 import React, {useEffect} from "react";
 import "./_styles.scss";
 import { Icon } from "@iconify/react";
+import { MdEnergySavingsLeaf } from "react-icons/md";
 import {
   format,
   parse,
@@ -19,9 +20,10 @@ import axios from "axios";
 
 const CalendarContainer = styled.div`
   width: 1500px;
-  height: 600px;
+  height: 450px;
   display: flex;
   justify-content: center;
+  margin-top: -10px;
 `;
 
 const CellList = styled.ul`
@@ -47,12 +49,12 @@ const RenderHeader = (props) => {
         <div className="col col-end">
           <Icon
             icon="bi:arrow-left-circle-fill"
-            style={{ color: "#F2D7D9" }}
+            style={{ color: "blue" }}
             onClick={prevMonth}
           />
           <Icon
             icon="bi:arrow-right-circle-fill"
-            style={{ color: "#F2D7D9" }}
+            style={{ color: "blue" }}
             onClick={nextMonth}
           />
         </div>
@@ -164,7 +166,7 @@ const RenderCells = () => {
                   if(dayData.day == day.getDate())
                   {
                     let modify = parseInt(dayData.emissions*10);
-                    return <span>+{modify}</span>
+                    return <div><div style={{color: "green"}}>-{dayData.emissions.toFixed(1)}Co2<MdEnergySavingsLeaf style={{position: "absolute", marginTop: "2px"}}/></div><div style={{color: "orange"}}>+{modify}p</div></div>
                   }
                 }))
                 }

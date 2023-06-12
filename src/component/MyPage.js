@@ -5,9 +5,9 @@ import { ProfileStore } from "./store/store.js";
 
 const PageBox = styled.div`
   // border: 0.5px solid #c0c0c0;
-  height: 600px;
+  height: 450px;
   width: 1048px;
-  margin-left: 70px;
+  margin-left: 170px;
   oveflow: scroll;
 `;
 
@@ -21,19 +21,23 @@ padding-left: 5px;
   height: 50px;
   width: 100px;
   font-size: 30px;
-  background-color: orange;
+  background-color: white;
   font-family: 'Lobster', cursive;
-  // border: 0.5px solid #c0c0c0;
+  border: 2px solid orange;
+  // border-bottom-color: white;
 `;
 const PageCategory2 = styled.div`
 padding-left: 15px;
   height: 50px;
   width: 100px;
   font-size: 30px;
-  color: white;
-  background-color: blue;
+  color: black;
+  background-color: white;
   font-family: 'Lobster', cursive;
-  // border: 0.5px solid #c0c0c0;
+  border: 2px solid blue;
+  border-bottom-style: none;
+  margin-left: 5px;
+  margin-top: -1px;
 `;
 
 const MyPage = (props) => {
@@ -53,6 +57,7 @@ const MyPage = (props) => {
             >
               Channel
             </Link>
+            <div style={{position: "absolute", marginTop: "10px", marginLeft: "-5px", width: "105px", height: "200px", backgroundColor: "white"}}></div>
           </PageCategory1>
           <PageCategory2 onClick={stateInit}>
             <Link
@@ -61,6 +66,7 @@ const MyPage = (props) => {
             >
               Profile
             </Link>
+            {/* <div style={{position: "absolute", marginTop: "10px", marginLeft: "-15px", width: "115px", height: "200px", backgroundColor: "white"}}></div> */}
           </PageCategory2>
         </UpperBar>
         <Outlet />

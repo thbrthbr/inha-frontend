@@ -6,10 +6,11 @@ import postit from "./img/postit.png";
 
 const Container = styled.div`
   overflow: auto;
-  height: 550px;
+  height: 450px;
   width: 1048px;
-  // margin-left: 50px;
-  background-color: orange;
+  margin-top: -2px;
+  border: 2px solid orange;
+  background-color: white;
   &::-webkit-scrollbar {
     display: none;
   }
@@ -44,6 +45,7 @@ const ChannelItem = styled.div`
   width: 150px;
   margin-top: -250px;
   margin-left: 50px;
+  font-family: 'S-CoreDream-3Light';
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -114,7 +116,7 @@ const ChannelTask = (props) => {
 
   const getChannels2 = async () => {
     try {
-      const res1 = await axios.get(`http://localhost:8080/api/carpools?userId=${loggedRealId }`, {
+      const res1 = await axios.get(`http://localhost:8080/api/carpools?userId=${loggedRealId}`, {
         withCredentials: true,
       });
 
@@ -126,7 +128,6 @@ const ChannelTask = (props) => {
         // console.log(res1.data[i].hostNickname);
         // console.log(loggedId);
         if (res1.data.data[i].hostId == loggedRealId) {
-          console.log(res1.data.data[i].hostId);
           tempArr.push(res1.data.data[i]);
         } else {
           for (let j = 0; j < res1.data.data[i].userHasChannelList.length; j++) {

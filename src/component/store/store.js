@@ -81,6 +81,16 @@ const ProfileStore = create(
 
     switchOn: true,
     setSwitchOn: (input) => set({ switchOn: input }),
+
+    phoneF: "",
+    setPhoneF: (input) => set({ phoneF: input }),
+
+    phoneS: "",
+    setPhoneS: (input) => set({ phoneS: input }),
+
+    phoneT: "",
+    setPhoneT: (input) => set({ phoneT: input }),
+
   }),
   {
     name: "login-stuff",

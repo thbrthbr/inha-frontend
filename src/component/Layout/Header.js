@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
-import logoImg from "../img/logo.png";
+import logoImg from "../img/logo2.png";
+import car from "../img/car.png";
 import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 import {
   ProfileStore,
@@ -13,12 +14,37 @@ const HeaderArea = styled.div`
   height: 150px;
   width: 1300px;
   display: flex;
-  font-size: 100%;
+  // font-size: 100%;
   // justify-content: space-between;
   align-items: center;
-  margin-left: 50px;
+  margin-left: 60px;
 `;
-const CategoryItem = styled.span``;
+
+const CategoryItem = styled.span`
+  margin-top: -27px;
+  margin-left: 27px;
+  font-family: 'S-CoreDream-3Light';
+  font-size: 30px;
+  font-weight: 600;
+`;
+
+const Line = styled.div`
+  height: 2px;
+  width: 990px;
+  background-color: black;
+  margin-top: -22px;
+  margin-left: -25px;
+`
+
+const Section2 = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
+const Section1 = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
 
 const Item = styled.p`
   &:hover {
@@ -48,9 +74,17 @@ function Header(props) {
   };
 
   const logOut = () => {
-    setLoggedId(null);
-    movePage("/");
-    setLoggedin(false);
+    let confirm = window.confirm("로그아웃 하시겠습니까?");
+    if(confirm)
+    {
+      setLoggedId(null);
+      movePage("/");
+      setLoggedin(false);
+    }
+    else{
+      return false;
+    }
+    
   };
 
   const deny = () => {
@@ -70,128 +104,6 @@ function Header(props) {
   }, []);
 
   return (
-    <>
-      {/* {loggedin === true ? (
-        <>
-          <HeaderArea>
-            <span style={{ height: "100px" }}>
-              <Link
-                to="/login/today/*"
-                style={{ color: "inherit", textDecoration: "none" }}
-              >
-                <img src={logoImg} alt="logo" style={{ height: "80px" }} />
-              </Link>
-            </span>
-
-            <CategoryItem>
-              <Link
-                to="/login/today/*"
-                style={{ color: "inherit", textDecoration: "none" }}
-              >
-                <Item
-                  style={
-                    location.pathname === "/login/today/*"
-                      ? {
-                          color: "blue",
-                          textDecoration: "none",
-                          marginLeft: "15px",
-                          marginRight: "15px",
-                        }
-                      : {
-                          color: "inherit",
-                          textDecoration: "none",
-                          marginLeft: "15px",
-                          marginRight: "15px",
-                        }
-                  }
-                  onClick={stateInit}
-                >
-                  오늘의 이동거리
-                </Item>
-              </Link>
-            </CategoryItem>
-            <CategoryItem>
-              <Link
-                to="/login/calendar/*"
-                style={{ color: "inherit", textDecoration: "none" }}
-              >
-                <Item
-                  style={
-                    location.pathname === "/login/calendar/*"
-                      ? {
-                          color: "blue",
-                          textDecoration: "none",
-                          marginRight: "15px",
-                        }
-                      : {
-                          color: "inherit",
-                          textDecoration: "none",
-                          marginRight: "15px",
-                        }
-                  }
-                  onClick={stateInit}
-                >
-                  탄소배출일지
-                </Item>
-              </Link>
-            </CategoryItem>
-            <CategoryItem>
-              <Link
-                to="/login/board/*"
-                style={{ color: "inherit", textDecoration: "none" }}
-              >
-                <Item
-                  style={
-                    location.pathname === "/login/board/*"
-                      ? {
-                          color: "blue",
-                          textDecoration: "none",
-                          marginRight: "15px",
-                        }
-                      : {
-                          color: "inherit",
-                          textDecoration: "none",
-                          marginRight: "15px",
-                        }
-                  }
-                  onClick={stateInit}
-                >
-                  카풀 쉐어링
-                </Item>
-              </Link>
-            </CategoryItem>
-            <CategoryItem>
-              <Link
-                to="/login/mypage/channeltask"
-                style={{ color: "inherit", textDecoration: "none" }}
-              >
-                <Item
-                  style={
-                    location.pathname.includes("/login/mypage")
-                      ? {
-                          color: "blue",
-                          textDecoration: "none",
-                          marginRight: "15px",
-                        }
-                      : {
-                          color: "inherit",
-                          textDecoration: "none",
-                          marginRight: "15px",
-                        }
-                  }
-                  onClick={stateInit}
-                >
-                  마이페이지
-                </Item>
-              </Link>
-            </CategoryItem>
-            <button onClick={logOut}>로그아웃</button>
-          </HeaderArea>
-          <Outlet />
-        </>
-      ) : (
-        deny()
-      )} */}
       <>
         <HeaderArea id="header">
           <span style={{ height: "100px" }}>
@@ -206,7 +118,8 @@ function Header(props) {
               />
             </Link>
           </span>
-
+          <Section1>
+            <Section2>
           <CategoryItem>
             <Link
               to="/login/today/*"
@@ -216,7 +129,7 @@ function Header(props) {
                 style={
                   location.pathname === "/login/today/*"
                     ? {
-                        fontSize: "30px",
+                        // fontSize: "30px",
                         color: "blue",
                         textDecoration: "none",
                         marginLeft: "15px",
@@ -224,7 +137,7 @@ function Header(props) {
                         marginTop: "60px",
                       }
                     : {
-                        fontSize: "30px",
+                        // fontSize: "30px",
                         color: "inherit",
                         textDecoration: "none",
                         marginLeft: "15px",
@@ -247,14 +160,14 @@ function Header(props) {
                 style={
                   location.pathname === "/login/calendar/*"
                     ? {
-                        fontSize: "30px",
+                        // fontSize: "30px",
                         color: "blue",
                         textDecoration: "none",
                         marginRight: "30px",
                         marginTop: "60px",
                       }
                     : {
-                        fontSize: "30px",
+                        // fontSize: "30px",
                         color: "inherit",
                         textDecoration: "none",
                         marginRight: "30px",
@@ -276,14 +189,14 @@ function Header(props) {
                 style={
                   location.pathname === "/login/board/*"
                     ? {
-                        fontSize: "30px",
+                        // fontSize: "30px",
                         color: "blue",
                         textDecoration: "none",
                         marginRight: "30px",
                         marginTop: "60px",
                       }
                     : {
-                        fontSize: "30px",
+                        // fontSize: "30px",
                         color: "inherit",
                         textDecoration: "none",
                         marginRight: "30px",
@@ -305,14 +218,14 @@ function Header(props) {
                 style={
                   location.pathname.includes("/login/mypage")
                     ? {
-                        fontSize: "30px",
+                        // fontSize: "30px",
                         color: "blue",
                         textDecoration: "none",
                         marginRight: "30px",
                         marginTop: "60px",
                       }
                     : {
-                        fontSize: "30px",
+                        // fontSize: "30px",
                         color: "inherit",
                         textDecoration: "none",
                         marginRight: "30px",
@@ -325,11 +238,23 @@ function Header(props) {
               </Item>
             </Link>
           </CategoryItem>
-          <button onClick={logOut}>로그아웃</button>
+          <img
+                src={car}
+                onClick={logOut}
+                alt="car"
+                style={{ cursor: "pointer", height: "60px", marginRight: "10px",  marginTop: "27px"}}
+              />
+          </Section2>
+          <Line></Line>
+          
+          </Section1>
+          
+          
+          {/* <button onClick={logOut}>로그아웃</button> */}
         </HeaderArea>
         <Outlet />
       </>
-    </>
+
   );
 }
 

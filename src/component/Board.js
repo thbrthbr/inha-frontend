@@ -3,6 +3,9 @@ import { GlobalStyle } from "./noScroll.js";
 import { BsMegaphone } from "react-icons/bs";
 import { BiRefresh } from "react-icons/bi";
 import { AiOutlineSearch } from "react-icons/ai";
+import { BiPencil } from "react-icons/bi";
+import { TbArrowsExchange2 } from "react-icons/tb";
+
 // import { useIsFocused } from "@react-navigation/native";
 import styled from "styled-components";
 import axios from "axios";
@@ -20,14 +23,15 @@ import qs from "qs";
 
 const Container = styled.div`
   width: 1500px;
-  height: 500px;
+  height: 400px;
   display: flex;
   justify-content: center;
+  margin-left: -30px;
 `;
 
 const BoardBox = styled.div`
   // border: 0.5px solid #c0c0c0;
-  height: 600px;
+  height: 300px;
   width: 1048px;
   margin-left: 10px;
 `;
@@ -39,12 +43,17 @@ const SearchSection = styled.div`
 `;
 
 const Searchbar = styled.input`
+  border: 0.5px solid black;
   margin-left: 20px;
-  border: none;
-  background-color: #eeeeee;
+  // border: none;
+  // background-color: #eeeeee;
+  border-radius: 10px;
   margin-bottom: 10px;
   margin-right: 20px;
   height: 20px;
+  &::placeholder {
+    text-align: center; 
+ }
 `;
 
 const Searchbar2 = styled.input`
@@ -56,7 +65,7 @@ const Searchbar2 = styled.input`
 
 const ChannelBox = styled.div`
   position: relative;
-  height: 500px;
+  height: 450px;
   overflow: scroll;
   &::-webkit-scrollbar {
     display: none;
@@ -136,13 +145,15 @@ const Room = styled.div`
   // width: 500px;
   // display: flex;
   padding: 30px;
-  border: 0.5px solid #c0c0c0;
-  border-radius: 10%;
+  border: 0.5px solid black;
+  border-radius: 0px 0px 20px 20px;
   top: 15%;
   position: fixed;
-  height: 500px;
+  height: 370px;
   width: 500px;
   margin-left: 300px;
+  margin-top: 10px;
+  font-family: 'S-CoreDream-3Light';
   background-color: white;
   z-index: 5;
 `;
@@ -192,7 +203,7 @@ const ButtonX2 = styled.button`
 `;
 
 const ButtonX3 = styled.button`
-  // margin-top: 20px;
+  // margin-top: -20px;
   margin-left: 480px;
   border: none;
   background-color: white;
@@ -213,14 +224,16 @@ const ModalContainer = styled.div`
 
 const ModalBox = styled.div`
   background-color: white;
-  border-radius: 10%;
-  margin-left: 300px;
+  border-radius: 0px 0px 20px 20px;
+  font-family: 'S-CoreDream-3Light';
+  margin-left: 320px;
+  margin-top: 10px;
   top: 15%;
   position: fixed;
   align-items: center;
   flex-direction: column;
-  border: 0.5px solid #c0c0c0;
-  height: 500px;
+  border: 0.5px solid black;
+  height: 450px;
   width: 500px;
   display: flex;
 `;
@@ -295,7 +308,7 @@ const SubModal = styled.div`
   width: 300px;
   height: 250px;
   background-color: white;
-  border: 0.5px solid #c0c0c0;
+  border: 0.5px solid black;
   z-index: 4;
 `;
 
@@ -305,7 +318,7 @@ const SubModal2 = styled.div`
   width: 300px;
   height: 250px;
   background-color: white;
-  border: 0.5px solid #c0c0c0;
+  border: 0.5px solid black;
   z-index: 4;
 `;
 
@@ -338,6 +351,11 @@ width: 200px;
 const RoomPeopleBox = styled.span`
   display: flex;
   flex-direction: column;
+  overflow: scroll;
+  height: 80px;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `
 
 const RoomPeople = styled.span`
@@ -612,15 +630,15 @@ const Board = ({ searchPlace }) => {
       attendeeProfBox.id = "me";
       console.log(attendeeProfBox);
       attendeeProfBox.style.cssText = `
-        border: 0.5px solid #c0c0c0;
+        border: 0.5px solid orange;
         border-radius: 5%;
         width: 300px;
         background-color: white;
         height: 200px;
         position: fixed;
-        margin-top: -80px;
-        margin-left: 100px;
-        font-family: "GangwonEduPowerExtraBoldA";
+        margin-top: -280px;
+        margin-left: 170px;
+        font-family: 'S-CoreDream-3Light';
         padding: 20px;
         font-size: 25px;
       `;
@@ -655,15 +673,15 @@ const Board = ({ searchPlace }) => {
       const attendeeProfBox = document.createElement("div");
       attendeeProfBox.id = "me";
       attendeeProfBox.style.cssText = `
-        border: 0.5px solid #c0c0c0;
+        border: 0.5px solid orange;
         border-radius: 5%;
         width: 300px;
         background-color: white;
         height: 200px;
         position: fixed;
-        margin-top: -80px;
-        margin-left: 100px;
-        font-family: "GangwonEduPowerExtraBoldA";
+        margin-top: -280px;
+        margin-left: 170px;
+        font-family: 'S-CoreDream-3Light';
         padding: 20px;
         font-size: 25px;
       `;
@@ -701,14 +719,14 @@ const Board = ({ searchPlace }) => {
         const profText2 = document.createElement("p");
         profText2.id = "notMe";
         profBox.style.cssText = `
-          // border: 0.5px solid #c0c0c0;
-          border-radius: 5%;
-          background-color: rgba(0, 0, 255, 0.2);
+        border: 1px solid blue;
+        border-radius: 5%;
+        background-color: white;
           width: 150px;
           height: 100px;
           position: fixed;
           margin-left: 100px;
-          font-family: "GangwonEduPowerExtraBoldA";
+          font-family: 'S-CoreDream-3Light';
           padding: 20px;
           z-index: 6;
         `;
@@ -741,14 +759,14 @@ const Board = ({ searchPlace }) => {
         profText2.id = "notMe";
         
         profBox.style.cssText = `
-          // border: 1px solid rgba(0, 0, 255, 0.5);
+          border: 1px solid blue;
           border-radius: 5%;
-          // background-color: blue;
-          background-color: rgba(0, 0, 255, 0.2);
+          background-color: white;
+          // background-color: rgba(0, 0, 255, 0.2);
           width: 150px;
           height: 100px;
           position: fixed;
-          font-family: "GangwonEduPowerExtraBoldA";
+          font-family: 'S-CoreDream-3Light';
           margin-left: 100px;
           padding: 20px;
           z-index: 6;
@@ -836,6 +854,7 @@ const Board = ({ searchPlace }) => {
       setRoomHost(res3.data.data.hostNickname);
       setRoomDeparture(res3.data.data.departures);
       setRoomArrival(res3.data.data.arrivals);
+      console.log(res3.data.data);
       setRoomDriver(res3.data.data.driverNickname);
       let tempArr = [];
       for (let j = 0; j < res2.data.data.length; j++) {
@@ -902,106 +921,6 @@ const Board = ({ searchPlace }) => {
       console.log("error: " + e);
     }
   };
-
-  //@@@@@@@@@@@@@@@@@@@@@@@@@@
-  const enterChannel = async (curpersonnel, channelId, roomId) => {
-    try {
-      document.getElementById("channelBox").style.cssText = `
-    overflow: hidden;`;
-    document.getElementById("header").style.cssText = `
-    pointer-events: none;`;
-      if (roomId == loggedId) {
-        setIsMaster(true);
-      }
-      const parsing = parseInt(channelId);
-      const sum = parseInt(curpersonnel) + 1;
-
-      const res1 = await axios.get(
-        `http://localhost:4000/carpools?carpoolId=${channelId}`,
-        {
-          withCredentials: true,
-        }
-      );
-      setRoomHost(res1.data[0].hostNickname);
-      setRoomDeparture(res1.data[0].departures);
-      setRoomArrival(res1.data[0].arrivals);
-      setRoomDriver(res1.data[0].driverNickname);
-
-      let tempArr = [];
-      for (let i = 0; i < res1.data[0].userChannelList.length; i++) {
-        tempArr.push(res1.data[0].userChannelList[i].nickname);
-        console.log(res1.data[0].userChannelList[i].nickname);
-      }
-      setRoomPeople(tempArr);
-
-      setIsRoomOn(true);
-
-      if (!tempArr.includes(loggedId)) {
-        if (res1.data[0].personnel == res1.data[0].curPersonnel) {
-          alert("인원이 가득 찼습니다");
-          setIsRoomOn(false);
-          return;
-        }
-        let result = window.confirm("해당 채널에 입장하시겠습니까?");
-        if (result) {
-          const personnelPlus = {
-            curPersonnel: sum,
-          };
-          const userEnter = {
-            curPersonnel: sum,
-            userChannelList: [
-              ...res1.data[0].userChannelList,
-              {
-                id: loggedRealId,
-                nickname: loggedId,
-                userId: loggedRealId,
-                departures: null,
-                departuresLatitude: null,
-                departuresLongitude: null,
-                arrivals: null,
-                arrivalsLatitude: null,
-                arrivalsLongitude: null,
-                rating: 4.2,
-              },
-            ],
-          };
-
-          const res2 = await axios(
-            {
-              method: "patch",
-              url: `http://localhost:4000/carpools/${parsing}`,
-              data: userEnter,
-              headers: { "Content-Type": "application/json" },
-            },
-            {
-              withCredentials: true,
-            }
-          );
-
-          const res3 = await axios(
-            {
-              method: "patch",
-              url: `http://localhost:4000/posts/${parsing}`,
-              data: personnelPlus,
-              headers: { "Content-Type": "application/json" },
-            },
-            {
-              withCredentials: true,
-            }
-          );
-        } else {
-          document.getElementById("channelBox").style.cssText = ``;
-          document.getElementById("header").style.cssText = ``;
-          setIsRoomOn(false);
-        }
-      }
-
-      return res1.data;
-    } catch (e) {
-      console.log("error: " + e);
-    }
-  };
-  //@@@@@@@@@@@@@@@@@@@@@@@@@@
 
   const realGetChannelData = async () => {
     try {
@@ -1343,6 +1262,7 @@ const Board = ({ searchPlace }) => {
       const channelData = {
         nickname: loggedId,
         userId: loggedRealId,
+        driverId: driverExsist === true ? loggedRealId : null,
         title: "제목없음",
         departures: inputStartPoint,
         departuresLatitude: departuresLatitude,
@@ -3303,18 +3223,20 @@ const Board = ({ searchPlace }) => {
                 <RoomContainer>
                   <Room id="room">
                     <ButtonX3 onClick={closeRoom}>X</ButtonX3>
-                    <div>방장: {roomHost}</div>
-                    <div>출발지: {roomDeparture} </div>
-                    <div>목적지: {roomArrival} </div>
-                    <div>
+                    <div style={{marginBottom: "10px"}}>방장: {roomHost}</div>
+                    <div style={{marginBottom: "10px"}}>출발지: {roomDeparture} </div>
+                    <div style={{marginBottom: "10px"}}>목적지: {roomArrival} </div>
+                    <div style={{marginBottom: "10px"}}>
                       운전자: {roomDriver === null ? "없음" : roomDriver}
                     </div>
-                    <div>
-                      소통창구: {contentEdit === false ? (<>{roomContent} <span><button onClick={editSwitch}>편집</button></span></>) : <><span><input placeholder={roomContent} onChange={changeWord2}></input></span> <span><button onClick={editSwitch}>편집</button></span></>} 
+                    <div style={{marginBottom: "10px"}}>
+                      소통창구: {contentEdit === false ? (<>{roomContent} <span><button style={{border: "none", cursor:"pointer", backgroundColor: "white", height: "10px"}} onClick={editSwitch}><BiPencil style={{fontSize: "15px", marginBottom: "-2px", marginLeft: "-7px"}}/></button></span>
+                      </>) : <><span><input placeholder={roomContent} onChange={changeWord2}></input></span> <span><button style={{border: "none", cursor:"pointer", backgroundColor: "white", height: "10px"}} onClick={editSwitch}><BiPencil style={{fontSize: "15px", marginBottom: "-2px", marginLeft: "-7px"}}/></button></span></>} 
                     </div>
                     
                     <div style={{ zIndex : 7}}>
-                      탑승자:<RoomPeopleBox>{roomPeople.sort().map((people) => {
+                      <div style={{marginTop: "10px"}}>탑승자:</div>
+                      <RoomPeopleBox>{roomPeople.sort().map((people) => {
                         usersCount++;
                         if (usersCount === roomPeople.length)
                           return (<>
@@ -3344,13 +3266,16 @@ const Board = ({ searchPlace }) => {
                     <div style={{marginBottom: "10px"}}>
                       소통창구: {roomContent}
                     </div>
-                    <div style={{marginBottom: "10px"}}>개인 출발지 / 도착지 지정하기 </div>
-                    <span><input id="findD"></input></span>
-                    <span><input id="findA"></input></span>
-                    <span><button id="find">변경</button></span>
+                    <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}><div style={{marginBottom: "10px"}}>개인 출발지 / 도착지 지정하기 </div>
+                    <div style={{fontSize: "10px", color: "orange", marginBottom: "10px"}}>(채널의 출발/목적지에서 100m 이내 지점만 지정 가능해요)</div>
+                    <div><span><input placeholder="출발" style={{borderRadius: "10px"}} id="findD"></input></span>
+                    <span><input placeholder="도착" style={{marginLeft: "10px", borderRadius: "10px"}} id="findA"></input></span>
+                    <span><button style={{borderRadius: "10px", marginLeft: "10px", backgroundColor: "white"}} id="find"> <TbArrowsExchange2/></button></span></div>
+                    </div>
+                    
                     
                     <div style={{marginBottom: "10px"}}>
-                      탑승자:<RoomPeopleBox>{roomPeople.sort().map((people) => {
+                      <div style={{marginTop: "10px"}}>탑승자:</div><RoomPeopleBox>{roomPeople.sort().map((people) => {
                         usersCount++;
                         if (usersCount === roomPeople.length)
                           return (<>
@@ -3380,11 +3305,11 @@ const Board = ({ searchPlace }) => {
                         type="text"
                         value={search}
                         id="keyword1"
-                        style={{ width: "50px" }}
+                        style={{ width: "50px", borderRadius: "5px" }}
                         onChange={onChangeSearch}
                         onKeyPress={handleOnKeyPress}
                       />
-                      <button className="start" id="submit_btn1" type="submit">
+                      <button style={{backgroundColor: "white", borderRadius: "5px" }} className="start" id="submit_btn1" type="submit">
                         <AiOutlineSearch />
                       </button>
                     </div>
@@ -3406,11 +3331,11 @@ const Board = ({ searchPlace }) => {
                         type="text"
                         value={search2}
                         id="keyword2"
-                        style={{ width: "50px" }}
+                        style={{ width: "50px", borderRadius: "5px" }}
                         onChange={onChangeSearch2}
                         onKeyPress={handleOnKeyPress}
                       />
-                      <button className="end" id="submit_btn2" type="submit">
+                      <button style={{backgroundColor: "white", borderRadius: "5px" }} className="end" id="submit_btn2" type="submit">
                         <AiOutlineSearch />
                       </button>
                     </div>
@@ -3427,8 +3352,8 @@ const Board = ({ searchPlace }) => {
                 </FirstRow>
                 <SecondRow>
                   <div></div>
-                  <div>운전자입니까? </div>
-                  <div>
+                  운전자입니까? &nbsp;
+                  <span>
                     네
                     <input
                       type="radio"
@@ -3444,7 +3369,8 @@ const Board = ({ searchPlace }) => {
                       defaultChecked="true"
                       onChange={driverChange}
                     />
-                  </div>
+                  </span>
+                  
 
                   <div>
                     정기
@@ -3465,8 +3391,9 @@ const Board = ({ searchPlace }) => {
                     />
                   </div>
                   <div>
-                    참가인원제한
+                    참가인원제한 &nbsp;
                     <input
+                    style={{backgroundColor: "white", borderRadius: "5px" }}
                       type="number"
                       min="2"
                       max="47"
@@ -3475,11 +3402,11 @@ const Board = ({ searchPlace }) => {
                   </div>
                   {/* 인원제한이랑 인원수랑 구분해야함 */}
                   <div>
-                    참고사항
-                    <input onChange={contentChange}></input>
+                    소통창구 &nbsp;
+                    <input style={{backgroundColor: "white", borderRadius: "5px" }} onChange={contentChange}></input>
                   </div>
                 </SecondRow>
-                <button onClick={openChannel2}>채널생성</button>
+                <button style={{ marginTop: "10px", backgroundColor: "white", borderRadius: "5px" }} onClick={openChannel2}>채널생성</button>
               </ModalBox>
             </ModalContainer>
           </ChannelBox>

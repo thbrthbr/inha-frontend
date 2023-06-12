@@ -21,7 +21,7 @@ import { MdEnergySavingsLeaf } from "react-icons/md";
 
 const TodayContainer = styled.div`
   width: 1500px;
-  height: 800px;
+  height: 450px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -47,6 +47,7 @@ const TodayBox = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  border-radius: 10px;
 `;
 
 const Yoyak = styled.h3`
@@ -93,7 +94,7 @@ const Today = (props) => {
       {
         withCredentials: true,
       });
-      const res2 = await axios.get(`http://localhost:8080/api/users/1?userId=${loggedRealId}`,
+      const res2 = await axios.get(`http://localhost:8080/api/users/${loggedRealId}?userId=${loggedRealId}`,
       {
         withCredentials: true,
       });
@@ -167,7 +168,7 @@ const Today = (props) => {
       {
         withCredentials: true,
       });
-      const res2 = await axios.get(`http://localhost:8080/api/users/1?userId=${loggedRealId}`,
+      const res2 = await axios.get(`http://localhost:8080/api/users/${loggedRealId}?userId=${loggedRealId}`,
       {
         withCredentials: true,
       });
@@ -176,7 +177,7 @@ const Today = (props) => {
 
       if(res1.data.data.length === 0)
       {
-        setLastDate("-");
+        setLastDate("-/-/-");
         setEmission2("-");
         setPoint2("-");
         setLevel2(1);
@@ -207,6 +208,7 @@ const Today = (props) => {
       console.log(parseInt(lastEmission*10));
       setEmission2(parseInt(lastEmission*10));
       setPoint2(res2.data.data.point);
+      console.log(res2.data.data);
       setLevel2(res2.data.data.level);
       }
 
@@ -238,7 +240,7 @@ const Today = (props) => {
             <Summary>오늘의 <span style={{color: "blue"}}>절약량</span></Summary>
             <SummaryContent><span style={{color: "green", fontFamily: 'Dosis'}}>{emission}</span> <span style={{fontFamily: 'Dosis'}}>Co2</span> <span style={{position: "relative"}}><MdEnergySavingsLeaf style={{position: "absolute", marginTop: "4px"}}/></span></SummaryContent>
             <Summary>누적 <span style={{color: "blue"}}>포인트</span></Summary>
-            <SummaryContent><span style={{color: "orange", fontFamily: 'Dosis'}}>{point}</span></SummaryContent>
+            <SummaryContent><span style={{color: "orange", fontFamily: 'Dosis'}}>{point}p</span></SummaryContent>
           </TodayBox><Icon
           onClick={swticher}
             icon="bi:arrow-right-circle-fill"
@@ -267,7 +269,7 @@ const Today = (props) => {
             <Summary>{lastDate}의 <span style={{color: "blue"}}>절약량</span></Summary>
             <SummaryContent><span style={{color: "green", fontFamily: 'Dosis'}}>{emission2}</span> <span style={{fontFamily: 'Dosis'}}>Co2</span> <span style={{position: "relative"}}><MdEnergySavingsLeaf style={{position: "absolute", marginTop: "4px"}}/></span></SummaryContent>
             <Summary>누적 <span style={{color: "blue"}}>포인트</span></Summary>
-            <SummaryContent><span style={{color: "orange", fontFamily: 'Dosis'}}>{point2}</span></SummaryContent>
+            <SummaryContent><span style={{color: "orange", fontFamily: 'Dosis'}}>{point2}p</span></SummaryContent>
             </TodayBox></TodayLine2>
           </> }
 

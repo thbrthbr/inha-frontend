@@ -8,24 +8,31 @@ import { BiPencil } from "react-icons/bi";
 
 const Uramen = styled.div`
   width: 1048px;
-  height: 550px;
-  background-color: orange;
+  height: 450px;
+  background-color: white;
+  border: 2px solid orange;
+  margin-top: -2px;
 `
 
 const ProfileContainer = styled.div`
-margin-left: 105px;
-background-color: blue;
-height: 450px;
-padding-top: 100px;
-position: relative;
+margin-left: 111.5px;
+background-color: white;
+
+margin-top: -2px;
+height: 380px;
+width: 936px;
+padding-top: 70px;
+border: 2px solid blue;
+// position: relative;
 `
 
 const ProfileBox1 = styled.div`
+// padding-top: 100px;
   padding: 10px;
   font-size: 30px;
-  font-family: "GangwonEduPowerExtraBoldA";
-  margin-left: 100px;
-  border: 0.5px solid #c0c0c0;
+  font-family: 'S-CoreDream-3Light';
+  margin-left: 150px;
+  // border: 0.5px solid #c0c0c0;
   width: 600px;
   height: 300px;
   display: grid;
@@ -39,10 +46,10 @@ const ProfileBox1 = styled.div`
 
 const ProfileBox2 = styled.div`
 padding: 10px;
-font-family: 'Dosis', sans-serif;
-  margin-left: 100px;
+font-family: 'S-CoreDream-3Light';
+margin-left: 150px;
   background-color: white;
-  border: 0.5px solid #c0c0c0;
+  // border: 0.5px solid #c0c0c0;
   width: 600px;
   height: 300px;
   display: grid;
@@ -98,6 +105,12 @@ const ProfileTask = (props) => {
     carPoolCount,
     switchOn,
     setSwitchOn,
+    phoneF,
+    setPhoneF,
+    phoneS,
+    setPhoneS,
+    phoneT,
+    setPhoneT
   } = ProfileStore();
   const { loggedRealId } = MasterStore3();
   const { setLoggedId, loggedId } = MasterStore2();
@@ -135,6 +148,18 @@ const ProfileTask = (props) => {
   const phoneNumberChange = (e) => {
     setPhoneNumber(e.currentTarget.value);
     console.log(phoneNumber);
+  };
+
+  const phoneChange = (e) => {
+    if (e.target.id === "first") {
+      setPhoneF(e.target.value);
+    }
+    if (e.target.id === "second") {
+      setPhoneS(e.target.value);
+    }
+    if (e.target.id === "third") {
+      setPhoneT(e.target.value);
+    }
   };
 
   const hasCarChange = (e) => {
@@ -185,7 +210,7 @@ const ProfileTask = (props) => {
       const updateDataObj = {
         userId: loggedRealId,
         nickname: nickname,
-        cellphone: phoneNumber,
+        cellphone: phoneF + "-" + phoneS + "-" + phoneT,
         ownCar: ownCar,
         driving: canDrive
       };
@@ -210,6 +235,7 @@ const ProfileTask = (props) => {
   return (
     <Uramen>
       <ProfileContainer>
+        <div style={{position: "absolute", marginTop: "-71px",  width: "115px", height: "200px", backgroundColor: "white"}}></div>
       {switchOn === true ? (
         <ProfileBox1>
           <Nickname>닉네임: {nickname}</Nickname>
@@ -223,7 +249,13 @@ const ProfileTask = (props) => {
       ) : (
         <ProfileBox2>
           <Nickname>
-            닉네임: <input onChange={nickNameChange}></input>
+            닉네임: <input style={{
+                      // width: "30px",
+                      // marginRight: "5px",
+                      // marginLeft: "5px",
+                      borderColor: "black",
+                      borderRadius: "5px"
+                    }} onChange={nickNameChange}></input>
           </Nickname>
           <Gender>
             <div>성별:</div>
@@ -247,7 +279,43 @@ const ProfileTask = (props) => {
             여자
           </Gender>
           <PhoneNumber>
-            전화번호: <input onChange={phoneNumberChange}></input>
+            전화번호: 
+            <input
+                    style={{
+                      width: "30px",
+                      marginRight: "5px",
+                      marginLeft: "5px",
+                      borderColor: "black",
+                      borderRadius: "5px"
+                    }}
+                    id="first"
+                    onChange={phoneChange}
+                  ></input>
+                  -
+                  <input
+                    style={{
+                      width: "40px",
+                      marginRight: "5px",
+                      marginLeft: "5px",
+                      borderColor: "black",
+                      borderRadius: "5px"
+                    }}
+                    id="second"
+                    onChange={phoneChange}
+                  ></input>
+                  -
+                  <input
+                    style={{
+                      width: "40px",
+                      marginRight: "5px",
+                      marginLeft: "5px",
+                      borderColor: "black",
+                      borderRadius: "5px"
+                    }}
+                    id="third"
+                    onChange={phoneChange}
+                  ></input>
+            {/* <input onChange={phoneNumberChange}></input> */}
           </PhoneNumber>
           <IsDriver>
           <div>운전가능여부:</div>
@@ -295,7 +363,7 @@ const ProfileTask = (props) => {
           
         </ProfileBox2>
       )}
-      <button style={{border: "none", cursor:"pointer", backgroundColor: "white", marginTop: "-35px", marginLeft: "689px", height: "30px", position: "absolute"}} onClick={modifty}><BiPencil style={{fontSize: "20px"}}/></button>
+      <button style={{borderRadius: "50%", cursor:"pointer", backgroundColor: "white", marginTop: "-60px", marginLeft: "735px", height: "50px", width: "50px", position: "absolute"}} onClick={modifty}><BiPencil style={{fontSize: "20px"}}/></button>
     </ProfileContainer>
     </Uramen>
     

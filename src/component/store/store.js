@@ -101,6 +101,9 @@ const TodayStore = create((set, get) => ({
 
 const ChannelStore = create((set, get) => ({
 
+  mapRender: null,
+  setMapRender: (input) => set({ mapRender: input }),
+
   flag: false,
   setFlag: (input) => set({ flag: input }),
 

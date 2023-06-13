@@ -251,11 +251,11 @@ const PersonnelSticker = styled.div`
   margin-top: -150px;
 `;
 
-const KakaoMap = styled.div`
-  width: 200px;
-  height: 200px;
-  margin-top: 20px;
-`;
+// const KakaoMap = styled.div`
+//   width: 200px;
+//   height: 200px;
+//   margin-top: 20px;
+// `;
 
 const PlaceList = styled.ul`
   width: 250px;
@@ -448,7 +448,9 @@ const Board = ({ searchPlace }) => {
     channelPg2,
     setChannelPg2,
     flag,
-    setFlag
+    setFlag,
+    mapRender,
+    setMapRender
   } = ChannelStore();
   const { loggedId, setLoggedId } = MasterStore2();
   const { loggedRealId, setLoggedRealId } = MasterStore3();
@@ -456,6 +458,7 @@ const Board = ({ searchPlace }) => {
   const createChannel = () => {
     setContent(null);
     document.getElementById("modalbox").style.display = "block";
+    mapRender.relayout();
     document.body.style.cssText = `
     position: fixed; 
     top: -${window.scrollY}px;
@@ -1208,6 +1211,14 @@ const Board = ({ searchPlace }) => {
     };
     const map = new kakao.maps.Map(container, options);
 
+    container.style.width = "200px";
+    container.style.height = "200px";
+    container.style.marginTop = "20px";
+
+    setMapRender(map);
+
+    // map.relayout();
+
     const markerPosition = new window.kakao.maps.LatLng(
       38.2313466,
       128.2139293
@@ -1773,7 +1784,16 @@ const Board = ({ searchPlace }) => {
       center: new kakao.maps.LatLng(33.450701, 126.570667),
       level: 3,
     };
+
     const map = new kakao.maps.Map(container, options);
+
+    container.style.width = "200px";
+    container.style.height = "200px";
+    container.style.marginTop = "20px";
+
+    setMapRender(map);
+
+    // map.relayout();
 
     const markerPosition = new window.kakao.maps.LatLng(
       38.2313466,
@@ -2821,7 +2841,7 @@ const Board = ({ searchPlace }) => {
                       <div></div>
                     )}
                   </StartPoint>
-                  <KakaoMap id="map" searchPlace={place}></KakaoMap>
+                  <div id="map" searchPlace={place}></div>
                   <EndPoint>
                     &lt;도착지&gt;
                     <div id="form">

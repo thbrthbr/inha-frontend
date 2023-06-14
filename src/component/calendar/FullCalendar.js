@@ -87,7 +87,7 @@ const RenderCells = () => {
     try {
       let dataArr = []; 
       const thisYear = new Date;
-      const res = await axios.get(`http://localhost:8080/api/carbonFootprints?userId=${loggedRealId}&year=${thisYear.getFullYear()}`,
+      const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/carbonFootprints?userId=${loggedRealId}&year=${thisYear.getFullYear()}`,
       {
         withCredentials: true,
       });

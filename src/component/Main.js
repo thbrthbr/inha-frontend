@@ -194,7 +194,7 @@ const Main = (props) => {
 
       console.log(toString(phoneF));
       console.log(signInData);
-      const res = await axios.post(`http://localhost:8080/join`, signInData, {
+      const res = await axios.post(`${process.env.REACT_APP_API_URL}/join`, signInData, {
         withCredentials: true,
       });
       console.log(res);
@@ -213,7 +213,7 @@ const Main = (props) => {
   const logInRequest = async () => {
     try {
       const res = await axios.post(
-        "http://localhost:8080/loginProc",
+        `${process.env.REACT_APP_API_URL}/loginProc`,
         {
           username: id,
           password: password,

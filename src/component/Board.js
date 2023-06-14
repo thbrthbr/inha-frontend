@@ -532,7 +532,7 @@ const Board = ({ searchPlace }) => {
 
   const showAttendeeProfile = async (id) => {
     try{
-      const res = await axios.get(`http://localhost:8080/api/users/${id}?userId=${loggedRealId}`,
+      const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/users/${id}?userId=${loggedRealId}`,
       {
         withCredentials: true,
       })
@@ -573,7 +573,7 @@ const Board = ({ searchPlace }) => {
   const showAttendeeProfile2 = async (id) => {
     try{
       console.log(document.getElementById(`hidden_${id}`).children);
-      const res = await axios.get(`http://localhost:8080/api/users/${id}?userId=${loggedRealId}`,
+      const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/users/${id}?userId=${loggedRealId}`,
       {
         withCredentials: true,
       })
@@ -615,7 +615,7 @@ const Board = ({ searchPlace }) => {
       let confirm = window.confirm("해당유저를 운전자로 지정하시겠습니까?");
       if(confirm)
       {
-        const res = await axios.patch(`http://localhost:8080/api/posts`,
+        const res = await axios.patch(`${process.env.REACT_APP_API_URL}/api/posts`,
         {
           postId: enteredPostId,    
           driverId: id,
@@ -760,14 +760,14 @@ const Board = ({ searchPlace }) => {
       }
 
       const res3= await axios.get(
-        `http://localhost:8080/api/posts/${channelId}`,
+        `${process.env.REACT_APP_API_URL}/api/posts/${channelId}`,
         {
           withCredentials: true,
         }
       );
 
       const res2= await axios.get(
-        `http://localhost:8080/api/carpools/participation?channelId=${channelId}`,
+        `${process.env.REACT_APP_API_URL}/api/carpools/participation?channelId=${channelId}`,
         {
           withCredentials: true,
         }
@@ -812,7 +812,7 @@ const Board = ({ searchPlace }) => {
         let result = window.confirm("해당 채널에 입장하시겠습니까?");
         if (result) {
           const res1 = await axios.post(
-            `http://localhost:8080/api/carpools`,
+            `${process.env.REACT_APP_API_URL}/api/carpools`,
             letMeIn
           ,
             {
@@ -847,13 +847,13 @@ const Board = ({ searchPlace }) => {
       setFlag(false);
       const temp = 1;
       const res = await axios.get(
-        `http://localhost:8080/api/posts/lists/${temp}`,
+        `${process.env.REACT_APP_API_URL}/api/posts/lists/${temp}`,
         {
           withCredentials: true,
         }
       );
       const res2 = await axios.get(
-        `http://localhost:8080/api/carpools/count`,
+        `${process.env.REACT_APP_API_URL}/api/carpools/count`,
         {
           withCredentials: true,
         }
@@ -885,11 +885,11 @@ const Board = ({ searchPlace }) => {
 
   const getPageChannel2 = async (e) => {
     try {
-      const res = await axios.get(`http://localhost:8080/api/posts/lists/${e.target.id}`, {
+      const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/posts/lists/${e.target.id}`, {
         withCredentials: true,
       });
       const res2 = await axios.get(
-        `http://localhost:8080/api/carpools/count`,
+        `${process.env.REACT_APP_API_URL}/api/carpools/count`,
         {
           withCredentials: true,
         }
@@ -955,7 +955,7 @@ const Board = ({ searchPlace }) => {
         carpoolDate: today,
       };
 
-      const res = await axios.post("http://localhost:8080/api/posts", channelData, {
+      const res = await axios.post(`${process.env.REACT_APP_API_URL}/api/posts`, channelData, {
         withCredentials: true,
       });
 
@@ -973,7 +973,7 @@ const Board = ({ searchPlace }) => {
   const realSearch = async () => {
      try{
       
-      const res = await axios.get(`http://localhost:8080/api/posts?keyword=${searchWord}`, {
+      const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/posts?keyword=${searchWord}`, {
         withCredentials: true,
       });
       channelNum = res.data.data.length;
@@ -1031,7 +1031,7 @@ const Board = ({ searchPlace }) => {
         setContentEdit(true);
       }
       else{
-        const res = await axios.patch(`http://localhost:8080/api/posts`,
+        const res = await axios.patch(`${process.env.REACT_APP_API_URL}/api/posts`,
         {
           postId: enteredPostId,
           driverId: roomDriverId,
@@ -1402,7 +1402,7 @@ const Board = ({ searchPlace }) => {
             let c2 = 2 * Math.asin(Math.sqrt(a2));
             let finalA = R * c2;
 
-            if (finalD <= 100 && finalA <= 100) {
+            if (finalD <= 500 && finalA <= 500) {
               console.log("프로토타입");
             }
             else
@@ -1978,7 +1978,7 @@ const Board = ({ searchPlace }) => {
             let c2 = 2 * Math.asin(Math.sqrt(a2));
             let finalA = R * c2;
 
-            if (finalD <= 100 && finalA <= 100) {
+            if (finalD <= 500 && finalA <= 500) {
               const changedDA = {
                 channelId: enteredPostId,    
                 userId: loggedRealId,
@@ -1989,7 +1989,7 @@ const Board = ({ searchPlace }) => {
                 arrivalsLatitude: completeXY[1][0],
                 arrivalsLongitude: completeXY[1][1],
               }
-              const res = await axios.patch("http://localhost:8080/api/carpools", changedDA, {
+              const res = await axios.patch(`${process.env.REACT_APP_API_URL}/api/carpools`, changedDA, {
                 withCredentials: true,
               });
               alert("변경 되었습니다.");
@@ -2045,7 +2045,7 @@ const Board = ({ searchPlace }) => {
             let c2 = 2 * Math.asin(Math.sqrt(a2));
             let finalA = R * c2;
 
-            if (finalD <= 100 && finalA <= 100) {
+            if (finalD <= 500 && finalA <= 500) {
               const changedDA = {
                 channelId: enteredPostId,    
                 userId: loggedRealId,
@@ -2056,7 +2056,7 @@ const Board = ({ searchPlace }) => {
                 arrivalsLatitude: completeXY[1][0],
                 arrivalsLongitude: completeXY[1][1],
               }
-              const res = await axios.patch("http://localhost:8080/api/carpools", changedDA, {
+              const res = await axios.patch(`${process.env.REACT_APP_API_URL}/api/carpools`, changedDA, {
                 withCredentials: true,
               });
               alert("변경 되었습니다.");

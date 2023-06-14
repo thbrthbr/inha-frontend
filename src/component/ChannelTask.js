@@ -106,7 +106,7 @@ const ChannelTask = (props) => {
 
   const getChannels2 = async () => {
     try {
-      const res1 = await axios.get(`http://localhost:8080/api/carpools?userId=${loggedRealId}`, {
+      const res1 = await axios.get(`${process.env.REACT_APP_API_URL}/api/carpools?userId=${loggedRealId}`, {
         withCredentials: true,
       });
 
@@ -162,7 +162,7 @@ const ChannelTask = (props) => {
       if (hostId == loggedRealId) {
         let confirm = window.confirm("채널을 삭제하시겠습니까?");
         if (confirm) {
-          const res2 = await axios.delete(`http://localhost:8080/api/posts?postId=${id}&userId=${loggedRealId }`, {
+          const res2 = await axios.delete(`${process.env.REACT_APP_API_URL}/api/posts?postId=${id}&userId=${loggedRealId }`, {
             withCredentials: true,
           });
           alert("채널이 삭제 되었습니다")
@@ -172,29 +172,10 @@ const ChannelTask = (props) => {
           return;
         }
       } else {
-        let confirm = window.confirm("채널에서 나가시겠습니까?");
+        let confirm = window.confirm("채널을 삭제하시겠습니까?");
         if (confirm) {
-          // const res3 = await axios(
-          //   {
-          //     method: "patch",
-          //     url: `http://localhost:4000/posts/${id}`,
-          //     data: {
-          //       curPersonnel: num - 1,
-          //     },
-          //     headers: { "Content-Type": "application/json" },
-          //   },
-          //   {
-          //     withCredentials: true,
-          //   }
-          // );
-          // const res1 = await axios.delete(
-          //   `http://localhost:4000/carpools/${id}`,
-          //   {
-          //     withCredentials: true,
-          //   }
-          // );
 
-          alert("미구현");
+          alert("권한이 없습니다.");
         }
       }
     } catch (e) {

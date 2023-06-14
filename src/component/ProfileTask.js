@@ -159,7 +159,7 @@ const ProfileTask = (props) => {
 
   const getUserData = async () => {
     try {
-      const res = await axios.get(`http://localhost:8080/api/users/${loggedRealId}?userId=${loggedRealId}`, {
+      const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/users/${loggedRealId}?userId=${loggedRealId}`, {
         withCredentials: true,
       });
       console.log(res.data.data);
@@ -189,7 +189,7 @@ const ProfileTask = (props) => {
         driving: canDrive
       };
       const res = await axios.patch(
-        "http://localhost:8080/api/users",
+        `${process.env.REACT_APP_API_URL}/api/users`,
         updateDataObj,
         {
           withCredentials: true,

@@ -82,11 +82,11 @@ const Today = (props) => {
   const getToday = async () => {
     try {
       
-      const res1 = await axios.get(`http://localhost:8080/api/carbonFootprints?userId=${loggedRealId}&year=${Olhae}`,
+      const res1 = await axios.get(`${process.env.REACT_APP_API_URL}/api/carbonFootprints?userId=${loggedRealId}&year=${Olhae}`,
       {
         withCredentials: true,
       });
-      const res2 = await axios.get(`http://localhost:8080/api/users/${loggedRealId}?userId=${loggedRealId}`,
+      const res2 = await axios.get(`${process.env.REACT_APP_API_URL}/api/users/${loggedRealId}?userId=${loggedRealId}`,
       {
         withCredentials: true,
       });
@@ -144,7 +144,7 @@ const Today = (props) => {
       console.log(res1.data);
       console.log(res2.data);
       }
-      
+
       return res1.data;
     } catch (e) {
       console.log("error: " + e);
@@ -154,11 +154,11 @@ const Today = (props) => {
   const getLast = async () => {
     try {
       
-      const res1 = await axios.get(`http://localhost:8080/api/carbonFootprints?userId=${loggedRealId}&year=${Olhae}`,
+      const res1 = await axios.get(`${process.env.REACT_APP_API_URL}/api/carbonFootprints?userId=${loggedRealId}&year=${Olhae}`,
       {
         withCredentials: true,
       });
-      const res2 = await axios.get(`http://localhost:8080/api/users/${loggedRealId}?userId=${loggedRealId}`,
+      const res2 = await axios.get(`${process.env.REACT_APP_API_URL}/api/users/${loggedRealId}?userId=${loggedRealId}`,
       {
         withCredentials: true,
       });
